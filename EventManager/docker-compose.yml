@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+
+  event-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile_EM
+    image: gcr.io/clusterekaitz/pruebas-gcis:event-manager
+    container_name: event-manager
+    ports:
+      - 8080:8080
+    volumes:
+      - event-manager-data:/event_manager
+
+
+volumes:
+  event-manager-data:

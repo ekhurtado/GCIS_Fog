@@ -1,0 +1,17 @@
+#FROM tomcat:jdk8-openjdk
+FROM tomcat:8-jdk8-openjdk
+
+COPY ./EventManager.war /usr/local/tomcat/webapps/
+
+RUN curl -L https://github.com/kubernetes/kompose/releases/download/v1.23.0/kompose-linux-amd64 -o kompose
+
+RUN chmod +x kompose
+
+RUN mv ./kompose /usr/local/bin/kompose
+
+COPY config .kube/config
+
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
+
