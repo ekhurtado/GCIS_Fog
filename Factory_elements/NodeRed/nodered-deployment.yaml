@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: nodered
+  name: nodered
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: nodered
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: nodered
+    spec:
+      containers:
+      - image: gcr.io/clusterekaitz/gcis:nodered
+        imagePullPolicy: ""
+        name: nodered
+        ports:
+        - containerPort: 1880
+        resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: node-red-data
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: node-red-data
+        persistentVolumeClaim:
+          claimName: node-red-data
+status: {}
