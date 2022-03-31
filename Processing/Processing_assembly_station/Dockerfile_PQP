@@ -1,0 +1,13 @@
+FROM gcr.io/clusterekaitz/processing:base
+
+RUN pip install influxdb-client
+
+COPY pqp.py .
+
+COPY influxAPI.py .
+
+ENV FLASK_APP=pqp.py
+
+ENV LIMIT=67
+
+#CMD flask run --host=0.0.0.0

@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+
+  processing-base:
+    build:
+      context: .
+      dockerfile: Dockerfile_processing_base
+    image: gcr.io/clusterekaitz/processing:base
+    container_name: processing-base
+
