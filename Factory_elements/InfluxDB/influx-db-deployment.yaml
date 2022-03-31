@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: influx-db
+  name: influx-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: influx-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: influx-db
+    spec:
+      containers:
+      - env:
+        - name: PRE_CREATE_DB
+          value: gcis
+        image: influxdb
+        imagePullPolicy: ""
+        name: influx-db
+        ports:
+        - containerPort: 8083
+        - containerPort: 8086
+        resources: {}
+        volumeMounts:
+        - mountPath: /root/.influxdbv2
+          name: influxdb-influx-data
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: influxdb-influx-data
+        persistentVolumeClaim:
+          claimName: influxdb-influx-data
+      nodeSelector:
+        node-type: factory-components
+status: {}
