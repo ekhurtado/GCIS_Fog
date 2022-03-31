@@ -1,0 +1,9 @@
+FROM openjdk:8-jre-alpine
+
+COPY Libraries_for_eXist /Libraries_for_eXist
+
+#ENV MACHINE_ID=NULL
+
+#ENV RANGE=60
+
+#ENV PQP_NAME=pqp_11

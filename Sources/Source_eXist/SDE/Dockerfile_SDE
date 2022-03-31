@@ -1,0 +1,15 @@
+FROM gcr.io/clusterekaitz/source:exist-base
+
+COPY SDE.jar /
+
+ENV MACHINE_ID=NULL
+
+ENV RANGE=60
+
+ENV PQP_NAME=pqp_11
+
+WORKDIR /
+
+EXPOSE 6000
+
+#CMD ["java", "-jar", "SDE.jar"]

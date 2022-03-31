@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+
+  source-exist-station:
+    build:
+      context: .
+      dockerfile: Dockerfile_SDE
+    image: gcr.io/clusterekaitz/source:exist-station
+    container_name: source-exist-station
+

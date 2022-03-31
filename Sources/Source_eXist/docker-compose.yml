@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+
+  source-exist-base:
+    build:
+      context: .
+      dockerfile: Dockerfile_source_base
+    image: gcr.io/clusterekaitz/source:exist-base
+    container_name: source-exist-base
+

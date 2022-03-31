@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -o kompose
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sde-11
+  name: sde-11
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sde-11
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -o kompose
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sde-11
+    spec:
+      containers:
+      - env:
+        - name: MACHINE_ID
+          value: "11"
+        - name: PQP_NAME
+          value: pqp-11
+        - name: RANGE
+          value: "60"
+        image: gcr.io/clusterekaitz/appfil2:source_exist_prueba
+        imagePullPolicy: ""
+        name: sde-11
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
