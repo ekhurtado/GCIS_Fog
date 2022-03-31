@@ -1,0 +1,16 @@
+<!-- edited with XMLSpy v2020 (http://www.altova.com) by  (University of the Basque Country) -->
+<application name="data_acquisition" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/Users/eestevez/Downloads/Application.xsd">
+	<componentInstance name="get_data_from_plant" type="SOURCE_PLANT_MQTT" description="component instance description">
+		<function name="get_plant_data" description="description of function"/>
+		<outPort name="OPort1" id="get_data_from_plant::OPort1">
+			<data name="product" type="TPlant"/>
+		</outPort>
+	</componentInstance>
+	<componentInstance name="process_data" type="SINK_EXIST" description="component instance description">
+		<function name="updateProductInstance" description="description of funcion"/>
+		<inPort name="IPort1" id="process_data::IPort1">
+			<data name="MachineOperation" type="TPlant"/>
+		</inPort>
+	</componentInstance>
+	<channel from="get_data_from_plant::OPort1" to="process_data::IPort1" link="http"/>
+</application>

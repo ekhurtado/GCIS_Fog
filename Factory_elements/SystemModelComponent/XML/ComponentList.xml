@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 (http://www.altova.com) by  (University of the Basque Country) -->
+<componentList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/Users/eestevez/Downloads/ComponentList.xsd">
+	<component type="SOURCE_PLANT_MQTT" id="gcr.io/gcis/source:mqtt" name="GetDataFromPlant" description="description of component">
+		<function name="get_plant_data" description="description of function">
+			<output name="out1" type="TPlant" protocol="http"/>
+		</function>
+	</component>
+	<component type="SINK_EXIST" id="gcr.io/gcis/sink:exist" name="StoreDataInDB" description="description of component">
+		<function name="updateProductInstance" description="description of function">
+			<input name="in1" type="TPlant" protocol="http"/>
+		</function>
+	</component>
+	<component type="SOURCE_PROCESSING_DB" id="gcr.io/gcis/source:exist" name="GetDataFromDB" description="description of component">
+		<function name="get_eXist" description="description of function">
+			<output name="out1" type="TDataBase" protocol="http"/>
+		</function>
+	</component>
+	<component type="PROCESSING_OEE" id="gcr.io/gcis/processing:oee" name="ProcessData" description="description of component">
+		<function name="OEEComputing" description="description of function">
+			<input name="in1" type="TDataBase" protocol="http"/>
+			<output name="out1" type="String" protocol="http"/>
+		</function>
+	</component>
+	<component type="EVENT_MANAGER" id="gcr.io/gcis/factoryComponent:eventManager" name="EventManager" description="description of component">
+		<function name="operatorAlarm" description="description of function">
+			<input name="in1" type="String" protocol="http"/>
+		</function>
+	</component>
+</componentList>

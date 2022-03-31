@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2018 sp1 (http://www.altova.com) by Marga Marcos (Escuela de Ingeniería de Bilbao (UPV/EHU)) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- ======= Component ======= -->
+	<xs:complexType name="Component">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="function" type="xs:string" use="required"/>
+		<xs:attribute name="type" type="xs:string" use="required"/>
+		<xs:attribute name="inPort" type="xs:string" use="optional"/>
+		<xs:attribute name="outPort" type="xs:string" use="optional"/>
+		<xs:attribute name="dataIn" type="xs:string" use="optional"/>
+		<xs:attribute name="dataOut" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<!-- ======= Event ======= -->
+	<xs:complexType name="Event">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+</xs:schema>

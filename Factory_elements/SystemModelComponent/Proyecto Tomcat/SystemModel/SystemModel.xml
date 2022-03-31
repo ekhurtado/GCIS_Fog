@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system>
+    <element ID="sink_exist1" category="component" dataIn="TPlant" function="storeAssemblyStationData" inPort="TStation" name="sink_exist_plant_data" type="SINK_EXIST"/>
+    <element ID="mqtt_source_http1" category="component" dataOut="TPlant" function="assemblyStationData" name="get_data_from_plant" outPort="TStation" type="MQTT_SOURCE_HTTP"/>
+    <element ID="channel1" category="channel" from="mqtt_source_http1" fromPort="TStation" link="http" to="sink_exist1" toPort="TStation"/>
+    <application ID="application1">
+        <channels>
+            <channel>channel1</channel>
+        </channels>
+        <components>
+            <component>sink_exist1</component>
+            <component>mqtt_source_http1</component>
+        </components>
+    </application>
+</system>

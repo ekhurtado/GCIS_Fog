@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system>
+    <element ID="channel1" category="channel" from="mqtt_source_http1" fromPort="TStation" link="http" to="sink_exist1" toPort="TStation"/>
+    <element ID="channel2" category="channel" from="mqtt_source_http2" fromPort="TStation" link="http" to="sink_exist2" toPort="TStation"/>
+    <element ID="sink_exist2" category="component" dataIn="TPlant" function="storeAssemblyStationData" image="OK" inPort="TStation" name="sink_exist_plant_data" type="SINK_EXIST"/>
+    <element ID="sink_exist1" category="component" dataIn="TPlant" function="storeAssemblyStationData" image="OK" inPort="TStation" name="sink_exist_plant_data" type="SINK_EXIST"/>
+    <element ID="channel3" category="channel" from="mqtt_source_http3" fromPort="TStation" link="http" to="sink_exist3" toPort="TStation"/>
+    <element ID="channel4" category="channel" from="mqtt_source_http4" fromPort="TStation" link="http" to="sink_exist4" toPort="TStation"/>
+    <element ID="mqtt_source_http1" category="component" dataOut="TPlant" function="assemblyStationData" image="OK" name="get_data_from_plant" outPort="TStation" type="MQTT_SOURCE_HTTP"/>
+    <element ID="mqtt_source_http2" category="component" dataOut="TPlant" function="assemblyStationData" image="OK" name="get_data_from_plant" outPort="TStation" type="MQTT_SOURCE_HTTP"/>
+    <element ID="mqtt_source_http3" category="component" dataOut="TPlant" function="assemblyStationData" image="OK" name="get_data_from_plant" outPort="TStation" type="MQTT_SOURCE_HTTP"/>
+    <element ID="mqtt_source_http4" category="component" dataOut="TPlant" function="assemblyStationData" image="OK" name="get_data_from_plant" outPort="TStation" type="MQTT_SOURCE_HTTP"/>
+    <element ID="sink_exist4" category="component" dataIn="TPlant" function="storeAssemblyStationData" image="OK" inPort="TStation" name="sink_exist_plant_data" type="SINK_EXIST"/>
+    <element ID="sink_exist3" category="component" dataIn="TPlant" function="storeAssemblyStationData" image="OK" inPort="TStation" name="sink_exist_plant_data" type="SINK_EXIST"/>
+    <application ID="application4">
+        <channels>
+            <channel>channel4</channel>
+        </channels>
+        <components>
+            <component>sink_exist4</component>
+            <component>mqtt_source_http4</component>
+        </components>
+    </application>
+    <application ID="application1">
+        <channels>
+            <channel>channel1</channel>
+        </channels>
+        <components>
+            <component>sink_exist1</component>
+            <component>mqtt_source_http1</component>
+        </components>
+    </application>
+    <application ID="application2">
+        <channels>
+            <channel>channel2</channel>
+        </channels>
+        <components>
+            <component>sink_exist2</component>
+            <component>mqtt_source_http2</component>
+        </components>
+    </application>
+    <application ID="application3">
+        <channels>
+            <channel>channel3</channel>
+        </channels>
+        <components>
+            <component>sink_exist3</component>
+            <component>mqtt_source_http3</component>
+        </components>
+    </application>
+</system>

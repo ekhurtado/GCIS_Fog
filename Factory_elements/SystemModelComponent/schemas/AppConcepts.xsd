@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2018 sp1 (http://www.altova.com) by Marga Marcos (Escuela de Ingeniería de Bilbao (UPV/EHU)) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="/system_model/schemas/AppProperties.xsd"/>
+	<xs:element name="component" type="Component"/>
+	<xs:element name="event" type="Event"/>
+</xs:schema>

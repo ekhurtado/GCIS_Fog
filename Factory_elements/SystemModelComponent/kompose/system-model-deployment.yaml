@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: system-model
+  name: system-model
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: system-model
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: system-model
+    spec:
+      containers:
+      - image: gcr.io/clusterekaitz/pruebas-gcis:system-model
+        imagePullPolicy: ""
+        name: cluster-manager
+        ports:
+        - containerPort: 8080
+        resources: {}
+        volumeMounts:
+        - mountPath: /system_model
+          name: system-model-data
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: system-model-data
+        persistentVolumeClaim:
+          claimName: system-model-data
+status: {}

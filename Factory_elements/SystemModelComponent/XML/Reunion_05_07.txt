@@ -1,0 +1,63 @@
+REUNION 05/07
+-------------
+
+Pasarlo a un XML (esquema)
+
+Mirar Que tiene que tener cada aplicaciones
+
+Registro/validacion
+
+Caracterizar cada componente por su salida y entrada
+
+Comprobar el tipo de la aplicacion y por cada conexion si la salida y entrada coinciden y tambien el protocolo de comunicacion
+
+Hacerlos en relacion al submodelo Batch de Alejandro
+
+Añadir en tipo de componente (type en Componentinstance) un enumeration en vez de string (presentacion MM_ETFA application XML Schema)
+
+Desarrollar un "planner" para desacoplar el SystemModel --> Alli estaría la definicion de la aplicacion antes de que se complete el registro
+
+Una vez registrado, un elemento (EventManager?) crea el archivo de configuracion y despliegue y lo despliega en Kubernetes
+
+
+							-- Componentes
+System Model (estructura)--
+							-- Aplicaciones
+
+PASOS A SEGUIR:
+
+1- Crear el flujo en Node-RED seleccionando los microservicios
+2- Guarda el flujo
+	2.1- Cada componente coje el XML que le ha pasado el anterior componente y añade su parte, y el canal para enlazar con el anterior
+3- Una vez se tenga el XML de la aplicacion completo se enviaría a un elemento del fog (SystemModel?Planner?) para su registro y validacion
+4- Este elemento leerá todo el XML y lo validará:
+	4.1- Comprobar si existen los tipos de componente
+	4.2- Comprobar si los puertos de entrada y salida coinciden
+	4.3- Comprobar si los protocolos coinciden
+5- Despues de que esté validado, se pedirá al Sytem Model Component que registre la nueva aplicacion, pasandole el XML
+
+
+MINECO 21
+---------
+
+Cada componente tendra mas de una funcion, y por petición se le pide que ejecute una u otra
+
+Los componentes serán recursos, estarán siempre desplegados
+
+Cuando crees una aplicacion, crearás un workflow, pero los componentes ya estarán activos.
+	- Así, se irán ejecutando la funcionalidad de cada componente e irá enviando mensaje a los demas componentes de dicha aplicacion
+
+
+REUNION 06/07
+-------------
+
+Cuando se instancian los componentes, se registran en el SystemModel
+
+Cuando se crea la aplicacion (workflow) se registra en el SystemModel y se valida su definicion
+
+IDEA: Cada nodo de Node-RED:
+		- Si es el primero del workflow: Coge el XML Schema y crea el XML con su definicion. En el canal pone el "from" (el mismo) y el "to" lo deja en null
+		- Si no es el primero: Coge el XML anterior y añade su definicion. Despues modifica el canal con el componente anterior (añade la parte de "to"). Por ultimo, al igual que el primero, añade el canal con el siguiente componente si poner el "to"
+		
+		DUDA!!!!!!!!!!!!!!!!! A la hora de añadir el "link" del canal, que hacer si no coinciden?
+

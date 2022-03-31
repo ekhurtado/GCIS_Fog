@@ -1,0 +1,13 @@
+IDEA EVENT MANAGER:
+
+	1. El Planner recibe que se han creado todas las imagenes de los componentes bien	(Planner <-- SMC)
+	2. Pide al System Model Component que despliegue la aplicacion (Planner --> SMC)
+	3. El SMC recibe la peticion, crea el docker-compose.yml y se lo envia al Event Manager
+		- Utilizando los datos de systemElements, crea el docker-compose añadiendolos (nombre de la imagen, nombre del componente...)
+		- ! CUIDADO ! Tambien hay que añadir una variable de entorno para especificarle cual es el siguiente componente
+			* P.e. En el componente Source-MQTT-HTTP habrá que meter la variable OUTPUT=sink-exist
+	4. El Event Manager recibirá la peticion del SMC de desplegar una aplicacion
+		- Leerá el docker-compose y utilizará la herramienta kompose para crear los YAML
+		- Modificará lo necesario de ellos
+		- Desplegará utilizando la API de Kubernetes
+		- Almacenará el docker-compose y los archivos YAML

@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+
+  system-model:
+    build:
+      context: .
+      dockerfile: Dockerfile_SMC
+    image: gcr.io/clusterekaitz/pruebas-gcis:system-model
+    container_name: cluster-manager
+    ports:
+      - 8080:8080
+    volumes:
+      - system-model-data:/system_model
+
+
+volumes:
+  system-model-data:

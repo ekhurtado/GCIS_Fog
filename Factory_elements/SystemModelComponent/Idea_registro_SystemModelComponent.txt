@@ -1,0 +1,44 @@
+REGISTRO EN SYSTEM MODEL AGENT
+
+	1. Peticion de registro --> seRegister (SMA)
+	2. Extrae la información necesaria de la petición de registro (p.e: que tipo de elemento se quiere registrar)
+	3. Comprueba si existe el tipo de elemento que se quiere generar en el sistema
+	4. Valida la jerarquía
+	5. Registra el elemento --> reg (SMA) y consigue el ID del nuevo elemento
+	6. Valida el elementro contra el esquema systemElements: Si no es correcto, elimina el elemento que se acaba de registrar
+	7. Devuelve el nuevo ID al elemento que le ha realizado la petición
+	
+	
+IDEA DE REGISTRO EN SYSTEM MODEL COMPONENT
+
+	1. Peticion de registro --> seRegister (SMC)
+	2. Extrae la información necesaria de la petición de registro (p.e: que tipo de elemento se quiere registrar)
+	3. Comprueba si existe el tipo de elemento que se quiere generar en el sistema
+	4. Valida la definición de cada componente
+	5. Valida la consistencia de la aplicación en su conjunto respecto al modelado (si tiene sentido agrupar así los componentes)
+	5. Registra el elemento --> reg (SMC) y consigue el ID del nuevo elemento
+	7. Devuelve el nuevo ID al elemento que le ha realizado la petición
+	
+	
+	
+Lo que se crea de Node-RED:
+
+	- Dockerfiles de todos los componentes. Ejemplo:
+	
+				FROM processing_assembly_base_image
+
+				ENV function=processingOEE
+
+				ENV inPort=TDBStation
+
+				ENV outPort=TStationOEE
+
+				CMD java -jar processing.jar
+				
+	IDEAS:
+		1. Habrá que buscar la forma de enviar todos los Dockerfile a la vez
+		2. Se tendrá que pasar el orden de los componentes (para poder relacionar laos puertos de entrada y salida)
+		3. Habrá que saber de donde sacar la estructura del Dockerfile (el esqueleto), para luego rellenar lo que haga falta
+		4. Donde se va a crear la nueva imagen Docker?
+			- Es decir, el Dockerfile que se crea de Node-RED, donde se crea la imagen (docker build) y donde se sube al repositorio (docker push)
+			- Igual habria que hacer un nuevo componente ("builder"), que tenga instalado docker instalado y las credenciales del repositorio, y sea capaz de crear y subir imagenes a repositorios

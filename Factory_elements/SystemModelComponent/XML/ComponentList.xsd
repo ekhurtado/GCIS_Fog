@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 (http://www.altova.com) by  (University of the Basque Country) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<!-- ============== DEFINITION OF DATA TYPES ============= -->
+	<xs:complexType name="TPlant">
+		<xs:attribute name="machineId" type="xs:string" use="required"/>
+		<xs:attribute name="orderId" type="xs:string" use="required"/>
+		<xs:attribute name="batchId" type="xs:string" use="required"/>
+		<xs:attribute name="itemID" type="xs:string" use="required"/>
+		<xs:attribute name="serviceTypeId" type="xs:string" use="required"/>
+		<xs:attribute name="subproductTypeId" type="xs:string" use="required"/>
+		<xs:attribute name="dataInitialTimeStamp" type="xs:dateTime" use="required"/>
+		<xs:attribute name="dataFinalTimeStamp" type="xs:dateTime" use="required"/>
+		<xs:attribute name="dataServiceTimeStamp" type="xs:dateTime" use="required"/>
+		<!-- YYYY-MM-DDThh:mm:ss -->
+	</xs:complexType>
+	<xs:complexType name="Times">
+		<xs:attribute name="itemId" type="xs:string" use="required"/>
+		<xs:attribute name="actionId" type="xs:string" use="required"/>
+		<xs:attribute name="start" type="xs:time" use="required"/>
+		<xs:attribute name="finish" type="xs:time" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TDataBase">
+		<xs:sequence>
+			<xs:element name="plannedTimes">
+				<xs:complexType>
+					<xs:sequence minOccurs="1" maxOccurs="unbounded">
+						<xs:element name="plannedTime" type="Times"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="actualTimes">
+				<xs:complexType>
+					<xs:sequence minOccurs="1" maxOccurs="unbounded">
+						<xs:element name="actualTime" type="Times"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="machineId" type="xs:string" use="required"/>
+		<xs:attribute name="actionId" type="xs:string" use="required"/>
+		<xs:attribute name="itemId" type="xs:string" use="required"/>
+		<xs:attribute name="start" type="xs:time" use="required"/>
+		<xs:attribute name="finish" type="xs:time" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="DataType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TPlant"/>
+			<xs:enumeration value="TDataBase"/>
+			<xs:enumeration value="Bool"/>
+			<xs:enumeration value="ShortInt"/>
+			<xs:enumeration value="Int"/>
+			<xs:enumeration value="String"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- =========== FINISH OF DATA TYPE DIFINITIONS =============== -->
+	<xs:complexType name="Parameter">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="type" type="DataType" use="required"/>		
+	</xs:complexType>
+	<xs:element name="function">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="input" type="Parameter" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="output" type="Parameter" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="description" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="protocol">
+		<xs:complexType>
+			<xs:attribute name="in" type="xs:string" use="optional"/>
+			<xs:attribute name="out" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="TComponent">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SOURCE_PLANT_MQTT"/>
+			<xs:enumeration value="SINK_EXIST"/>
+			<xs:enumeration value="SOURCE_PROCESSING_DB"/>
+			<xs:enumeration value="PROCESSING_OEE"/>
+			<xs:enumeration value="EVENT_MANAGER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:group name="Data">
+		<xs:choice>
+			<xs:element name="TPlant" type="TPlant"/>
+			<xs:element name="TDataBase" type="TDataBase"/>
+		</xs:choice>
+	</xs:group>
+	<xs:element name="component">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="function" minOccurs="1" maxOccurs="unbounded"/>
+				<xs:element ref="protocol" minOccurs="1" maxOccurs="1"/>
+				<xs:group ref="Data" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="type" type="TComponent" use="required"/>
+			<xs:attribute name="id" type="xs:string" use="required"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="description" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="componentList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="component" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

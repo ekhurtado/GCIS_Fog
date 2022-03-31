@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 (http://www.altova.com) by  (University of the Basque Country) -->
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/Users/eestevez/Downloads/Application.xsd" name="data_processing">
+	<componentInstance name="get_plant_data" type="SOURCE_PROCESSING_DB" description="description of component">
+		<function name="get_eXist" description="description of function"/>
+		<outPort name="OPort1" id="get_plant_data::OPort1">
+			<data name="getMachineOperationTimes" type="TDataBase"/>
+		</outPort>
+	</componentInstance>
+	<componentInstance name="store_plant_data" type="PROCESSING_OEE" description="descrition of component">
+		<function name="OEEComputing" description="description of function"/>
+		<inPort name="IPort1" id="store_plant_data::IPort1">
+			<data name="MachineOperationTimes" type="TDataBase"/>
+		</inPort>
+		<outPort name="OPort1" id="store_plant_data::OPort1">
+			<data name="OEEUnderThreshold" type="String"/>
+		</outPort>
+	</componentInstance>
+	<componentInstance name="event_manager" type="EVENT_MANAGER" description="description of component">
+		<function name="operatorAlarm" description="description of function"/>
+		<inPort name="IPort1" id="event_manager::IPort1">
+			<data name="OEEFault" type="String"/>
+		</inPort>
+	</componentInstance>
+	<channel from="get_plant_data::OPort1" to="store_plant_data::IPort1" link="http"/>
+	<channel from="store_plant_data::OPort1" to="event_manager::IPort1" link="http"/>
+</application>

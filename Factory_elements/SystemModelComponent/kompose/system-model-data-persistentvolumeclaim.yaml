@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: system-model-data
+  name: system-model-data
+spec:
+  storageClassName: system-model-data
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 400Mi
+status: {}
