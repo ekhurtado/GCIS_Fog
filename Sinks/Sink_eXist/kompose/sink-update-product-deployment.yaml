@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -o ./kompose
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sink-update-product
+  name: sink-update-product
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sink-update-product
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -o ./kompose
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sink-update-product
+    spec:
+      containers:
+      - env:
+        - name: SERVICE_TYPE
+          value: updatePLCInfo
+        image: gcr.io/clusterekaitz/sink:exist
+        imagePullPolicy: ""
+        name: sink-update-product
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: "536870912"
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
