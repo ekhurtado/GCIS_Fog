@@ -1,0 +1,7 @@
+FROM gcr.io/clusterekaitz/sink:exist
+
+ENV FUNCTION=storeAssemblyStationData
+
+ENV inPort=TStation
+
+CMD ["catalina.sh", "run"]

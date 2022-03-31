@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: source-assembly-station
+  name: source-assembly-station
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: source-assembly-station
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: source-assembly-station
+    spec:
+      containers:
+      - env:
+        - name: OUTPUT
+          value: sink-exist-assembly
+        image: gcr.io/clusterekaitz/application1:source-assembly
+        imagePullPolicy: ""
+        name: source-assembly-station
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+      nodeSelector:
+        node-type: multipass
+status: {}

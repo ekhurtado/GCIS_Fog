@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+
+  processing-assembly-oee:
+    build:
+      context: .
+      dockerfile: Dockerfile_pqp
+    image: gcr.io/clusterekaitz/multipass:processing-assembly-oee
+    container_name: processing-assembly-oee
+    ports:
+      - 6000:6000
+    environment:
+      - LIMIT=67

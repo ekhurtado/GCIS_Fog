@@ -1,0 +1,7 @@
+FROM gcr.io/clusterekaitz/source:exist-station
+
+ENV FUNCTION=getAssemblyStationData
+
+ENV outPort=TDBStation
+
+CMD ["java", "-jar", "SDE.jar"]

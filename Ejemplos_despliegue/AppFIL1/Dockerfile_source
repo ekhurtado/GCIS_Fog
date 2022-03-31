@@ -1,0 +1,7 @@
+FROM gcr.io/clusterekaitz/source:mqtt-http
+
+ENV FUNCTION=getAssemblyStationData
+
+ENV outPort=TStation
+
+CMD python3 subscriber.py

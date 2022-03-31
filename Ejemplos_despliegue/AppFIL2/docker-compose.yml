@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+
+  source-exist-assembly:
+    image: gcr.io/clusterekaitz/application2:source-exist-assembly
+    container_name: source-exist-assembly
+    environment:
+      - OUTPUT=processing-assembly-oee
+      - RANGE=60
+
+  processing-assembly-oee:
+    image: gcr.io/clusterekaitz/application2:processing-assembly-oee
+    container_name: processing-assembly-oee
+    ports:
+      - 6000:6000
+    environment:
+      - LIMIT=67

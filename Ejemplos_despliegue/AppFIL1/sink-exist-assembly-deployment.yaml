@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sink-exist-assembly
+  name: sink-exist-assembly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sink-exist-assembly
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sink-exist-assembly
+    spec:
+      containers:
+      - image: gcr.io/clusterekaitz/application1:sink-exist
+        imagePullPolicy: ""
+        name: source-assembly-station
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+      nodeSelector:
+        node-type: multipass
+status: {}

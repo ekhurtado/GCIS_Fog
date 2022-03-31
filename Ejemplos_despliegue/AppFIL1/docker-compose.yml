@@ -1,0 +1,16 @@
+version: "2"
+
+services:
+
+  source-assembly-station:
+    image: gcr.io/clusterekaitz/application1:source-assembly
+    container_name: source-assembly-station
+    environment:
+      - OUTPUT=sink-exist-assembly
+
+  sink-exist-assembly:
+    image: gcr.io/clusterekaitz/application1:sink-exist
+    container_name: source-assembly-station
+    ports:
+      - 8080:8080
+

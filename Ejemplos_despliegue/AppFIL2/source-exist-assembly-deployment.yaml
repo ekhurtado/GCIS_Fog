@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.24.0 (4a2a0458)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: source-exist-assembly
+  name: source-exist-assembly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: source-exist-assembly
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.24.0 (4a2a0458)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: source-exist-assembly
+    spec:
+      containers:
+        - env:
+            - name: OUTPUT
+              value: processing-assembly-oee
+            - name: RANGE
+              value: "60"
+          image: gcr.io/clusterekaitz/application2:source-exist-assembly
+          name: source-exist-assembly
+          resources: {}
+      restartPolicy: Always
+status: {}
