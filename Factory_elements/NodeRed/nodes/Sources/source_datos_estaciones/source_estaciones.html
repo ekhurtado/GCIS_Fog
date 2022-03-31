@@ -1,0 +1,49 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Datos estaciones',{
+        category: 'Source',
+        color: '#09d97b',
+        defaults: {
+            range: {value:""},
+            machineid: {value:"All"},
+            output: {value:"HTTP"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "sde.png",
+        label: function() {
+            return this.name||"Datos estaciones";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Datos estaciones">
+    <div class="form-row">
+        <label for="node-input-range"><i class="fa fa-tag"></i> Range</label>
+        <input type="number" id="node-input-range" placeholder="60" min="0" max="1440">
+    </div>
+    <div class="form-row">
+        <label for="node-input-machineid"><i class="fa fa-tag"></i> Machine IDs</label>
+        <select name="machine_id" id="node-input-machineid">
+          <option value="All">All</option>
+          <option value="11">11</option>
+          <option value="22">22</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-output"><i class="fa fa-tag"></i> Output gateway</label>
+        <select name="output_gateway" id="node-input-output">
+          <option value="HTTP">HTTP</option>
+          <option value="POP">POP</option>
+          <option value="SMTP">SMTP</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="Datos estaciones">
+    <p>A simple node that create a new instance of source fog-in-the-loop component.</p>
+    <p>This kind of source will connect with the eXist database and will get data of machines from it.</p>
+    <p>You will have to choose some options:</p>
+    <p>     Firstly, the time range , in minutes.</p>
+    <p>     Secondly, the id of the machine. You can choose all machines or one.</p>
+    <p>     Thirdly, the protocol to communicate and send the data to the other components.</p>
+</script>

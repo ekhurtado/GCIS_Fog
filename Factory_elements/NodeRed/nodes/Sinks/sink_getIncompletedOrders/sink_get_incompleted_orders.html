@@ -1,0 +1,23 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Incompleted Orders',{
+        category: 'Sink',
+        color: '#dba00b',
+        defaults: {
+            endpoint: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "get.png",
+        label: function() {
+            return this.name||"Get Incompleted Orders";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Incompleted Orders">
+</script>
+
+<script type="text/html" data-help-name="Incompleted Orders">
+    <p>A simple node that create a new instance of sink fog-in-the-loop component.</p>
+    <p>This type of sink will get all incompleted orders.</p>
+</script>

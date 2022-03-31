@@ -1,0 +1,23 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Build',{
+        category: 'GCIS',
+        color: '#bdbdbd',
+        defaults: {
+        },
+        inputs:1,
+        outputs:1,
+        inputLabels: "Last component input",
+        outputLabels: "Output with definition",
+        icon: "build.png",
+        label: function() {
+            return this.name||"Build";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Build">
+</script>
+
+<script type="text/html" data-help-name="Build">
+    <p>A simple node that build the fog-in-the-loop application that is defined in the flow.</p>
+</script>

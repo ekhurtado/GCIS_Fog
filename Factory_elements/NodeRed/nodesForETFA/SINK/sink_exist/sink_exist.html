@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Sink eXist',{
+        category: 'sink',
+        color: '#08bd08',
+        defaults: {
+            function: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        inputLabels: "DataType of inPort is for eXist",
+        icon: "sink.png",
+        label: function() {
+            return this.name||"Sink eXist";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Sink eXist">
+    <div class="form-row">
+        <label for="node-input-function"><i class="fa fa-tag"></i> Functions</label>
+        <select name="function" id="node-input-function">
+          <option value="storeAssemblyStationData">Assembly station data</option>
+          <option value="storeTransportRobotData">Transport robot data</option>
+          <option value="storeMonitorData">Monitor data</option>
+        </select>
+</script>
+
+<script type="text/html" data-help-name="Sink eXist">
+    <p>A simple node that create a new instance of source component to read with MQTT and send data with MQTT</p>
+</script>

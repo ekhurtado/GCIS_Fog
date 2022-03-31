@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    RED.nodes.registerType('MQTT - MQTT',{
+        category: 'source',
+        color: '#14a7e0',
+        defaults: {
+            function: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "source.png",
+        label: function() {
+            return this.name||"MQTT source MQTT";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="MQTT - MQTT">
+    <div class="form-row">
+        <label for="node-input-function"><i class="fa fa-tag"></i> Functions</label>
+        <select name="function" id="node-input-function">
+          <option value="assemblyStationData">Get data from assembly station</option>
+          <option value="transportRobotData">Get data from transport robot</option>
+          <option value="monitorData">Get data from monitor</option>
+        </select>
+</script>
+
+<script type="text/html" data-help-name="MQTT - MQTT">
+    <p>A simple node that create a new instance of source component to read with MQTT and send data with MQTT</p>
+</script>

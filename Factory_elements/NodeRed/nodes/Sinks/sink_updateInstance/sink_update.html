@@ -1,0 +1,23 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Update instance',{
+        category: 'Sink',
+        color: '#dba00b',
+        defaults: {
+            endpoint: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "sink.png",
+        label: function() {
+            return this.name||"Update instance";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Update instance">
+</script>
+
+<script type="text/html" data-help-name="Update instance">
+    <p>A simple node that create a new instance of sink fog-in-the-loop component.</p>
+    <p>This type of sink will update a product instance XML data with the data come from the plant.</p>
+</script>

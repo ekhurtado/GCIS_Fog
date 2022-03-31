@@ -1,0 +1,33 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Notify operator event',{
+        category: 'events',
+        color: '#f01707',
+        defaults: {
+            name: {value:""},
+            topic: {value:""},
+            sink: {value:""},
+            output: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        inputLabels: "DataType of inPort is TStation",
+        icon: "event.png",
+        label: function() {
+            return this.name||"Notify operator";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Notify operator event">
+    <div class="form-row">
+        <label for="node-input-output"><i class="fa fa-tag"></i> Functions</label>
+        <select name="output_gateway" id="node-input-output">
+          <option value="getDataFromAssemblyStation">Calculate OEE</option>
+          <option value="getDataFromTransportRobot">Calculate performance</option>
+          <option value="getDataFromMonitor">Get data from monitor</option>
+        </select>
+</script>
+
+<script type="text/html" data-help-name="Notify operator event">
+    <p>A simple node that create a new instance of source component to read with MQTT and send data with HTTP</p>
+</script>

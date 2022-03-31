@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    RED.nodes.registerType('MQTT',{
+        category: 'Source',
+        color: '#09d97b',
+        defaults: {
+            output: {value:"HTTP"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "source.png",
+        label: function() {
+            return this.name||"MQTT";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="MQTT">
+    <div class="form-row">
+        <label for="node-input-output"><i class="fa fa-tag"></i> Protocol</label>
+        <select name="output_gateway" id="node-input-output">
+          <option value="HTTP">HTTP</option>
+          <option value="POP">POP</option>
+          <option value="SMTP">SMTP</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="MQTT">
+    <p>A simple node that create a new instance of source fog-in-the-loop component.</p>
+    <p>This kind of source will connect with the MQTT Broker and will get data from it.</p>
+    <p>You will have to choose the protocol to communicate and send the data to the other components.</p>
+</script>
