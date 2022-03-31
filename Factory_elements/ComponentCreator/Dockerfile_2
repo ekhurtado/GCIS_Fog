@@ -1,0 +1,8 @@
+FROM tomcat:jdk8-openjdk
+
+WORKDIR /
+
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
+

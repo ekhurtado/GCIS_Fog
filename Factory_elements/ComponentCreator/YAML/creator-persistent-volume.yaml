@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: component-creator
+  labels:
+    type: local
+spec:
+  storageClassName: component-creator
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/creator/"

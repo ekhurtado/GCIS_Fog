@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+
+  component-creator:
+    build:
+      context: .
+      dockerfile: Dockerfile_CC
+    image: gcr.io/clusterekaitz/pruebas-gcis:component-creator
+    container_name: component-creator
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /creator:/creator
+

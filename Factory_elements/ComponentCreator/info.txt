@@ -1,0 +1,58 @@
+1. Primero, hay que instalar Docker dentro del contenedor
+
+2. Para que pueda crear imagenes, hay que añadirle el volumen de /var/run/docker.sock
+
+3. Una vez podamos crear imagenes, debemos instalar GCloud para subir las imagenes al repositorio
+
+4. Para ello, hay que instalar gcloud dentro del contenedor
+
+5. Como hay que autentificarse automaticamente (por si el contenedor se cae), tendremos que creas un JSON con las credenciales (https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-console)
+
+	5.1 Seleccionamos el proyecto
+	5.2 Creamos una cuenta de acceso si no tenemos
+	5.3 Vamos a "Administrar claves" y creamos una nueva clave, de la cual se creará el archivo JSON
+
+
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+UTILIZANDO APIs
+
+Para crear y subir las imagenes Docker utilizaremos Docker Engine API. Utilizaremos la API de HTTP
+	-URL: https://docs.docker.com/engine/api/sdk/examples/
+-------------------------------------------------------------------
+
+1. Para crear las imagenes Docker
+	- URL: https://docs.docker.com/engine/api/v1.41/#operation/ImageBuild
+	- Command: curl --unix-socket /var/run/docker.sock -H "Content-Type: application/x-tar" --data-binary '@Dockerfile2.tar.gz' -X POST "http://localhost/v1.41/build?t=gcr.io/clusterekaitz/pruebas-gcis:nuevo2&dockerfile=Dockerfile_2"
+
+		*: Habrá que pasarle un archivo comprimido (Dockerfile.tar.gz) y especificarle el nombre del archivo Dockerfile dentro del tar (Dockerfile_2)
+
+	Pasos a seguir:
+
+		1. Crear el archivo Dockerfile con la definicion dentro (si se llama "Dockerfile" no habrá que especificar nada en la URL)
+		2. Comprirlo en un archivo tar (> tar -cvf Dockerfile.tar.gz <nombre del archivo Dockerfile>)
+		3. Mandar el mensaje HTTP para crear la imagen (> curl --unix ...). En los parametros del URL irá el tag de la imagen, para luego poder subirla al repositorio
+			> curl --unix-socket /var/run/docker.sock -H "Content-Type: application/x-tar" --data-binary '@<nombre del archivo comprimido>' -X POST "http://localhost/v1.41/build?t=<nombre>:<tag>&dockerfile=<nombre del archivo Dockerfile>"
+
+-------------------------------------------------------------------
+
+2. Para subir las imagenes al repositorio online (Google Cloud Registry) utilizaremos la misma API
+	- URL: https://docs.docker.com/engine/api/v1.41/#operation/ImageHistory
+	- Command: curl --unix-socket /var/run/docker.sock -H "X-Registry-Auth: '{
+  "type": "service_account",
+  "project_id": "clusterekaitz",
+  "private_key_id": "007155af0d571592e74b31436fb76a431b9dcc7b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n
+  MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC0QLFikaWoDhZ0\nBoWkNzAL6AtBi5j4D6+DE+LYZNi9NpiBBYbXH/ttAwGsjX7J9Ow6FNhASabhL5Fs\nBkih7XB5IYVd4AqGhbTJtEdGXyBDN5R/xIahO5kIDP8PGBYx4DtQtdZvBDN1BgBl\nafjclnUGjNPbtDVsaVHj1Y6cU66YLL3QVDXHgAK7/QQRFbYyHZtyZd8uoR6jd8Ow\n/GPxyVclSueldJC657ArpR4SNCoLwVRi2hR5f2DJCejthXKeXozWBmM3GmsVp51P\ndsvq+kBHTgyl0AlH+U8C2NSUCbwCg4gwQ7w9IqPJlQfhfDUQyleXlwgAls2htxOi\nEy+K87URAgMBAAECggEADPRRS0o4Y5mPl4sYc7Lbqx9kH7POrJVEAeGd/ftRcFfK\nIgupozBTO4RpzGLm59DIYWw6FnS0n55xjxfshGayHKKCGTsOxpg5Y/2m2bHgebQ2\n4e/X1SKZXvDAK++JONBqsuQ+ov/kStbBlIhHMGNHyc65MyMCa+Yt0nf4pdeFxr3h\njUJuwjJuxu/qTbE0bXBEpVDehbX8PwZWfCkbUvxm/KyGIItXyDq/htQ0iNttawov\nIuc1dxbj+qVCWt38KM9WntWKdt1gfKTu+22Ctx1ccVUQewIo4LcZcEf7YYeV1MwD\nu5p/N04k+BnqB+l63EuLD0B5yXCSnlTo4Mwv50zPuQKBgQDZqCjRg3KcMXGLPFQI\n3Yy459wSP1Sv3VZ3zUfsEZj6hijmcY4B6NNC7EkqLMEjq7zGO6vB0UxiWRwdIqfP\ng/RVc0CPc9hINu8gIuQXeaMnuW+TJFL/KN0bMp/3EZj03S7WMAK6nFq/TRD8aZzA\nFWTVHMeN/sog+6+Xfb3DyM4hWwKBgQDUAbBWNWvP6RSXEocUIVQBb5sX6Nt9nJKz\nyMSxe/pWQhuoAbUwKXMfOGqpl9YKQ1dg+z7TdMMv7FQkRXdmE5gDFuNTCLq5pHyB\nEV68c/HqbPVQFdX3YHFrLYW87LOOtQwNOaM7JMiHo5n++gTrDDlNR6K+D5XiTLMQ\nbmmaGDPDAwKBgQC3jVx+839fwUKjzQiBQXU/KikpKkdc2CfneDLDHkQIYcN0Mycy\n7QncUi+RZZSrZFUaR5AdL0hfWA6hc2xZUEppFXzIfUVUAR+/1izMr0OsaHFzgRqN\nHAT6vsKwNSLsvOqWrn5eqSTOV0uP0fDi/CfAoTiYwtnq3tXBx8SUq29KKQKBgCX3\n23XFAXbtvkNEDS78vQe4ziTdDhoT5W4PQbKrimzSUBOpoqJqefSYbPnMeIfEAa0b\nsee63I4DnBoW2shMMAg1nCatxIskuyt+SeIkPaoHM3PRRU2VVxqjv3TTS2D+aZcg\nwGwCLWulUBoK+sCBou2FK88wCV7K77K8o2r2dKazAoGBAKWIvTHuHF2S3od1Obk1\n6Rh0gc5TltXGduxWH5r7ozESmRxmWRhdn+47jpj6rwIGYJfcox3k5wJLQSYVvLl1\n2DC1v6kvbHBBL36ZqYJZKhD8BLdOFgAg8zJ7LB5j+LTiTBjhmlu/UdmDo1CMQbcs\nE/uuTGqjWQM54a/vpl/U7bav\n-----END PRIVATE KEY-----\n",
+  "client_email": "ekaitz@clusterekaitz.iam.gserviceaccount.com",
+  "client_id": "101315892296646328536",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ekaitz%40clusterekaitz.iam.gserviceaccount.com"
+}'" -X POST http://localhost/v1.41/images/gcr.io/clusterekaitz/pruebas-gcis:nuevo2/push
+
+

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: component-creator
+  name: component-creator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: component-creator
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: component-creator
+    spec:
+      containers:
+      - image: gcr.io/clusterekaitz/pruebas-gcis:component-creator
+        imagePullPolicy: ""
+        name: component-creator
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: component-creator-claim0
+        - mountPath: /creator
+          name: component-creator-claim1
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: component-creator-claim0
+        persistentVolumeClaim:
+          claimName: component-creator-claim0
+      - name: component-creator-claim1
+        persistentVolumeClaim:
+          claimName: component-creator-claim1
+status: {}
