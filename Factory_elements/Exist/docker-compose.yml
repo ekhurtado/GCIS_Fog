@@ -1,0 +1,25 @@
+version: "3.6"
+
+services:
+
+  exist:
+    image: existdb/existdb:latest
+    container_name: existdb
+    ports:
+      - 8080:8080
+      - 8443:8443
+    volumes:
+      - type: volume
+        source: exist-data
+        target: exist/data
+      - type: volume
+        source: exist-config
+        target: exist/config
+
+volumes:
+  data:
+    driver: labels
+    name: exist-data
+  config:
+    driver: local
+    name: exist-config
