@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+
+  planner:
+    build:
+      context: .
+      dockerfile: Dockerfile_Planner
+    image: gcr.io/clusterekaitz/pruebas-gcis:planner
+    container_name: planner
+    ports:
+      - 8080:8080
+
+
