@@ -1,0 +1,17 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get -y install python3
+
+RUN apt-get -y install python3-pip
+
+COPY subscriber.py /
+
+COPY requirements.txt /
+
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+ENV CLIENT_NAME=source
+
+ENV TOPIC=#
+
+ENV SINK_NAME=sink01

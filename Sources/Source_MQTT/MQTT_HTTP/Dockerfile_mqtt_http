@@ -1,0 +1,13 @@
+FROM gcr.io/clusterekaitz/source:mqtt-base
+
+COPY mqtt2http.py /
+
+RUN pip3 install requests
+
+ENV OUTPUT_GW=mqtt2http.py
+
+ENV FUNCTION=getDataFrom
+
+ENV OUTPUT=sinkName
+
+#CMD python3 subscriber.py

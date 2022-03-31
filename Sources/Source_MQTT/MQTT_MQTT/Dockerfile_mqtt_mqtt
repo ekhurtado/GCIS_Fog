@@ -1,0 +1,9 @@
+FROM gcr.io/clusterekaitz/appfil1:source_base
+
+COPY mqtt2mqtt.py /
+
+RUN pip3 install requests
+
+ENV OUTPUT_GW=mqtt2mqtt.py
+
+#CMD python3 subscriber.py

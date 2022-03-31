@@ -1,0 +1,10 @@
+version: "2"
+
+services:
+
+  source-mqtt-mqtt:
+    build:
+      context: .
+      dockerfile: Dockerfile_mqtt_mqtt
+    image: gcr.io/clusterekaitz/source:mqtt-mqtt
+    container_name: source-mqtt-mqtt

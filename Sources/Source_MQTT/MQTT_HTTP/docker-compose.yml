@@ -1,0 +1,10 @@
+version: "2"
+
+services:
+
+  source-mqtt-http:
+    build:
+      context: .
+      dockerfile: Dockerfile_mqtt_http
+    image: gcr.io/clusterekaitz/source:mqtt-http
+    container_name: source-mqtt-http
