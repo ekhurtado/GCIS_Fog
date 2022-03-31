@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+
+
+  influx-db:
+    image: influxdb
+    container_name: influx-db
+    environment:
+      - PRE_CREATE_DB=gcis
+    ports:
+      - 8083:8083
+      - 8086:8086
+    volumes:
+      - influx-data:/root/.influxdbv2
+
+
+volumes:
+  influx-data:
+      driver: local
+      name: influx-data
+      

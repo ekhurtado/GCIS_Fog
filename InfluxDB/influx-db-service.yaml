@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: influx-db
+  name: influx-db
+spec:
+  type: NodePort
+  ports:
+  - name: "8083"
+    port: 8083
+    targetPort: 8083
+    nodePort: 30083
+  - name: "8086"
+    port: 8086
+    targetPort: 8086
+    nodePort: 30086
+  selector:
+    io.kompose.service: influx-db
+status:
+  loadBalancer: {}
