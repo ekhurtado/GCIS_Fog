@@ -1,0 +1,2100 @@
+1618472359: mosquitto version 2.0.10 starting
+1618472359: Config loaded from /mosquitto/config/mosquitto.conf.
+1618472359: Starting in local only mode. Connections will only be possible from clients running on this machine.
+1618472359: Create a configuration file which defines a listener to allow remote access.
+1618472359: For more details see https://mosquitto.org/documentation/authentication-methods/
+1618472359: Opening ipv4 listen socket on port 1883.
+1618472359: Opening ipv6 listen socket on port 1883.
+1618472359: Error: Address not available
+1618472359: mosquitto version 2.0.10 running
+1618472721: mosquitto version 2.0.10 terminating
+1618472721: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618472932: mosquitto version 2.0.10 starting
+1618472932: Config loaded from /mosquitto/config/mosquitto.conf.
+1618472932: Starting in local only mode. Connections will only be possible from clients running on this machine.
+1618472932: Create a configuration file which defines a listener to allow remote access.
+1618472932: For more details see https://mosquitto.org/documentation/authentication-methods/
+1618472932: Opening ipv4 listen socket on port 1883.
+1618472932: Opening ipv6 listen socket on port 1883.
+1618472932: Error: Address not available
+1618472932: mosquitto version 2.0.10 running
+1618473242: mosquitto version 2.0.10 terminating
+1618473242: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618473351: mosquitto version 2.0.10 starting
+1618473351: Config loaded from /mosquitto/config/mosquitto.conf.
+1618473351: Starting in local only mode. Connections will only be possible from clients running on this machine.
+1618473351: Create a configuration file which defines a listener to allow remote access.
+1618473351: For more details see https://mosquitto.org/documentation/authentication-methods/
+1618473351: Opening ipv4 listen socket on port 1883.
+1618473351: Opening ipv6 listen socket on port 1883.
+1618473351: Error: Address not available
+1618473351: mosquitto version 2.0.10 running
+1618473411: mosquitto version 2.0.10 terminating
+1618473411: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618473453: mosquitto version 2.0.10 starting
+1618473453: Config loaded from /mosquitto/config/mosquitto.conf.
+1618473453: Starting in local only mode. Connections will only be possible from clients running on this machine.
+1618473453: Create a configuration file which defines a listener to allow remote access.
+1618473453: For more details see https://mosquitto.org/documentation/authentication-methods/
+1618473453: Opening ipv4 listen socket on port 1883.
+1618473453: Opening ipv6 listen socket on port 1883.
+1618473453: Error: Address not available
+1618473453: mosquitto version 2.0.10 running
+1618473771: mosquitto version 2.0.10 terminating
+1618473771: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618473934: mosquitto version 2.0.10 starting
+1618473934: Config loaded from /mosquitto/config/mosquitto.conf.
+1618473934: Starting in local only mode. Connections will only be possible from clients running on this machine.
+1618473934: Create a configuration file which defines a listener to allow remote access.
+1618473934: For more details see https://mosquitto.org/documentation/authentication-methods/
+1618473934: Opening ipv4 listen socket on port 1883.
+1618473934: Opening ipv6 listen socket on port 1883.
+1618473934: Error: Address not available
+1618473934: mosquitto version 2.0.10 running
+1618474113: mosquitto version 2.0.10 terminating
+1618474113: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618474140: mosquitto version 2.0.10 starting
+1618474140: Config loaded from /mosquitto/config/mosquitto.conf.
+1618474140: Opening ipv4 listen socket on port 1883.
+1618474140: Opening ipv6 listen socket on port 1883.
+1618474140: mosquitto version 2.0.10 running
+1618474147: New connection from 10.244.1.0:50156 on port 1883.
+1618474147: New client connected from 10.244.1.0:50156 as mosq-RJHq5XD8SCFz6P3FM3 (p2, c1, k60, u'admin').
+1618474147: Client mosq-RJHq5XD8SCFz6P3FM3 disconnected.
+1618475100: New connection from 10.244.2.242:54989 on port 1883.
+1618475100: New client connected from 10.244.2.242:54989 as source (p2, c1, k60, u'admin').
+1618475941: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618476931: Client source closed its connection.
+1618476946: New connection from 10.244.1.0:18140 on port 1883.
+1618476946: New client connected from 10.244.1.0:18140 as mosq-eMHT5ydBOU9Rxl70g8 (p2, c1, k60, u'admin').
+1618476946: Client mosq-eMHT5ydBOU9Rxl70g8 disconnected.
+1618477712: New connection from 10.244.1.0:62946 on port 1883.
+1618477712: New client connected from 10.244.1.0:62946 as mosq-8wEat79tmrB2bTjqEm (p2, c1, k60, u'admin').
+1618477712: Client mosq-8wEat79tmrB2bTjqEm disconnected.
+1618477715: New connection from 10.244.1.0:43527 on port 1883.
+1618477715: New client connected from 10.244.1.0:43527 as mosq-lG6MWlobLBGYAsDgvY (p2, c1, k60, u'admin').
+1618477715: Client mosq-lG6MWlobLBGYAsDgvY disconnected.
+1618477739: New connection from 10.244.2.243:44835 on port 1883.
+1618477739: New client connected from 10.244.2.243:44835 as source (p2, c1, k60, u'admin').
+1618477742: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618477771: New connection from 10.244.1.0:37146 on port 1883.
+1618477771: New client connected from 10.244.1.0:37146 as mosq-GaZyx6J0V1lBJX3df9 (p2, c1, k60, u'admin').
+1618477771: Client mosq-GaZyx6J0V1lBJX3df9 disconnected.
+1618479543: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618479992: New connection from 10.244.1.0:46040 on port 1883.
+1618479992: New client connected from 10.244.1.0:46040 as mqtt_a3f63b.d87189c8 (p2, c1, k60, u'admin').
+1618480096: Client mqtt_a3f63b.d87189c8 disconnected.
+1618480096: New connection from 10.244.1.0:1727 on port 1883.
+1618480096: New client connected from 10.244.1.0:1727 as mqtt_1fa0c899.c86017 (p2, c1, k60, u'admin').
+1618480119: Client mqtt_1fa0c899.c86017 disconnected.
+1618480119: New connection from 10.244.1.0:36436 on port 1883.
+1618480119: New client connected from 10.244.1.0:36436 as mqtt_7d7efdf0.6b6d94 (p2, c1, k60, u'admin').
+1618480153: New connection from 10.244.1.0:45200 on port 1883.
+1618480153: New client connected from 10.244.1.0:45200 as mosq-JNv5kWwdsU2VPFaUwT (p2, c1, k60, u'admin').
+1618480153: Client mosq-JNv5kWwdsU2VPFaUwT disconnected.
+1618481136: Client mqtt_7d7efdf0.6b6d94 disconnected.
+1618481136: New connection from 10.244.1.0:16572 on port 1883.
+1618481136: New client connected from 10.244.1.0:16572 as mqtt_449a96b8.3e1b38 (p2, c1, k60, u'admin').
+1618481169: Client mqtt_449a96b8.3e1b38 disconnected.
+1618481169: New connection from 10.244.1.0:64173 on port 1883.
+1618481169: New client connected from 10.244.1.0:64173 as mqtt_fe0744ef.04f478 (p2, c1, k60, u'admin').
+1618481235: Client mqtt_fe0744ef.04f478 disconnected.
+1618481235: New connection from 10.244.1.0:60861 on port 1883.
+1618481235: New client connected from 10.244.1.0:60861 as mqtt_8bb21bc2.e515c8 (p2, c1, k60, u'admin').
+1618481247: Client mqtt_8bb21bc2.e515c8 disconnected.
+1618481247: New connection from 10.244.1.0:35990 on port 1883.
+1618481247: New client connected from 10.244.1.0:35990 as mqtt_d9510e2f.108d5 (p2, c1, k60, u'admin').
+1618481272: Client mqtt_d9510e2f.108d5 disconnected.
+1618481272: New connection from 10.244.1.0:7144 on port 1883.
+1618481272: New client connected from 10.244.1.0:7144 as mqtt_d628503f.f3f4f (p2, c1, k60, u'admin').
+1618481344: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618481401: Client mqtt_d628503f.f3f4f disconnected.
+1618481401: New connection from 10.244.1.0:64635 on port 1883.
+1618481401: New client connected from 10.244.1.0:64635 as mqtt_8571628f.698e3 (p2, c1, k60, u'admin').
+1618481419: Client mqtt_8571628f.698e3 disconnected.
+1618481419: New connection from 10.244.1.0:1394 on port 1883.
+1618481419: New client connected from 10.244.1.0:1394 as mqtt_4c4c8625.912328 (p2, c1, k60, u'admin').
+1618481429: Client mqtt_4c4c8625.912328 disconnected.
+1618481429: New connection from 10.244.1.0:20639 on port 1883.
+1618481429: New client connected from 10.244.1.0:20639 as mqtt_12bfa4dd.bd2d2b (p2, c1, k60, u'admin').
+1618481455: Client mqtt_12bfa4dd.bd2d2b disconnected.
+1618481455: New connection from 10.244.1.0:23473 on port 1883.
+1618481455: New client connected from 10.244.1.0:23473 as mqtt_c81a8166.3586e (p2, c1, k60, u'admin').
+1618481472: Client mqtt_c81a8166.3586e disconnected.
+1618481472: New connection from 10.244.1.0:10493 on port 1883.
+1618481472: New client connected from 10.244.1.0:10493 as mqtt_72d42fad.6cc5f (p2, c1, k60, u'admin').
+1618481536: Client mqtt_72d42fad.6cc5f disconnected.
+1618481536: New connection from 10.244.1.0:18031 on port 1883.
+1618481536: New client connected from 10.244.1.0:18031 as mqtt_353c19e3.c197a6 (p2, c1, k60, u'admin').
+1618481628: Client mqtt_353c19e3.c197a6 disconnected.
+1618481628: New connection from 10.244.1.0:40606 on port 1883.
+1618481628: New client connected from 10.244.1.0:40606 as mqtt_d8248707.900458 (p2, c1, k60, u'admin').
+1618481647: Client mqtt_d8248707.900458 disconnected.
+1618481647: New connection from 10.244.1.0:64844 on port 1883.
+1618481647: New client connected from 10.244.1.0:64844 as mqtt_e692d8e1.88a428 (p2, c1, k60, u'admin').
+1618482322: New connection from 10.244.1.0:24805 on port 1883.
+1618482322: Client mqtt_e692d8e1.88a428 already connected, closing old connection.
+1618482322: New client connected from 10.244.1.0:24805 as mqtt_e692d8e1.88a428 (p2, c1, k60, u'admin').
+1618482377: Client mqtt_e692d8e1.88a428 disconnected.
+1618483145: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618484946: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618486747: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618488455: mosquitto version 2.0.10 terminating
+1618488455: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618558060: mosquitto version 2.0.10 starting
+1618558060: Config loaded from /mosquitto/config/mosquitto.conf.
+1618558060: Opening ipv4 listen socket on port 1883.
+1618558060: Opening ipv6 listen socket on port 1883.
+1618558060: mosquitto version 2.0.10 running
+1618558071: New connection from 10.244.2.245:51335 on port 1883.
+1618558071: New client connected from 10.244.2.245:51335 as source (p2, c1, k60, u'admin').
+1618559860: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618561661: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618563462: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618565263: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618565374: mosquitto version 2.0.10 terminating
+1618565374: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618565502: mosquitto version 2.0.10 starting
+1618565502: Config loaded from /mosquitto/config/mosquitto.conf.
+1618565502: Opening ipv4 listen socket on port 1883.
+1618565502: Opening ipv6 listen socket on port 1883.
+1618565502: mosquitto version 2.0.10 running
+1618565674: New connection from 10.244.2.6:38311 on port 1883.
+1618565674: New client connected from 10.244.2.6:38311 as source (p2, c1, k60, u'admin').
+1618567302: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618569103: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618569574: mosquitto version 2.0.10 terminating
+1618569574: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618819872: mosquitto version 2.0.10 starting
+1618819872: Config loaded from /mosquitto/config/mosquitto.conf.
+1618819872: Opening ipv4 listen socket on port 1883.
+1618819872: Opening ipv6 listen socket on port 1883.
+1618819872: mosquitto version 2.0.10 running
+1618819897: New connection from 10.244.2.16:44901 on port 1883.
+1618819897: New client connected from 10.244.2.16:44901 as source (p2, c1, k60, u'admin').
+1618820676: mosquitto version 2.0.10 terminating
+1618820676: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618820822: mosquitto version 2.0.10 starting
+1618820822: Config loaded from /mosquitto/config/mosquitto.conf.
+1618820822: Opening ipv4 listen socket on port 1883.
+1618820822: Opening ipv6 listen socket on port 1883.
+1618820822: mosquitto version 2.0.10 running
+1618820836: New connection from 10.244.2.20:33949 on port 1883.
+1618820836: New client connected from 10.244.2.20:33949 as source (p2, c1, k60, u'admin').
+1618822622: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618824423: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618825385: mosquitto version 2.0.10 terminating
+1618825385: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618825511: mosquitto version 2.0.10 starting
+1618825511: Config loaded from /mosquitto/config/mosquitto.conf.
+1618825511: Opening ipv4 listen socket on port 1883.
+1618825511: Opening ipv6 listen socket on port 1883.
+1618825511: mosquitto version 2.0.10 running
+1618825525: New connection from 10.244.2.30:39331 on port 1883.
+1618825525: New client connected from 10.244.2.30:39331 as source (p2, c1, k60, u'admin').
+1618827313: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618829114: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618830915: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618831868: mosquitto version 2.0.10 terminating
+1618831868: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618904680: mosquitto version 2.0.10 starting
+1618904680: Config loaded from /mosquitto/config/mosquitto.conf.
+1618904680: Opening ipv4 listen socket on port 1883.
+1618904680: Opening ipv6 listen socket on port 1883.
+1618904680: mosquitto version 2.0.10 running
+1618904682: New connection from 10.244.2.37:45637 on port 1883.
+1618904682: New client connected from 10.244.2.37:45637 as source (p2, c1, k60, u'admin').
+1618906481: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618908282: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618910083: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618911884: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618913685: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618915486: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618917287: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618919088: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618919513: mosquitto version 2.0.10 terminating
+1618919513: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618990494: mosquitto version 2.0.10 starting
+1618990494: Config loaded from /mosquitto/config/mosquitto.conf.
+1618990494: Opening ipv4 listen socket on port 1883.
+1618990494: Opening ipv6 listen socket on port 1883.
+1618990494: mosquitto version 2.0.10 running
+1618990522: New connection from 10.244.2.40:55477 on port 1883.
+1618990522: New client connected from 10.244.2.40:55477 as source (p2, c1, k60, u'admin').
+1618992295: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618994096: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618995897: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618997698: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1618999499: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619001300: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619003101: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619004902: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619006703: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619008504: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619009488: mosquitto version 2.0.10 terminating
+1619009488: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619080606: mosquitto version 2.0.10 starting
+1619080606: Config loaded from /mosquitto/config/mosquitto.conf.
+1619080606: Opening ipv4 listen socket on port 1883.
+1619080606: Opening ipv6 listen socket on port 1883.
+1619080606: mosquitto version 2.0.10 running
+1619080617: New connection from 10.244.2.45:55925 on port 1883.
+1619080617: New client connected from 10.244.2.45:55925 as source (p2, c1, k60, u'admin').
+1619082406: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619084207: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619086008: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619087809: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619089610: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619089731: mosquitto version 2.0.10 terminating
+1619089731: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619162484: mosquitto version 2.0.10 starting
+1619162484: Config loaded from /mosquitto/config/mosquitto.conf.
+1619162484: Opening ipv4 listen socket on port 1883.
+1619162484: Opening ipv6 listen socket on port 1883.
+1619162484: mosquitto version 2.0.10 running
+1619162494: New connection from 10.244.2.53:48941 on port 1883.
+1619162494: New client connected from 10.244.2.53:48941 as source (p2, c1, k60, u'admin').
+1619164285: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619166085: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619167886: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619169688: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619171488: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619173289: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619175090: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619176891: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619178693: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619179625: New connection from 10.244.1.0:30613 on port 1883.
+1619179625: New client connected from 10.244.1.0:30613 as mosq-bNAtYMXNa3TqSHgIBZ (p2, c1, k60, u'admin').
+1619179625: Client mosq-bNAtYMXNa3TqSHgIBZ disconnected.
+1619180493: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619180505: mosquitto version 2.0.10 terminating
+1619180505: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619422112: mosquitto version 2.0.10 starting
+1619422112: Config loaded from /mosquitto/config/mosquitto.conf.
+1619422112: Opening ipv4 listen socket on port 1883.
+1619422112: Opening ipv6 listen socket on port 1883.
+1619422112: mosquitto version 2.0.10 running
+1619422124: New connection from 10.244.2.67:60367 on port 1883.
+1619422124: New client connected from 10.244.2.67:60367 as source (p2, c1, k60, u'admin').
+1619423913: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619425714: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619427515: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619429316: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619431117: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619432918: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619434339: mosquitto version 2.0.10 terminating
+1619434339: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619509132: mosquitto version 2.0.10 starting
+1619509132: Config loaded from /mosquitto/config/mosquitto.conf.
+1619509132: Opening ipv4 listen socket on port 1883.
+1619509132: Opening ipv6 listen socket on port 1883.
+1619509132: mosquitto version 2.0.10 running
+1619509159: New connection from 10.244.2.72:36673 on port 1883.
+1619509159: New client connected from 10.244.2.72:36673 as source (p2, c1, k60, u'admin').
+1619510933: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619512734: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619514535: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619516336: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619518137: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619519938: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619521739: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619523540: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619524299: mosquitto version 2.0.10 terminating
+1619524299: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619597838: mosquitto version 2.0.10 starting
+1619597838: Config loaded from /mosquitto/config/mosquitto.conf.
+1619597838: Opening ipv4 listen socket on port 1883.
+1619597838: Opening ipv6 listen socket on port 1883.
+1619597838: mosquitto version 2.0.10 running
+1619597838: New connection from 10.244.2.77:47269 on port 1883.
+1619597838: New client connected from 10.244.2.77:47269 as source (p2, c1, k60, u'admin').
+1619599638: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619601439: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619603240: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619605041: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619606842: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619608643: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619609742: mosquitto version 2.0.10 terminating
+1619609742: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619682558: mosquitto version 2.0.10 starting
+1619682558: Config loaded from /mosquitto/config/mosquitto.conf.
+1619682558: Opening ipv4 listen socket on port 1883.
+1619682558: Opening ipv6 listen socket on port 1883.
+1619682558: mosquitto version 2.0.10 running
+1619682560: New connection from 10.244.2.89:41913 on port 1883.
+1619682560: New client connected from 10.244.2.89:41913 as source (p2, c1, k60, u'admin').
+1619684359: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619686160: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619687961: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619689011: Client source closed its connection.
+1619689136: New connection from 10.244.2.94:37081 on port 1883.
+1619689136: New client connected from 10.244.2.94:37081 as source (p2, c1, k60, u'admin').
+1619689254: New connection from 10.244.1.0:55415 on port 1883.
+1619689254: New client connected from 10.244.1.0:55415 as mosq-ivF1JiXtJuVe9Yxsc5 (p2, c1, k60, u'admin').
+1619689254: Client mosq-ivF1JiXtJuVe9Yxsc5 disconnected.
+1619689762: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619691563: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619693364: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619694913: mosquitto version 2.0.10 terminating
+1619694913: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619768125: mosquitto version 2.0.10 starting
+1619768125: Config loaded from /mosquitto/config/mosquitto.conf.
+1619768125: Opening ipv4 listen socket on port 1883.
+1619768125: Opening ipv6 listen socket on port 1883.
+1619768125: mosquitto version 2.0.10 running
+1619768142: New connection from 10.244.2.99:37469 on port 1883.
+1619768142: New client connected from 10.244.2.99:37469 as source (p2, c1, k60, u'admin').
+1619769925: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619770007: Client source closed its connection.
+1619771726: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619773527: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619775328: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619777129: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619778930: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619780731: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1619781570: mosquitto version 2.0.10 terminating
+1619781570: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620028021: mosquitto version 2.0.10 starting
+1620028021: Config loaded from /mosquitto/config/mosquitto.conf.
+1620028021: Opening ipv4 listen socket on port 1883.
+1620028021: Opening ipv6 listen socket on port 1883.
+1620028021: mosquitto version 2.0.10 running
+1620029822: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620031623: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620033424: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620035225: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620037026: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620038827: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620040465: mosquitto version 2.0.10 terminating
+1620040465: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620113337: mosquitto version 2.0.10 starting
+1620113337: Config loaded from /mosquitto/config/mosquitto.conf.
+1620113337: Opening ipv4 listen socket on port 1883.
+1620113337: Opening ipv6 listen socket on port 1883.
+1620113337: mosquitto version 2.0.10 running
+1620115137: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620116938: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620118739: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620120540: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620122341: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620124142: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620125943: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620126290: New connection from 10.244.2.130:48585 on port 1883.
+1620126290: New client connected from 10.244.2.130:48585 as source (p2, c1, k60, u'admin').
+1620126582: Client source closed its connection.
+1620126703: New connection from 10.244.2.131:39911 on port 1883.
+1620126703: New client connected from 10.244.2.131:39911 as source (p2, c1, k60, u'admin').
+1620127249: Client source closed its connection.
+1620127384: New connection from 10.244.2.132:51795 on port 1883.
+1620127384: New client connected from 10.244.2.132:51795 as source (p2, c1, k60, u'admin').
+1620127621: Client source closed its connection.
+1620127744: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620127761: New connection from 10.244.2.133:56291 on port 1883.
+1620127761: New client connected from 10.244.2.133:56291 as source (p2, c1, k60, u'admin').
+1620128442: Client source closed its connection.
+1620128600: New connection from 10.244.2.134:48209 on port 1883.
+1620128600: New client connected from 10.244.2.134:48209 as source (p2, c1, k60, u'admin').
+1620128657: New connection from 10.244.1.0:11261 on port 1883.
+1620128657: New client connected from 10.244.1.0:11261 as mosq-8dyV00cTBVQJDIskTI (p2, c1, k60, u'admin').
+1620128657: Client mosq-8dyV00cTBVQJDIskTI disconnected.
+1620129445: mosquitto version 2.0.10 terminating
+1620129445: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620209485: mosquitto version 2.0.10 starting
+1620209485: Config loaded from /mosquitto/config/mosquitto.conf.
+1620209485: Opening ipv4 listen socket on port 1883.
+1620209485: Opening ipv6 listen socket on port 1883.
+1620209485: mosquitto version 2.0.10 running
+1620209487: New connection from 10.244.1.70:59563 on port 1883.
+1620209487: New client connected from 10.244.1.70:59563 as source (p2, c1, k60, u'admin').
+1620210198: mosquitto version 2.0.10 terminating
+1620210198: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620211122: mosquitto version 2.0.10 starting
+1620211122: Config loaded from /mosquitto/config/mosquitto.conf.
+1620211122: Opening ipv4 listen socket on port 1883.
+1620211122: Opening ipv6 listen socket on port 1883.
+1620211122: mosquitto version 2.0.10 running
+1620211165: New connection from 10.244.1.70:49581 on port 1883.
+1620211165: New client connected from 10.244.1.70:49581 as source (p2, c1, k60, u'admin').
+1620211171: New connection from 10.244.2.141:33801 on port 1883.
+1620211171: Client source already connected, closing old connection.
+1620211171: New client connected from 10.244.2.141:33801 as source (p2, c1, k60, u'admin').
+1620211172: New connection from 10.244.1.70:44717 on port 1883.
+1620211172: Client source already connected, closing old connection.
+1620211172: New client connected from 10.244.1.70:44717 as source (p2, c1, k60, u'admin').
+1620211173: New connection from 10.244.2.141:55641 on port 1883.
+1620211173: Client source already connected, closing old connection.
+1620211173: New client connected from 10.244.2.141:55641 as source (p2, c1, k60, u'admin').
+1620211174: New connection from 10.244.1.70:41991 on port 1883.
+1620211174: Client source already connected, closing old connection.
+1620211174: New client connected from 10.244.1.70:41991 as source (p2, c1, k60, u'admin').
+1620211175: New connection from 10.244.2.141:49203 on port 1883.
+1620211175: Client source already connected, closing old connection.
+1620211175: New client connected from 10.244.2.141:49203 as source (p2, c1, k60, u'admin').
+1620211176: New connection from 10.244.1.70:49895 on port 1883.
+1620211176: Client source already connected, closing old connection.
+1620211176: New client connected from 10.244.1.70:49895 as source (p2, c1, k60, u'admin').
+1620211177: New connection from 10.244.2.141:53541 on port 1883.
+1620211177: Client source already connected, closing old connection.
+1620211177: New client connected from 10.244.2.141:53541 as source (p2, c1, k60, u'admin').
+1620211178: New connection from 10.244.1.70:55887 on port 1883.
+1620211178: Client source already connected, closing old connection.
+1620211178: New client connected from 10.244.1.70:55887 as source (p2, c1, k60, u'admin').
+1620211179: New connection from 10.244.2.141:54265 on port 1883.
+1620211179: Client source already connected, closing old connection.
+1620211179: New client connected from 10.244.2.141:54265 as source (p2, c1, k60, u'admin').
+1620211180: New connection from 10.244.1.70:33777 on port 1883.
+1620211180: Client source already connected, closing old connection.
+1620211180: New client connected from 10.244.1.70:33777 as source (p2, c1, k60, u'admin').
+1620211181: New connection from 10.244.2.141:49807 on port 1883.
+1620211181: Client source already connected, closing old connection.
+1620211181: New client connected from 10.244.2.141:49807 as source (p2, c1, k60, u'admin').
+1620211182: New connection from 10.244.1.70:48949 on port 1883.
+1620211182: Client source already connected, closing old connection.
+1620211182: New client connected from 10.244.1.70:48949 as source (p2, c1, k60, u'admin').
+1620211183: New connection from 10.244.2.141:60567 on port 1883.
+1620211183: Client source already connected, closing old connection.
+1620211183: New client connected from 10.244.2.141:60567 as source (p2, c1, k60, u'admin').
+1620211184: New connection from 10.244.1.70:56569 on port 1883.
+1620211184: Client source already connected, closing old connection.
+1620211184: New client connected from 10.244.1.70:56569 as source (p2, c1, k60, u'admin').
+1620211185: New connection from 10.244.2.141:52831 on port 1883.
+1620211185: Client source already connected, closing old connection.
+1620211185: New client connected from 10.244.2.141:52831 as source (p2, c1, k60, u'admin').
+1620211186: New connection from 10.244.1.70:35329 on port 1883.
+1620211186: Client source already connected, closing old connection.
+1620211186: New client connected from 10.244.1.70:35329 as source (p2, c1, k60, u'admin').
+1620211187: New connection from 10.244.2.141:44839 on port 1883.
+1620211187: Client source already connected, closing old connection.
+1620211187: New client connected from 10.244.2.141:44839 as source (p2, c1, k60, u'admin').
+1620211188: New connection from 10.244.1.70:59683 on port 1883.
+1620211188: Client source already connected, closing old connection.
+1620211188: New client connected from 10.244.1.70:59683 as source (p2, c1, k60, u'admin').
+1620211189: New connection from 10.244.2.141:38945 on port 1883.
+1620211189: Client source already connected, closing old connection.
+1620211189: New client connected from 10.244.2.141:38945 as source (p2, c1, k60, u'admin').
+1620211190: New connection from 10.244.1.70:51643 on port 1883.
+1620211190: Client source already connected, closing old connection.
+1620211190: New client connected from 10.244.1.70:51643 as source (p2, c1, k60, u'admin').
+1620211191: New connection from 10.244.2.141:36013 on port 1883.
+1620211191: Client source already connected, closing old connection.
+1620211191: New client connected from 10.244.2.141:36013 as source (p2, c1, k60, u'admin').
+1620211192: New connection from 10.244.1.70:42633 on port 1883.
+1620211192: Client source already connected, closing old connection.
+1620211192: New client connected from 10.244.1.70:42633 as source (p2, c1, k60, u'admin').
+1620211193: New connection from 10.244.2.141:46495 on port 1883.
+1620211193: Client source already connected, closing old connection.
+1620211193: New client connected from 10.244.2.141:46495 as source (p2, c1, k60, u'admin').
+1620211194: New connection from 10.244.1.70:49925 on port 1883.
+1620211194: Client source already connected, closing old connection.
+1620211194: New client connected from 10.244.1.70:49925 as source (p2, c1, k60, u'admin').
+1620211195: New connection from 10.244.2.141:58555 on port 1883.
+1620211195: Client source already connected, closing old connection.
+1620211195: New client connected from 10.244.2.141:58555 as source (p2, c1, k60, u'admin').
+1620211196: New connection from 10.244.1.70:46853 on port 1883.
+1620211196: Client source already connected, closing old connection.
+1620211196: New client connected from 10.244.1.70:46853 as source (p2, c1, k60, u'admin').
+1620211197: New connection from 10.244.2.141:54885 on port 1883.
+1620211197: Client source already connected, closing old connection.
+1620211197: New client connected from 10.244.2.141:54885 as source (p2, c1, k60, u'admin').
+1620211198: New connection from 10.244.1.70:55667 on port 1883.
+1620211198: Client source already connected, closing old connection.
+1620211198: New client connected from 10.244.1.70:55667 as source (p2, c1, k60, u'admin').
+1620211199: New connection from 10.244.2.141:45089 on port 1883.
+1620211199: Client source already connected, closing old connection.
+1620211199: New client connected from 10.244.2.141:45089 as source (p2, c1, k60, u'admin').
+1620211200: New connection from 10.244.1.70:43907 on port 1883.
+1620211200: Client source already connected, closing old connection.
+1620211200: New client connected from 10.244.1.70:43907 as source (p2, c1, k60, u'admin').
+1620211201: New connection from 10.244.2.141:46033 on port 1883.
+1620211201: Client source already connected, closing old connection.
+1620211201: New client connected from 10.244.2.141:46033 as source (p2, c1, k60, u'admin').
+1620212922: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620213580: mosquitto version 2.0.10 terminating
+1620213580: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620286674: mosquitto version 2.0.10 starting
+1620286674: Config loaded from /mosquitto/config/mosquitto.conf.
+1620286674: Opening ipv4 listen socket on port 1883.
+1620286674: Opening ipv6 listen socket on port 1883.
+1620286674: mosquitto version 2.0.10 running
+1620286675: New connection from 10.244.2.150:39445 on port 1883.
+1620286675: New client connected from 10.244.2.150:39445 as source (p2, c1, k60, u'admin').
+1620288463: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620290264: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620292065: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620293866: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620295667: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620297286: mosquitto version 2.0.10 terminating
+1620297286: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620377782: mosquitto version 2.0.10 starting
+1620377782: Config loaded from /mosquitto/config/mosquitto.conf.
+1620377782: Opening ipv4 listen socket on port 1883.
+1620377782: Opening ipv6 listen socket on port 1883.
+1620377782: mosquitto version 2.0.10 running
+1620377797: New connection from 10.244.2.156:55367 on port 1883.
+1620377797: New client connected from 10.244.2.156:55367 as source (p2, c1, k60, u'admin').
+1620379582: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620381383: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620383184: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620384985: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620386519: mosquitto version 2.0.10 terminating
+1620386519: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620640331: mosquitto version 2.0.10 starting
+1620640331: Config loaded from /mosquitto/config/mosquitto.conf.
+1620640331: Opening ipv4 listen socket on port 1883.
+1620640331: Opening ipv6 listen socket on port 1883.
+1620640331: mosquitto version 2.0.10 running
+1620640345: New connection from 10.244.2.167:58505 on port 1883.
+1620640345: New client connected from 10.244.2.167:58505 as source (p2, c1, k60, u'admin').
+1620642132: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620643933: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620644015: mosquitto version 2.0.10 terminating
+1620644015: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620717905: mosquitto version 2.0.10 starting
+1620717905: Config loaded from /mosquitto/config/mosquitto.conf.
+1620717905: Opening ipv4 listen socket on port 1883.
+1620717905: Opening ipv6 listen socket on port 1883.
+1620717905: mosquitto version 2.0.10 running
+1620717920: New connection from 10.244.2.175:50417 on port 1883.
+1620717920: New client connected from 10.244.2.175:50417 as source (p2, c1, k60, u'admin').
+1620719705: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620720128: mosquitto version 2.0.10 terminating
+1620720128: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620721812: mosquitto version 2.0.10 starting
+1620721812: Config loaded from /mosquitto/config/mosquitto.conf.
+1620721812: Opening ipv4 listen socket on port 1883.
+1620721812: Opening ipv6 listen socket on port 1883.
+1620721812: mosquitto version 2.0.10 running
+1620721837: New connection from 10.244.2.178:52563 on port 1883.
+1620721837: New client connected from 10.244.2.178:52563 as source (p2, c1, k60, u'admin').
+1620723613: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620725414: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620727215: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1620727445: mosquitto version 2.0.10 terminating
+1620727445: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621932008: mosquitto version 2.0.10 starting
+1621932008: Config loaded from /mosquitto/config/mosquitto.conf.
+1621932008: Opening ipv4 listen socket on port 1883.
+1621932008: Opening ipv6 listen socket on port 1883.
+1621932008: mosquitto version 2.0.10 running
+1621932024: New connection from 10.244.2.189:41611 on port 1883.
+1621932024: New client connected from 10.244.2.189:41611 as source (p2, c1, k60, u'admin').
+1621933809: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621935610: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621937411: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621939212: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621941013: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621942109: New connection from 10.244.1.0:2362 on port 1883.
+1621942109: New client connected from 10.244.1.0:2362 as odk_1 (p2, c1, k60, u'admin').
+1621942113: New connection from 10.244.1.0:44986 on port 1883.
+1621942113: Client odk_1 already connected, closing old connection.
+1621942113: New client connected from 10.244.1.0:44986 as odk_1 (p2, c1, k60, u'admin').
+1621942122: New connection from 10.244.1.0:48202 on port 1883.
+1621942122: Client odk_1 already connected, closing old connection.
+1621942122: New client connected from 10.244.1.0:48202 as odk_1 (p2, c1, k60, u'admin').
+1621942214: Client odk_1 has exceeded timeout, disconnecting.
+1621942814: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621943603: New connection from 10.244.1.0:48198 on port 1883.
+1621943603: New client connected from 10.244.1.0:48198 as odk_1 (p2, c1, k60, u'admin').
+1621943607: New connection from 10.244.1.0:33012 on port 1883.
+1621943607: Client odk_1 already connected, closing old connection.
+1621943607: New client connected from 10.244.1.0:33012 as odk_1 (p2, c1, k60, u'admin').
+1621943616: New connection from 10.244.1.0:54787 on port 1883.
+1621943616: Client odk_1 already connected, closing old connection.
+1621943616: New client connected from 10.244.1.0:54787 as odk_1 (p2, c1, k60, u'admin').
+1621943708: Client odk_1 has exceeded timeout, disconnecting.
+1621944615: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621944960: New connection from 10.244.1.0:12254 on port 1883.
+1621944960: New client connected from 10.244.1.0:12254 as odk_1 (p2, c1, k60, u'admin').
+1621944965: New connection from 10.244.1.0:50870 on port 1883.
+1621944965: Client odk_1 already connected, closing old connection.
+1621944965: New client connected from 10.244.1.0:50870 as odk_1 (p2, c1, k60, u'admin').
+1621944976: New connection from 10.244.1.0:29563 on port 1883.
+1621944976: Client odk_1 already connected, closing old connection.
+1621944976: New client connected from 10.244.1.0:29563 as odk_1 (p2, c1, k60, u'admin').
+1621945070: Client odk_1 has exceeded timeout, disconnecting.
+1621946416: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1621946733: mosquitto version 2.0.10 terminating
+1621946733: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622012154: mosquitto version 2.0.10 starting
+1622012154: Config loaded from /mosquitto/config/mosquitto.conf.
+1622012154: Opening ipv4 listen socket on port 1883.
+1622012154: Opening ipv6 listen socket on port 1883.
+1622012154: mosquitto version 2.0.10 running
+1622012195: New connection from 10.244.1.185:41305 on port 1883.
+1622012195: New client connected from 10.244.1.185:41305 as source (p2, c1, k60, u'admin').
+1622013577: New connection from 10.244.1.0:12331 on port 1883.
+1622013577: New client connected from 10.244.1.0:12331 as odk_1 (p2, c1, k60, u'admin').
+1622013583: New connection from 10.244.1.0:65285 on port 1883.
+1622013583: Client odk_1 already connected, closing old connection.
+1622013583: New client connected from 10.244.1.0:65285 as odk_1 (p2, c1, k60, u'admin').
+1622013593: New connection from 10.244.1.0:27965 on port 1883.
+1622013593: Client odk_1 already connected, closing old connection.
+1622013593: New client connected from 10.244.1.0:27965 as odk_1 (p2, c1, k60, u'admin').
+1622013689: Client odk_1 has exceeded timeout, disconnecting.
+1622013730: New connection from 10.244.1.190:54605 on port 1883.
+1622013730: Client source already connected, closing old connection.
+1622013730: New client connected from 10.244.1.190:54605 as source (p2, c1, k60, u'admin').
+1622013731: New connection from 10.244.1.185:36009 on port 1883.
+1622013731: Client source already connected, closing old connection.
+1622013731: New client connected from 10.244.1.185:36009 as source (p2, c1, k60, u'admin').
+1622013732: New connection from 10.244.1.190:48351 on port 1883.
+1622013732: Client source already connected, closing old connection.
+1622013732: New client connected from 10.244.1.190:48351 as source (p2, c1, k60, u'admin').
+1622013733: New connection from 10.244.1.185:48105 on port 1883.
+1622013733: Client source already connected, closing old connection.
+1622013733: New client connected from 10.244.1.185:48105 as source (p2, c1, k60, u'admin').
+1622013734: New connection from 10.244.1.190:42645 on port 1883.
+1622013734: Client source already connected, closing old connection.
+1622013734: New client connected from 10.244.1.190:42645 as source (p2, c1, k60, u'admin').
+1622013735: New connection from 10.244.1.185:55927 on port 1883.
+1622013735: Client source already connected, closing old connection.
+1622013735: New client connected from 10.244.1.185:55927 as source (p2, c1, k60, u'admin').
+1622013736: New connection from 10.244.1.190:53529 on port 1883.
+1622013736: Client source already connected, closing old connection.
+1622013736: New client connected from 10.244.1.190:53529 as source (p2, c1, k60, u'admin').
+1622013737: New connection from 10.244.1.185:60587 on port 1883.
+1622013737: Client source already connected, closing old connection.
+1622013737: New client connected from 10.244.1.185:60587 as source (p2, c1, k60, u'admin').
+1622013738: New connection from 10.244.1.190:54929 on port 1883.
+1622013738: Client source already connected, closing old connection.
+1622013738: New client connected from 10.244.1.190:54929 as source (p2, c1, k60, u'admin').
+1622013739: New connection from 10.244.1.185:54557 on port 1883.
+1622013739: Client source already connected, closing old connection.
+1622013739: New client connected from 10.244.1.185:54557 as source (p2, c1, k60, u'admin').
+1622013740: New connection from 10.244.1.190:41465 on port 1883.
+1622013740: Client source already connected, closing old connection.
+1622013740: New client connected from 10.244.1.190:41465 as source (p2, c1, k60, u'admin').
+1622013741: New connection from 10.244.1.185:35835 on port 1883.
+1622013741: Client source already connected, closing old connection.
+1622013741: New client connected from 10.244.1.185:35835 as source (p2, c1, k60, u'admin').
+1622013742: New connection from 10.244.1.190:55675 on port 1883.
+1622013742: Client source already connected, closing old connection.
+1622013742: New client connected from 10.244.1.190:55675 as source (p2, c1, k60, u'admin').
+1622013743: New connection from 10.244.1.185:47251 on port 1883.
+1622013743: Client source already connected, closing old connection.
+1622013743: New client connected from 10.244.1.185:47251 as source (p2, c1, k60, u'admin').
+1622013744: New connection from 10.244.1.190:54131 on port 1883.
+1622013744: Client source already connected, closing old connection.
+1622013744: New client connected from 10.244.1.190:54131 as source (p2, c1, k60, u'admin').
+1622013745: New connection from 10.244.1.185:36659 on port 1883.
+1622013745: Client source already connected, closing old connection.
+1622013745: New client connected from 10.244.1.185:36659 as source (p2, c1, k60, u'admin').
+1622013746: New connection from 10.244.1.190:57641 on port 1883.
+1622013746: Client source already connected, closing old connection.
+1622013746: New client connected from 10.244.1.190:57641 as source (p2, c1, k60, u'admin').
+1622013747: New connection from 10.244.1.185:42813 on port 1883.
+1622013747: Client source already connected, closing old connection.
+1622013747: New client connected from 10.244.1.185:42813 as source (p2, c1, k60, u'admin').
+1622013748: New connection from 10.244.1.190:44943 on port 1883.
+1622013748: Client source already connected, closing old connection.
+1622013748: New client connected from 10.244.1.190:44943 as source (p2, c1, k60, u'admin').
+1622013749: New connection from 10.244.1.185:34241 on port 1883.
+1622013749: Client source already connected, closing old connection.
+1622013749: New client connected from 10.244.1.185:34241 as source (p2, c1, k60, u'admin').
+1622013750: New connection from 10.244.1.190:41759 on port 1883.
+1622013750: Client source already connected, closing old connection.
+1622013750: New client connected from 10.244.1.190:41759 as source (p2, c1, k60, u'admin').
+1622013751: New connection from 10.244.1.185:49531 on port 1883.
+1622013751: Client source already connected, closing old connection.
+1622013751: New client connected from 10.244.1.185:49531 as source (p2, c1, k60, u'admin').
+1622013752: New connection from 10.244.1.190:49373 on port 1883.
+1622013752: Client source already connected, closing old connection.
+1622013752: New client connected from 10.244.1.190:49373 as source (p2, c1, k60, u'admin').
+1622013753: New connection from 10.244.1.185:47557 on port 1883.
+1622013753: Client source already connected, closing old connection.
+1622013753: New client connected from 10.244.1.185:47557 as source (p2, c1, k60, u'admin').
+1622013754: New connection from 10.244.1.190:35913 on port 1883.
+1622013754: Client source already connected, closing old connection.
+1622013754: New client connected from 10.244.1.190:35913 as source (p2, c1, k60, u'admin').
+1622013755: New connection from 10.244.1.185:38313 on port 1883.
+1622013755: Client source already connected, closing old connection.
+1622013755: New client connected from 10.244.1.185:38313 as source (p2, c1, k60, u'admin').
+1622013756: New connection from 10.244.1.190:48641 on port 1883.
+1622013756: Client source already connected, closing old connection.
+1622013756: New client connected from 10.244.1.190:48641 as source (p2, c1, k60, u'admin').
+1622013757: New connection from 10.244.1.185:40509 on port 1883.
+1622013757: Client source already connected, closing old connection.
+1622013757: New client connected from 10.244.1.185:40509 as source (p2, c1, k60, u'admin').
+1622013758: New connection from 10.244.1.190:43737 on port 1883.
+1622013758: Client source already connected, closing old connection.
+1622013758: New client connected from 10.244.1.190:43737 as source (p2, c1, k60, u'admin').
+1622013759: New connection from 10.244.1.185:49539 on port 1883.
+1622013759: Client source already connected, closing old connection.
+1622013759: New client connected from 10.244.1.185:49539 as source (p2, c1, k60, u'admin').
+1622013760: New connection from 10.244.1.190:47671 on port 1883.
+1622013760: Client source already connected, closing old connection.
+1622013760: New client connected from 10.244.1.190:47671 as source (p2, c1, k60, u'admin').
+1622013790: New connection from 10.244.2.227:33481 on port 1883.
+1622013790: Client source already connected, closing old connection.
+1622013790: New client connected from 10.244.2.227:33481 as source (p2, c1, k60, u'admin').
+1622013791: New connection from 10.244.1.190:36211 on port 1883.
+1622013791: Client source already connected, closing old connection.
+1622013791: New client connected from 10.244.1.190:36211 as source (p2, c1, k60, u'admin').
+1622013792: New connection from 10.244.2.227:59629 on port 1883.
+1622013792: Client source already connected, closing old connection.
+1622013792: New client connected from 10.244.2.227:59629 as source (p2, c1, k60, u'admin').
+1622013793: New connection from 10.244.1.190:46245 on port 1883.
+1622013793: Client source already connected, closing old connection.
+1622013793: New client connected from 10.244.1.190:46245 as source (p2, c1, k60, u'admin').
+1622013794: New connection from 10.244.2.227:46571 on port 1883.
+1622013794: Client source already connected, closing old connection.
+1622013794: New client connected from 10.244.2.227:46571 as source (p2, c1, k60, u'admin').
+1622013795: New connection from 10.244.1.190:39491 on port 1883.
+1622013795: Client source already connected, closing old connection.
+1622013795: New client connected from 10.244.1.190:39491 as source (p2, c1, k60, u'admin').
+1622013796: New connection from 10.244.2.227:39033 on port 1883.
+1622013796: Client source already connected, closing old connection.
+1622013796: New client connected from 10.244.2.227:39033 as source (p2, c1, k60, u'admin').
+1622013797: New connection from 10.244.1.190:57315 on port 1883.
+1622013797: Client source already connected, closing old connection.
+1622013797: New client connected from 10.244.1.190:57315 as source (p2, c1, k60, u'admin').
+1622013798: New connection from 10.244.2.227:51927 on port 1883.
+1622013798: Client source already connected, closing old connection.
+1622013798: New client connected from 10.244.2.227:51927 as source (p2, c1, k60, u'admin').
+1622013799: New connection from 10.244.1.190:58379 on port 1883.
+1622013799: Client source already connected, closing old connection.
+1622013799: New client connected from 10.244.1.190:58379 as source (p2, c1, k60, u'admin').
+1622013800: New connection from 10.244.2.227:48293 on port 1883.
+1622013800: Client source already connected, closing old connection.
+1622013800: New client connected from 10.244.2.227:48293 as source (p2, c1, k60, u'admin').
+1622013801: New connection from 10.244.1.190:33249 on port 1883.
+1622013801: Client source already connected, closing old connection.
+1622013801: New client connected from 10.244.1.190:33249 as source (p2, c1, k60, u'admin').
+1622013802: New connection from 10.244.2.227:37323 on port 1883.
+1622013802: Client source already connected, closing old connection.
+1622013802: New client connected from 10.244.2.227:37323 as source (p2, c1, k60, u'admin').
+1622013803: New connection from 10.244.1.190:47431 on port 1883.
+1622013803: Client source already connected, closing old connection.
+1622013803: New client connected from 10.244.1.190:47431 as source (p2, c1, k60, u'admin').
+1622013804: New connection from 10.244.2.227:39471 on port 1883.
+1622013804: Client source already connected, closing old connection.
+1622013804: New client connected from 10.244.2.227:39471 as source (p2, c1, k60, u'admin').
+1622013805: New connection from 10.244.1.190:55165 on port 1883.
+1622013805: Client source already connected, closing old connection.
+1622013805: New client connected from 10.244.1.190:55165 as source (p2, c1, k60, u'admin').
+1622013806: New connection from 10.244.2.227:60313 on port 1883.
+1622013806: Client source already connected, closing old connection.
+1622013806: New client connected from 10.244.2.227:60313 as source (p2, c1, k60, u'admin').
+1622013807: New connection from 10.244.1.190:57899 on port 1883.
+1622013807: Client source already connected, closing old connection.
+1622013807: New client connected from 10.244.1.190:57899 as source (p2, c1, k60, u'admin').
+1622013808: New connection from 10.244.2.227:59265 on port 1883.
+1622013808: Client source already connected, closing old connection.
+1622013808: New client connected from 10.244.2.227:59265 as source (p2, c1, k60, u'admin').
+1622013809: New connection from 10.244.1.190:42051 on port 1883.
+1622013809: Client source already connected, closing old connection.
+1622013809: New client connected from 10.244.1.190:42051 as source (p2, c1, k60, u'admin').
+1622013810: New connection from 10.244.2.227:55769 on port 1883.
+1622013810: Client source already connected, closing old connection.
+1622013810: New client connected from 10.244.2.227:55769 as source (p2, c1, k60, u'admin').
+1622013811: New connection from 10.244.1.190:52669 on port 1883.
+1622013811: Client source already connected, closing old connection.
+1622013811: New client connected from 10.244.1.190:52669 as source (p2, c1, k60, u'admin').
+1622013812: New connection from 10.244.2.227:35755 on port 1883.
+1622013812: Client source already connected, closing old connection.
+1622013812: New client connected from 10.244.2.227:35755 as source (p2, c1, k60, u'admin').
+1622013813: New connection from 10.244.1.190:46105 on port 1883.
+1622013813: Client source already connected, closing old connection.
+1622013813: New client connected from 10.244.1.190:46105 as source (p2, c1, k60, u'admin').
+1622013814: New connection from 10.244.2.227:33151 on port 1883.
+1622013814: Client source already connected, closing old connection.
+1622013814: New client connected from 10.244.2.227:33151 as source (p2, c1, k60, u'admin').
+1622013815: New connection from 10.244.1.190:34287 on port 1883.
+1622013815: Client source already connected, closing old connection.
+1622013815: New client connected from 10.244.1.190:34287 as source (p2, c1, k60, u'admin').
+1622013816: New connection from 10.244.2.227:42163 on port 1883.
+1622013816: Client source already connected, closing old connection.
+1622013816: New client connected from 10.244.2.227:42163 as source (p2, c1, k60, u'admin').
+1622013817: New connection from 10.244.1.190:36507 on port 1883.
+1622013817: Client source already connected, closing old connection.
+1622013817: New client connected from 10.244.1.190:36507 as source (p2, c1, k60, u'admin').
+1622013818: New connection from 10.244.2.227:51493 on port 1883.
+1622013818: Client source already connected, closing old connection.
+1622013818: New client connected from 10.244.2.227:51493 as source (p2, c1, k60, u'admin').
+1622013819: New connection from 10.244.1.190:46411 on port 1883.
+1622013819: Client source already connected, closing old connection.
+1622013819: New client connected from 10.244.1.190:46411 as source (p2, c1, k60, u'admin').
+1622013820: New connection from 10.244.2.227:47743 on port 1883.
+1622013820: Client source already connected, closing old connection.
+1622013820: New client connected from 10.244.2.227:47743 as source (p2, c1, k60, u'admin').
+1622013844: New connection from 10.244.1.191:60175 on port 1883.
+1622013844: Client source already connected, closing old connection.
+1622013844: New client connected from 10.244.1.191:60175 as source (p2, c1, k60, u'admin').
+1622013845: New connection from 10.244.2.227:44971 on port 1883.
+1622013845: Client source already connected, closing old connection.
+1622013845: New client connected from 10.244.2.227:44971 as source (p2, c1, k60, u'admin').
+1622013846: New connection from 10.244.1.191:51109 on port 1883.
+1622013846: Client source already connected, closing old connection.
+1622013846: New client connected from 10.244.1.191:51109 as source (p2, c1, k60, u'admin').
+1622013847: New connection from 10.244.2.227:52215 on port 1883.
+1622013847: Client source already connected, closing old connection.
+1622013847: New client connected from 10.244.2.227:52215 as source (p2, c1, k60, u'admin').
+1622013848: New connection from 10.244.1.191:33689 on port 1883.
+1622013848: Client source already connected, closing old connection.
+1622013848: New client connected from 10.244.1.191:33689 as source (p2, c1, k60, u'admin').
+1622013849: New connection from 10.244.2.227:51311 on port 1883.
+1622013849: Client source already connected, closing old connection.
+1622013849: New client connected from 10.244.2.227:51311 as source (p2, c1, k60, u'admin').
+1622013850: New connection from 10.244.1.191:53273 on port 1883.
+1622013850: Client source already connected, closing old connection.
+1622013850: New client connected from 10.244.1.191:53273 as source (p2, c1, k60, u'admin').
+1622013851: New connection from 10.244.2.227:43759 on port 1883.
+1622013851: Client source already connected, closing old connection.
+1622013851: New client connected from 10.244.2.227:43759 as source (p2, c1, k60, u'admin').
+1622013852: New connection from 10.244.1.191:36135 on port 1883.
+1622013852: Client source already connected, closing old connection.
+1622013852: New client connected from 10.244.1.191:36135 as source (p2, c1, k60, u'admin').
+1622013853: New connection from 10.244.2.227:51133 on port 1883.
+1622013853: Client source already connected, closing old connection.
+1622013853: New client connected from 10.244.2.227:51133 as source (p2, c1, k60, u'admin').
+1622013854: New connection from 10.244.1.191:51823 on port 1883.
+1622013854: Client source already connected, closing old connection.
+1622013854: New client connected from 10.244.1.191:51823 as source (p2, c1, k60, u'admin').
+1622013855: New connection from 10.244.2.227:44513 on port 1883.
+1622013855: Client source already connected, closing old connection.
+1622013855: New client connected from 10.244.2.227:44513 as source (p2, c1, k60, u'admin').
+1622013856: New connection from 10.244.1.191:43447 on port 1883.
+1622013856: Client source already connected, closing old connection.
+1622013856: New client connected from 10.244.1.191:43447 as source (p2, c1, k60, u'admin').
+1622013857: New connection from 10.244.2.227:35375 on port 1883.
+1622013857: Client source already connected, closing old connection.
+1622013857: New client connected from 10.244.2.227:35375 as source (p2, c1, k60, u'admin').
+1622013858: New connection from 10.244.1.191:36085 on port 1883.
+1622013858: Client source already connected, closing old connection.
+1622013858: New client connected from 10.244.1.191:36085 as source (p2, c1, k60, u'admin').
+1622013859: New connection from 10.244.2.227:49685 on port 1883.
+1622013859: Client source already connected, closing old connection.
+1622013859: New client connected from 10.244.2.227:49685 as source (p2, c1, k60, u'admin').
+1622013860: New connection from 10.244.1.191:37927 on port 1883.
+1622013860: Client source already connected, closing old connection.
+1622013860: New client connected from 10.244.1.191:37927 as source (p2, c1, k60, u'admin').
+1622013861: New connection from 10.244.2.227:50541 on port 1883.
+1622013861: Client source already connected, closing old connection.
+1622013861: New client connected from 10.244.2.227:50541 as source (p2, c1, k60, u'admin').
+1622013862: New connection from 10.244.1.191:51023 on port 1883.
+1622013862: Client source already connected, closing old connection.
+1622013862: New client connected from 10.244.1.191:51023 as source (p2, c1, k60, u'admin').
+1622013863: New connection from 10.244.2.227:60879 on port 1883.
+1622013863: Client source already connected, closing old connection.
+1622013863: New client connected from 10.244.2.227:60879 as source (p2, c1, k60, u'admin').
+1622013864: New connection from 10.244.1.191:46201 on port 1883.
+1622013864: Client source already connected, closing old connection.
+1622013864: New client connected from 10.244.1.191:46201 as source (p2, c1, k60, u'admin').
+1622013865: New connection from 10.244.2.227:55841 on port 1883.
+1622013865: Client source already connected, closing old connection.
+1622013865: New client connected from 10.244.2.227:55841 as source (p2, c1, k60, u'admin').
+1622013866: New connection from 10.244.1.191:51321 on port 1883.
+1622013866: Client source already connected, closing old connection.
+1622013866: New client connected from 10.244.1.191:51321 as source (p2, c1, k60, u'admin').
+1622013867: New connection from 10.244.2.227:41899 on port 1883.
+1622013867: Client source already connected, closing old connection.
+1622013867: New client connected from 10.244.2.227:41899 as source (p2, c1, k60, u'admin').
+1622013868: New connection from 10.244.1.191:52697 on port 1883.
+1622013868: Client source already connected, closing old connection.
+1622013868: New client connected from 10.244.1.191:52697 as source (p2, c1, k60, u'admin').
+1622013869: New connection from 10.244.2.227:60897 on port 1883.
+1622013869: Client source already connected, closing old connection.
+1622013869: New client connected from 10.244.2.227:60897 as source (p2, c1, k60, u'admin').
+1622013870: New connection from 10.244.1.191:47179 on port 1883.
+1622013870: Client source already connected, closing old connection.
+1622013870: New client connected from 10.244.1.191:47179 as source (p2, c1, k60, u'admin').
+1622013871: New connection from 10.244.2.227:49137 on port 1883.
+1622013871: Client source already connected, closing old connection.
+1622013871: New client connected from 10.244.2.227:49137 as source (p2, c1, k60, u'admin').
+1622013872: New connection from 10.244.1.191:56343 on port 1883.
+1622013872: Client source already connected, closing old connection.
+1622013872: New client connected from 10.244.1.191:56343 as source (p2, c1, k60, u'admin').
+1622013873: New connection from 10.244.2.227:54317 on port 1883.
+1622013873: Client source already connected, closing old connection.
+1622013873: New client connected from 10.244.2.227:54317 as source (p2, c1, k60, u'admin').
+1622013874: New connection from 10.244.1.191:49087 on port 1883.
+1622013874: Client source already connected, closing old connection.
+1622013874: New client connected from 10.244.1.191:49087 as source (p2, c1, k60, u'admin').
+1622013918: Client source closed its connection.
+1622013940: New connection from 10.244.1.192:45457 on port 1883.
+1622013940: New client connected from 10.244.1.192:45457 as source (p2, c1, k60, u'admin').
+1622013954: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622013989: New connection from 10.244.1.0:14562 on port 1883.
+1622013989: New client connected from 10.244.1.0:14562 as odk_1 (p2, c1, k60, u'admin').
+1622013993: New connection from 10.244.1.0:1556 on port 1883.
+1622013993: Client odk_1 already connected, closing old connection.
+1622013993: New client connected from 10.244.1.0:1556 as odk_1 (p2, c1, k60, u'admin').
+1622014003: New connection from 10.244.1.0:27847 on port 1883.
+1622014003: Client odk_1 already connected, closing old connection.
+1622014003: New client connected from 10.244.1.0:27847 as odk_1 (p2, c1, k60, u'admin').
+1622014097: Client odk_1 has exceeded timeout, disconnecting.
+1622015315: New connection from 10.244.1.0:40655 on port 1883.
+1622015315: New client connected from 10.244.1.0:40655 as odk_1 (p2, c1, k60, u'admin').
+1622015319: New connection from 10.244.1.0:46108 on port 1883.
+1622015319: Client odk_1 already connected, closing old connection.
+1622015319: New client connected from 10.244.1.0:46108 as odk_1 (p2, c1, k60, u'admin').
+1622015328: New connection from 10.244.1.0:14699 on port 1883.
+1622015328: Client odk_1 already connected, closing old connection.
+1622015328: New client connected from 10.244.1.0:14699 as odk_1 (p2, c1, k60, u'admin').
+1622015423: Client odk_1 has exceeded timeout, disconnecting.
+1622015543: New connection from 10.244.1.0:28825 on port 1883.
+1622015543: New client connected from 10.244.1.0:28825 as odk_1 (p2, c1, k60, u'admin').
+1622015547: New connection from 10.244.1.0:42711 on port 1883.
+1622015547: Client odk_1 already connected, closing old connection.
+1622015547: New client connected from 10.244.1.0:42711 as odk_1 (p2, c1, k60, u'admin').
+1622015557: New connection from 10.244.1.0:26326 on port 1883.
+1622015557: Client odk_1 already connected, closing old connection.
+1622015557: New client connected from 10.244.1.0:26326 as odk_1 (p2, c1, k60, u'admin').
+1622015651: Client odk_1 has exceeded timeout, disconnecting.
+1622015755: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622015794: New connection from 10.244.1.0:63942 on port 1883.
+1622015794: New client connected from 10.244.1.0:63942 as odk_1 (p2, c1, k60, u'admin').
+1622015825: New connection from 10.244.1.0:22424 on port 1883.
+1622015825: Client odk_1 already connected, closing old connection.
+1622015825: New client connected from 10.244.1.0:22424 as odk_1 (p2, c1, k60, u'admin').
+1622015827: New connection from 10.244.1.0:46703 on port 1883.
+1622015827: Client odk_1 already connected, closing old connection.
+1622015827: New client connected from 10.244.1.0:46703 as odk_1 (p2, c1, k60, u'admin').
+1622015911: New connection from 10.244.1.0:50538 on port 1883.
+1622015911: Client odk_1 already connected, closing old connection.
+1622015911: New client connected from 10.244.1.0:50538 as odk_1 (p2, c1, k60, u'admin').
+1622016005: Client odk_1 has exceeded timeout, disconnecting.
+1622016474: New connection from 10.244.1.0:56552 on port 1883.
+1622016474: New client connected from 10.244.1.0:56552 as odk_1 (p2, c1, k60, u'admin').
+1622016484: New connection from 10.244.1.0:44917 on port 1883.
+1622016484: Client odk_1 already connected, closing old connection.
+1622016484: New client connected from 10.244.1.0:44917 as odk_1 (p2, c1, k60, u'admin').
+1622016508: New connection from 10.244.1.0:3063 on port 1883.
+1622016508: Client odk_1 already connected, closing old connection.
+1622016508: New client connected from 10.244.1.0:3063 as odk_1 (p2, c1, k60, u'admin').
+1622016599: Client odk_1 has exceeded timeout, disconnecting.
+1622017556: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622018068: New connection from 10.244.1.0:42703 on port 1883.
+1622018068: New client connected from 10.244.1.0:42703 as odk_1 (p2, c1, k60, u'admin').
+1622018080: New connection from 10.244.1.0:58180 on port 1883.
+1622018080: Client odk_1 already connected, closing old connection.
+1622018080: New client connected from 10.244.1.0:58180 as odk_1 (p2, c1, k60, u'admin').
+1622018121: New connection from 10.244.1.0:36024 on port 1883.
+1622018121: Client odk_1 already connected, closing old connection.
+1622018121: New client connected from 10.244.1.0:36024 as odk_1 (p2, c1, k60, u'admin').
+1622018213: Client odk_1 has exceeded timeout, disconnecting.
+1622019357: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622019793: New connection from 10.244.1.0:58289 on port 1883.
+1622019793: New client connected from 10.244.1.0:58289 as odk_1 (p2, c1, k60, u'admin').
+1622019800: New connection from 10.244.1.0:4084 on port 1883.
+1622019800: Client odk_1 already connected, closing old connection.
+1622019800: New client connected from 10.244.1.0:4084 as odk_1 (p2, c1, k60, u'admin').
+1622019841: New connection from 10.244.1.0:50550 on port 1883.
+1622019841: Client odk_1 already connected, closing old connection.
+1622019841: New client connected from 10.244.1.0:50550 as odk_1 (p2, c1, k60, u'admin').
+1622019889: Client odk_1 closed its connection.
+1622020156: New connection from 10.244.1.0:45168 on port 1883.
+1622020156: New client connected from 10.244.1.0:45168 as odk_1 (p2, c1, k60, u'admin').
+1622020172: New connection from 10.244.1.0:44370 on port 1883.
+1622020172: Client odk_1 already connected, closing old connection.
+1622020172: New client connected from 10.244.1.0:44370 as odk_1 (p2, c1, k60, u'admin').
+1622020213: New connection from 10.244.1.0:4297 on port 1883.
+1622020213: Client odk_1 already connected, closing old connection.
+1622020213: New client connected from 10.244.1.0:4297 as odk_1 (p2, c1, k60, u'admin').
+1622020249: Client odk_1 closed its connection.
+1622020518: New connection from 10.244.1.0:43436 on port 1883.
+1622020518: New client connected from 10.244.1.0:43436 as odk_1 (p2, c1, k60, u'admin').
+1622020532: New connection from 10.244.1.0:38427 on port 1883.
+1622020532: Client odk_1 already connected, closing old connection.
+1622020532: New client connected from 10.244.1.0:38427 as odk_1 (p2, c1, k60, u'admin').
+1622020573: New connection from 10.244.1.0:59102 on port 1883.
+1622020573: Client odk_1 already connected, closing old connection.
+1622020573: New client connected from 10.244.1.0:59102 as odk_1 (p2, c1, k60, u'admin').
+1622020667: Client odk_1 has exceeded timeout, disconnecting.
+1622021102: New connection from 10.244.1.0:54224 on port 1883.
+1622021102: New client connected from 10.244.1.0:54224 as odk_1 (p2, c1, k60, u'admin').
+1622021117: New connection from 10.244.1.0:24499 on port 1883.
+1622021117: Client odk_1 already connected, closing old connection.
+1622021117: New client connected from 10.244.1.0:24499 as odk_1 (p2, c1, k60, u'admin').
+1622021158: New connection from 10.244.1.0:10106 on port 1883.
+1622021158: Client odk_1 already connected, closing old connection.
+1622021158: New client connected from 10.244.1.0:10106 as odk_1 (p2, c1, k60, u'admin').
+1622021158: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622021249: Client odk_1 has exceeded timeout, disconnecting.
+1622021965: New connection from 10.244.1.0:60765 on port 1883.
+1622021965: New client connected from 10.244.1.0:60765 as odk_1 (p2, c1, k60, u'admin').
+1622021974: New connection from 10.244.1.0:32879 on port 1883.
+1622021974: Client odk_1 already connected, closing old connection.
+1622021974: New client connected from 10.244.1.0:32879 as odk_1 (p2, c1, k60, u'admin').
+1622022015: New connection from 10.244.1.0:23272 on port 1883.
+1622022015: Client odk_1 already connected, closing old connection.
+1622022015: New client connected from 10.244.1.0:23272 as odk_1 (p2, c1, k60, u'admin').
+1622022107: Client odk_1 has exceeded timeout, disconnecting.
+1622022959: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622024153: New connection from 10.244.1.0:35347 on port 1883.
+1622024153: New client connected from 10.244.1.0:35347 as odk_1 (p2, c1, k60, u'admin').
+1622024168: New connection from 10.244.1.0:41524 on port 1883.
+1622024168: Client odk_1 already connected, closing old connection.
+1622024168: New client connected from 10.244.1.0:41524 as odk_1 (p2, c1, k60, u'admin').
+1622024209: New connection from 10.244.1.0:55071 on port 1883.
+1622024209: Client odk_1 already connected, closing old connection.
+1622024209: New client connected from 10.244.1.0:55071 as odk_1 (p2, c1, k60, u'admin').
+1622024303: Client odk_1 has exceeded timeout, disconnecting.
+1622024760: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622025232: mosquitto version 2.0.10 terminating
+1622025232: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622112339: mosquitto version 2.0.10 starting
+1622112339: Config loaded from /mosquitto/config/mosquitto.conf.
+1622112339: Opening ipv4 listen socket on port 1883.
+1622112339: Opening ipv6 listen socket on port 1883.
+1622112339: mosquitto version 2.0.10 running
+1622112366: New connection from 10.244.1.218:51887 on port 1883.
+1622112366: New client connected from 10.244.1.218:51887 as source (p2, c1, k60, u'admin').
+1622114140: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622115840: Client source closed its connection.
+1622115868: mosquitto version 2.0.10 terminating
+1622115868: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622187646: mosquitto version 2.0.10 starting
+1622187646: Config loaded from /mosquitto/config/mosquitto.conf.
+1622187646: Opening ipv4 listen socket on port 1883.
+1622187646: Opening ipv6 listen socket on port 1883.
+1622187646: mosquitto version 2.0.10 running
+1622187650: New connection from 10.244.1.223:58095 on port 1883.
+1622187650: New client connected from 10.244.1.223:58095 as source (p2, c1, k60, u'admin').
+1622189447: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622191248: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622193049: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622194850: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622196651: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622198452: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622200253: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622202054: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622202732: Client source closed its connection.
+1622202910: mosquitto version 2.0.10 terminating
+1622202910: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622446562: mosquitto version 2.0.10 starting
+1622446562: Config loaded from /mosquitto/config/mosquitto.conf.
+1622446562: Opening ipv4 listen socket on port 1883.
+1622446562: Opening ipv6 listen socket on port 1883.
+1622446562: mosquitto version 2.0.10 running
+1622446610: New connection from 10.244.1.232:60341 on port 1883.
+1622446610: New client connected from 10.244.1.232:60341 as source (p2, c1, k60, u'admin').
+1622448363: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622450164: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622451965: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622453766: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622455567: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622457368: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622459169: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622459661: mosquitto version 2.0.10 terminating
+1622459661: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622533920: mosquitto version 2.0.10 starting
+1622533920: Config loaded from /mosquitto/config/mosquitto.conf.
+1622533920: Opening ipv4 listen socket on port 1883.
+1622533920: Opening ipv6 listen socket on port 1883.
+1622533920: mosquitto version 2.0.10 running
+1622533955: New connection from 10.244.1.235:43849 on port 1883.
+1622533955: New client connected from 10.244.1.235:43849 as source (p2, c1, k60, u'admin').
+1622535271: mosquitto version 2.0.10 terminating
+1622535271: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622630132: mosquitto version 2.0.10 starting
+1622630132: Config loaded from /mosquitto/config/mosquitto.conf.
+1622630132: Opening ipv4 listen socket on port 1883.
+1622630132: Opening ipv6 listen socket on port 1883.
+1622630132: mosquitto version 2.0.10 running
+1622630139: New connection from 10.244.1.239:59477 on port 1883.
+1622630139: New client connected from 10.244.1.239:59477 as source (p2, c1, k60, u'admin').
+1622630868: mosquitto version 2.0.10 terminating
+1622630868: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622631765: mosquitto version 2.0.10 starting
+1622631765: Config loaded from /mosquitto/config/mosquitto.conf.
+1622631765: Opening ipv4 listen socket on port 1883.
+1622631765: Opening ipv6 listen socket on port 1883.
+1622631765: mosquitto version 2.0.10 running
+1622631813: New connection from 10.244.1.247:42233 on port 1883.
+1622631813: New client connected from 10.244.1.247:42233 as source (p2, c1, k60, u'admin').
+1622633566: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622635367: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1622635920: mosquitto version 2.0.10 terminating
+1622635920: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623664270: mosquitto version 2.0.11 starting
+1623664270: Config loaded from /mosquitto/config/mosquitto.conf.
+1623664270: Opening ipv4 listen socket on port 1883.
+1623664270: Opening ipv6 listen socket on port 1883.
+1623664270: mosquitto version 2.0.11 running
+1623664301: New connection from 10.244.1.249:43789 on port 1883.
+1623664301: New client connected from 10.244.1.249:43789 as source (p2, c1, k60, u'admin').
+1623664390: New connection from 10.244.2.66:40739 on port 1883.
+1623664390: Client source already connected, closing old connection.
+1623664390: New client connected from 10.244.2.66:40739 as source (p2, c1, k60, u'admin').
+1623664391: New connection from 10.244.1.249:59263 on port 1883.
+1623664391: Client source already connected, closing old connection.
+1623664391: New client connected from 10.244.1.249:59263 as source (p2, c1, k60, u'admin').
+1623664392: New connection from 10.244.2.66:39481 on port 1883.
+1623664392: Client source already connected, closing old connection.
+1623664392: New client connected from 10.244.2.66:39481 as source (p2, c1, k60, u'admin').
+1623664393: New connection from 10.244.1.249:43929 on port 1883.
+1623664393: Client source already connected, closing old connection.
+1623664393: New client connected from 10.244.1.249:43929 as source (p2, c1, k60, u'admin').
+1623664394: New connection from 10.244.2.66:45291 on port 1883.
+1623664394: Client source already connected, closing old connection.
+1623664394: New client connected from 10.244.2.66:45291 as source (p2, c1, k60, u'admin').
+1623664395: New connection from 10.244.1.249:43273 on port 1883.
+1623664395: Client source already connected, closing old connection.
+1623664395: New client connected from 10.244.1.249:43273 as source (p2, c1, k60, u'admin').
+1623664396: New connection from 10.244.2.66:57207 on port 1883.
+1623664396: Client source already connected, closing old connection.
+1623664396: New client connected from 10.244.2.66:57207 as source (p2, c1, k60, u'admin').
+1623664397: New connection from 10.244.1.249:33433 on port 1883.
+1623664397: Client source already connected, closing old connection.
+1623664397: New client connected from 10.244.1.249:33433 as source (p2, c1, k60, u'admin').
+1623664398: New connection from 10.244.2.66:38281 on port 1883.
+1623664398: Client source already connected, closing old connection.
+1623664398: New client connected from 10.244.2.66:38281 as source (p2, c1, k60, u'admin').
+1623664399: New connection from 10.244.1.249:53249 on port 1883.
+1623664399: Client source already connected, closing old connection.
+1623664399: New client connected from 10.244.1.249:53249 as source (p2, c1, k60, u'admin').
+1623664400: New connection from 10.244.2.66:38131 on port 1883.
+1623664400: Client source already connected, closing old connection.
+1623664400: New client connected from 10.244.2.66:38131 as source (p2, c1, k60, u'admin').
+1623664401: New connection from 10.244.1.249:53009 on port 1883.
+1623664401: Client source already connected, closing old connection.
+1623664401: New client connected from 10.244.1.249:53009 as source (p2, c1, k60, u'admin').
+1623664402: New connection from 10.244.2.66:60531 on port 1883.
+1623664402: Client source already connected, closing old connection.
+1623664402: New client connected from 10.244.2.66:60531 as source (p2, c1, k60, u'admin').
+1623664403: New connection from 10.244.1.249:37631 on port 1883.
+1623664403: Client source already connected, closing old connection.
+1623664403: New client connected from 10.244.1.249:37631 as source (p2, c1, k60, u'admin').
+1623664404: New connection from 10.244.2.66:59999 on port 1883.
+1623664404: Client source already connected, closing old connection.
+1623664404: New client connected from 10.244.2.66:59999 as source (p2, c1, k60, u'admin').
+1623664405: New connection from 10.244.1.249:51753 on port 1883.
+1623664405: Client source already connected, closing old connection.
+1623664405: New client connected from 10.244.1.249:51753 as source (p2, c1, k60, u'admin').
+1623664406: New connection from 10.244.2.66:41581 on port 1883.
+1623664406: Client source already connected, closing old connection.
+1623664406: New client connected from 10.244.2.66:41581 as source (p2, c1, k60, u'admin').
+1623664407: New connection from 10.244.1.249:37665 on port 1883.
+1623664407: Client source already connected, closing old connection.
+1623664407: New client connected from 10.244.1.249:37665 as source (p2, c1, k60, u'admin').
+1623664408: New connection from 10.244.2.66:59341 on port 1883.
+1623664408: Client source already connected, closing old connection.
+1623664408: New client connected from 10.244.2.66:59341 as source (p2, c1, k60, u'admin').
+1623664409: New connection from 10.244.1.249:49819 on port 1883.
+1623664409: Client source already connected, closing old connection.
+1623664409: New client connected from 10.244.1.249:49819 as source (p2, c1, k60, u'admin').
+1623664410: New connection from 10.244.2.66:34663 on port 1883.
+1623664410: Client source already connected, closing old connection.
+1623664410: New client connected from 10.244.2.66:34663 as source (p2, c1, k60, u'admin').
+1623664411: New connection from 10.244.1.249:45737 on port 1883.
+1623664411: Client source already connected, closing old connection.
+1623664411: New client connected from 10.244.1.249:45737 as source (p2, c1, k60, u'admin').
+1623664412: New connection from 10.244.2.66:49997 on port 1883.
+1623664412: Client source already connected, closing old connection.
+1623664412: New client connected from 10.244.2.66:49997 as source (p2, c1, k60, u'admin').
+1623664413: New connection from 10.244.1.249:57087 on port 1883.
+1623664413: Client source already connected, closing old connection.
+1623664413: New client connected from 10.244.1.249:57087 as source (p2, c1, k60, u'admin').
+1623664414: New connection from 10.244.2.66:58073 on port 1883.
+1623664414: Client source already connected, closing old connection.
+1623664414: New client connected from 10.244.2.66:58073 as source (p2, c1, k60, u'admin').
+1623664415: New connection from 10.244.1.249:46061 on port 1883.
+1623664415: Client source already connected, closing old connection.
+1623664415: New client connected from 10.244.1.249:46061 as source (p2, c1, k60, u'admin').
+1623664416: New connection from 10.244.2.66:57551 on port 1883.
+1623664416: Client source already connected, closing old connection.
+1623664416: New client connected from 10.244.2.66:57551 as source (p2, c1, k60, u'admin').
+1623664417: New connection from 10.244.1.249:57983 on port 1883.
+1623664417: Client source already connected, closing old connection.
+1623664417: New client connected from 10.244.1.249:57983 as source (p2, c1, k60, u'admin').
+1623664418: New connection from 10.244.2.66:33939 on port 1883.
+1623664418: Client source already connected, closing old connection.
+1623664418: New client connected from 10.244.2.66:33939 as source (p2, c1, k60, u'admin').
+1623664419: New connection from 10.244.1.249:39093 on port 1883.
+1623664419: Client source already connected, closing old connection.
+1623664419: New client connected from 10.244.1.249:39093 as source (p2, c1, k60, u'admin').
+1623664420: New connection from 10.244.2.66:49395 on port 1883.
+1623664420: Client source already connected, closing old connection.
+1623664420: New client connected from 10.244.2.66:49395 as source (p2, c1, k60, u'admin').
+1623664591: New connection from 10.244.2.67:37469 on port 1883.
+1623664591: Client source already connected, closing old connection.
+1623664591: New client connected from 10.244.2.67:37469 as source (p2, c1, k60, u'admin').
+1623664592: New connection from 10.244.2.66:43451 on port 1883.
+1623664592: Client source already connected, closing old connection.
+1623664592: New client connected from 10.244.2.66:43451 as source (p2, c1, k60, u'admin').
+1623664593: New connection from 10.244.2.67:56299 on port 1883.
+1623664593: Client source already connected, closing old connection.
+1623664593: New client connected from 10.244.2.67:56299 as source (p2, c1, k60, u'admin').
+1623664594: New connection from 10.244.2.66:58781 on port 1883.
+1623664594: Client source already connected, closing old connection.
+1623664594: New client connected from 10.244.2.66:58781 as source (p2, c1, k60, u'admin').
+1623664595: New connection from 10.244.2.67:58061 on port 1883.
+1623664595: Client source already connected, closing old connection.
+1623664595: New client connected from 10.244.2.67:58061 as source (p2, c1, k60, u'admin').
+1623664596: New connection from 10.244.2.66:41293 on port 1883.
+1623664596: Client source already connected, closing old connection.
+1623664596: New client connected from 10.244.2.66:41293 as source (p2, c1, k60, u'admin').
+1623664597: New connection from 10.244.2.67:56185 on port 1883.
+1623664597: Client source already connected, closing old connection.
+1623664597: New client connected from 10.244.2.67:56185 as source (p2, c1, k60, u'admin').
+1623664598: New connection from 10.244.2.66:33295 on port 1883.
+1623664598: Client source already connected, closing old connection.
+1623664598: New client connected from 10.244.2.66:33295 as source (p2, c1, k60, u'admin').
+1623664599: New connection from 10.244.2.67:38529 on port 1883.
+1623664599: Client source already connected, closing old connection.
+1623664599: New client connected from 10.244.2.67:38529 as source (p2, c1, k60, u'admin').
+1623664600: New connection from 10.244.2.66:56697 on port 1883.
+1623664600: Client source already connected, closing old connection.
+1623664600: New client connected from 10.244.2.66:56697 as source (p2, c1, k60, u'admin').
+1623664601: New connection from 10.244.2.67:50145 on port 1883.
+1623664601: Client source already connected, closing old connection.
+1623664601: New client connected from 10.244.2.67:50145 as source (p2, c1, k60, u'admin').
+1623664602: New connection from 10.244.2.66:52217 on port 1883.
+1623664602: Client source already connected, closing old connection.
+1623664602: New client connected from 10.244.2.66:52217 as source (p2, c1, k60, u'admin').
+1623664603: New connection from 10.244.2.67:43425 on port 1883.
+1623664603: Client source already connected, closing old connection.
+1623664603: New client connected from 10.244.2.67:43425 as source (p2, c1, k60, u'admin').
+1623664604: New connection from 10.244.2.66:45557 on port 1883.
+1623664604: Client source already connected, closing old connection.
+1623664604: New client connected from 10.244.2.66:45557 as source (p2, c1, k60, u'admin').
+1623664605: New connection from 10.244.2.67:34819 on port 1883.
+1623664605: Client source already connected, closing old connection.
+1623664605: New client connected from 10.244.2.67:34819 as source (p2, c1, k60, u'admin').
+1623664606: New connection from 10.244.2.66:53781 on port 1883.
+1623664606: Client source already connected, closing old connection.
+1623664606: New client connected from 10.244.2.66:53781 as source (p2, c1, k60, u'admin').
+1623664607: New connection from 10.244.2.67:38275 on port 1883.
+1623664607: Client source already connected, closing old connection.
+1623664607: New client connected from 10.244.2.67:38275 as source (p2, c1, k60, u'admin').
+1623664608: New connection from 10.244.2.66:58517 on port 1883.
+1623664608: Client source already connected, closing old connection.
+1623664608: New client connected from 10.244.2.66:58517 as source (p2, c1, k60, u'admin').
+1623664609: New connection from 10.244.2.67:35243 on port 1883.
+1623664609: Client source already connected, closing old connection.
+1623664609: New client connected from 10.244.2.67:35243 as source (p2, c1, k60, u'admin').
+1623664610: New connection from 10.244.2.66:42207 on port 1883.
+1623664610: Client source already connected, closing old connection.
+1623664610: New client connected from 10.244.2.66:42207 as source (p2, c1, k60, u'admin').
+1623664611: New connection from 10.244.2.67:52013 on port 1883.
+1623664611: Client source already connected, closing old connection.
+1623664611: New client connected from 10.244.2.67:52013 as source (p2, c1, k60, u'admin').
+1623664612: New connection from 10.244.2.66:44467 on port 1883.
+1623664612: Client source already connected, closing old connection.
+1623664612: New client connected from 10.244.2.66:44467 as source (p2, c1, k60, u'admin').
+1623664613: New connection from 10.244.2.67:50405 on port 1883.
+1623664613: Client source already connected, closing old connection.
+1623664613: New client connected from 10.244.2.67:50405 as source (p2, c1, k60, u'admin').
+1623664614: New connection from 10.244.2.66:49585 on port 1883.
+1623664614: Client source already connected, closing old connection.
+1623664614: New client connected from 10.244.2.66:49585 as source (p2, c1, k60, u'admin').
+1623664615: New connection from 10.244.2.67:43987 on port 1883.
+1623664615: Client source already connected, closing old connection.
+1623664615: New client connected from 10.244.2.67:43987 as source (p2, c1, k60, u'admin').
+1623664616: New connection from 10.244.2.66:45967 on port 1883.
+1623664616: Client source already connected, closing old connection.
+1623664616: New client connected from 10.244.2.66:45967 as source (p2, c1, k60, u'admin').
+1623664617: New connection from 10.244.2.67:49677 on port 1883.
+1623664617: Client source already connected, closing old connection.
+1623664617: New client connected from 10.244.2.67:49677 as source (p2, c1, k60, u'admin').
+1623664618: New connection from 10.244.2.66:40229 on port 1883.
+1623664618: Client source already connected, closing old connection.
+1623664618: New client connected from 10.244.2.66:40229 as source (p2, c1, k60, u'admin').
+1623664619: New connection from 10.244.2.67:39047 on port 1883.
+1623664619: Client source already connected, closing old connection.
+1623664619: New client connected from 10.244.2.67:39047 as source (p2, c1, k60, u'admin').
+1623664620: New connection from 10.244.2.66:50749 on port 1883.
+1623664620: Client source already connected, closing old connection.
+1623664620: New client connected from 10.244.2.66:50749 as source (p2, c1, k60, u'admin').
+1623664621: New connection from 10.244.2.67:45807 on port 1883.
+1623664621: Client source already connected, closing old connection.
+1623664621: New client connected from 10.244.2.67:45807 as source (p2, c1, k60, u'admin').
+1623666070: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623667871: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623669672: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623671340: mosquitto version 2.0.11 terminating
+1623671340: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623748525: mosquitto version 2.0.11 starting
+1623748525: Config loaded from /mosquitto/config/mosquitto.conf.
+1623748525: Opening ipv4 listen socket on port 1883.
+1623748525: Opening ipv6 listen socket on port 1883.
+1623748525: mosquitto version 2.0.11 running
+1623748549: New connection from 10.244.2.91:53377 on port 1883.
+1623748549: New client connected from 10.244.2.91:53377 as source (p2, c1, k60, u'admin').
+1623750326: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623752127: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623753928: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623755729: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1623756225: mosquitto version 2.0.11 terminating
+1623756225: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624867423: mosquitto version 2.0.11 starting
+1624867423: Config loaded from /mosquitto/config/mosquitto.conf.
+1624867423: Opening ipv4 listen socket on port 1883.
+1624867423: Opening ipv6 listen socket on port 1883.
+1624867423: mosquitto version 2.0.11 running
+1624867826: mosquitto version 2.0.11 starting
+1624867826: Config loaded from /mosquitto/config/mosquitto.conf.
+1624867826: Opening ipv4 listen socket on port 1883.
+1624867826: Opening ipv6 listen socket on port 1883.
+1624867826: mosquitto version 2.0.11 running
+1624867854: New connection from 10.244.2.118:51021 on port 1883.
+1624867854: New client connected from 10.244.2.118:51021 as source (p2, c1, k60, u'admin').
+1624869627: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624871428: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624873229: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624875030: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624876831: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624878632: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624879783: mosquitto version 2.0.11 terminating
+1624879783: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624952464: mosquitto version 2.0.11 starting
+1624952464: Config loaded from /mosquitto/config/mosquitto.conf.
+1624952464: Opening ipv4 listen socket on port 1883.
+1624952464: Opening ipv6 listen socket on port 1883.
+1624952464: mosquitto version 2.0.11 running
+1624952466: New connection from 10.244.2.209:47831 on port 1883.
+1624952466: New client connected from 10.244.2.209:47831 as source (p2, c1, k60, u'admin').
+1624954264: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624956065: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624957866: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624959667: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624961468: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624963269: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624965070: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1624966242: mosquitto version 2.0.11 terminating
+1624966242: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625038955: mosquitto version 2.0.11 starting
+1625038955: Config loaded from /mosquitto/config/mosquitto.conf.
+1625038955: Opening ipv4 listen socket on port 1883.
+1625038955: Opening ipv6 listen socket on port 1883.
+1625038955: mosquitto version 2.0.11 running
+1625038971: New connection from 10.244.2.10:36135 on port 1883.
+1625038971: New client connected from 10.244.2.10:36135 as source (p2, c1, k60, u'admin').
+1625040756: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625042557: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625044358: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625046159: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625047960: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625049761: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625051562: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625053363: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625053533: mosquitto version 2.0.11 terminating
+1625053533: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625125197: mosquitto version 2.0.11 starting
+1625125197: Config loaded from /mosquitto/config/mosquitto.conf.
+1625125197: Opening ipv4 listen socket on port 1883.
+1625125197: Opening ipv6 listen socket on port 1883.
+1625125197: mosquitto version 2.0.11 running
+1625125209: New connection from 10.244.2.47:41933 on port 1883.
+1625125209: New client connected from 10.244.2.47:41933 as source (p2, c1, k60, u'admin').
+1625126997: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625128798: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625130599: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625132400: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625134201: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625136002: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625136609: mosquitto version 2.0.11 terminating
+1625136609: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625220161: mosquitto version 2.0.11 starting
+1625220161: Config loaded from /mosquitto/config/mosquitto.conf.
+1625220161: Opening ipv4 listen socket on port 1883.
+1625220161: Opening ipv6 listen socket on port 1883.
+1625220161: mosquitto version 2.0.11 running
+1625220174: New connection from 10.244.2.69:50065 on port 1883.
+1625220174: New client connected from 10.244.2.69:50065 as source (p2, c1, k60, u'admin').
+1625221962: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625223763: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625225564: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625226775: mosquitto version 2.0.11 terminating
+1625226775: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625563962: mosquitto version 2.0.11 starting
+1625563962: Config loaded from /mosquitto/config/mosquitto.conf.
+1625563962: Opening ipv4 listen socket on port 1883.
+1625563962: Opening ipv6 listen socket on port 1883.
+1625563962: mosquitto version 2.0.11 running
+1625563979: New connection from 10.244.2.74:48169 on port 1883.
+1625563979: New client connected from 10.244.2.74:48169 as source (p2, c1, k60, u'admin').
+1625565763: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625567564: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625569365: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625570388: mosquitto version 2.0.11 terminating
+1625570388: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625644202: mosquitto version 2.0.11 starting
+1625644202: Config loaded from /mosquitto/config/mosquitto.conf.
+1625644202: Opening ipv4 listen socket on port 1883.
+1625644202: Opening ipv6 listen socket on port 1883.
+1625644202: mosquitto version 2.0.11 running
+1625644241: New connection from 10.244.2.78:56865 on port 1883.
+1625644241: New client connected from 10.244.2.78:56865 as source (p2, c1, k60, u'admin').
+1625646003: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625647803: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625649604: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625651405: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625653206: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625655007: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625655283: mosquitto version 2.0.11 terminating
+1625655283: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625732243: mosquitto version 2.0.11 starting
+1625732243: Config loaded from /mosquitto/config/mosquitto.conf.
+1625732243: Opening ipv4 listen socket on port 1883.
+1625732243: Opening ipv6 listen socket on port 1883.
+1625732243: mosquitto version 2.0.11 running
+1625732332: New connection from 10.244.2.130:37609 on port 1883.
+1625732332: New client connected from 10.244.2.130:37609 as source (p2, c1, k60, u'admin').
+1625734043: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625735844: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625737645: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625739446: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625741247: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625743048: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1625743333: mosquitto version 2.0.11 terminating
+1625743333: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626681307: mosquitto version 2.0.11 starting
+1626681307: Config loaded from /mosquitto/config/mosquitto.conf.
+1626681307: Opening ipv4 listen socket on port 1883.
+1626681307: Opening ipv6 listen socket on port 1883.
+1626681307: mosquitto version 2.0.11 running
+1626681323: New connection from 10.244.2.145:40753 on port 1883.
+1626681323: New client connected from 10.244.2.145:40753 as source (p2, c1, k60, u'admin').
+1626683108: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626684909: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626686710: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626688511: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626690312: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626692113: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626693914: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626694582: mosquitto version 2.0.11 terminating
+1626694582: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626765638: mosquitto version 2.0.11 starting
+1626765638: Config loaded from /mosquitto/config/mosquitto.conf.
+1626765638: Opening ipv4 listen socket on port 1883.
+1626765638: Opening ipv6 listen socket on port 1883.
+1626765638: mosquitto version 2.0.11 running
+1626765654: New connection from 10.244.2.167:43895 on port 1883.
+1626765654: New client connected from 10.244.2.167:43895 as source (p2, c1, k60, u'admin').
+1626767438: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626769239: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626771040: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626772841: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626774642: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626776443: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626778244: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626780045: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626781846: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626783408: mosquitto version 2.0.11 terminating
+1626783408: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626853851: mosquitto version 2.0.11 starting
+1626853851: Config loaded from /mosquitto/config/mosquitto.conf.
+1626853851: Opening ipv4 listen socket on port 1883.
+1626853851: Opening ipv6 listen socket on port 1883.
+1626853851: mosquitto version 2.0.11 running
+1626853869: New connection from 10.244.2.205:60959 on port 1883.
+1626853869: New client connected from 10.244.2.205:60959 as source (p2, c1, k60, u'admin').
+1626855652: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626857453: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626859254: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626861125: mosquitto version 2.0.11 starting
+1626861125: Config loaded from /mosquitto/config/mosquitto.conf.
+1626861125: Opening ipv4 listen socket on port 1883.
+1626861125: Opening ipv6 listen socket on port 1883.
+1626861125: mosquitto version 2.0.11 running
+1626861684: New connection from 10.244.1.77:39449 on port 1883.
+1626861684: New client connected from 10.244.1.77:39449 as source (p2, c1, k60, u'admin').
+1626862799: Client source has exceeded timeout, disconnecting.
+1626862800: New connection from 10.244.1.77:43851 on port 1883.
+1626862800: New client connected from 10.244.1.77:43851 as source (p2, c1, k60, u'admin').
+1626862926: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626864727: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626866528: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626867471: mosquitto version 2.0.11 terminating
+1626867471: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626938971: mosquitto version 2.0.11 starting
+1626938971: Config loaded from /mosquitto/config/mosquitto.conf.
+1626938971: Opening ipv4 listen socket on port 1883.
+1626938971: Opening ipv6 listen socket on port 1883.
+1626938971: mosquitto version 2.0.11 running
+1626939015: New connection from 10.244.1.85:49927 on port 1883.
+1626939015: New client connected from 10.244.1.85:49927 as source (p2, c1, k60, u'admin').
+1626940772: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626942573: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626944374: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626946175: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626947976: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626949777: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626951578: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626953379: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1626955004: Client source closed its connection.
+1626955036: mosquitto version 2.0.11 terminating
+1626955036: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627025487: mosquitto version 2.0.11 starting
+1627025487: Config loaded from /mosquitto/config/mosquitto.conf.
+1627025487: Opening ipv4 listen socket on port 1883.
+1627025487: Opening ipv6 listen socket on port 1883.
+1627025487: mosquitto version 2.0.11 running
+1627025497: New connection from 10.244.1.94:41601 on port 1883.
+1627025497: New client connected from 10.244.1.94:41601 as source (p2, c1, k60, u'admin').
+1627027288: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627029089: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627030890: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627032691: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627034184: mosquitto version 2.0.11 terminating
+1627035325: mosquitto version 2.0.11 starting
+1627035325: Config loaded from /mosquitto/config/mosquitto.conf.
+1627035325: Opening ipv4 listen socket on port 1883.
+1627035325: Opening ipv6 listen socket on port 1883.
+1627035325: mosquitto version 2.0.11 running
+1627035328: New connection from 10.244.2.244:45441 on port 1883.
+1627035328: New client connected from 10.244.2.244:45441 as source (p2, c1, k60, u'admin').
+1627035332: New connection from 10.244.2.246:46131 on port 1883.
+1627035332: Client source already connected, closing old connection.
+1627035332: New client connected from 10.244.2.246:46131 as source (p2, c1, k60, u'admin').
+1627035333: New connection from 10.244.2.244:57721 on port 1883.
+1627035333: Client source already connected, closing old connection.
+1627035333: New client connected from 10.244.2.244:57721 as source (p2, c1, k60, u'admin').
+1627035334: New connection from 10.244.2.246:51743 on port 1883.
+1627035334: Client source already connected, closing old connection.
+1627035334: New client connected from 10.244.2.246:51743 as source (p2, c1, k60, u'admin').
+1627035335: New connection from 10.244.2.244:44033 on port 1883.
+1627035335: Client source already connected, closing old connection.
+1627035335: New client connected from 10.244.2.244:44033 as source (p2, c1, k60, u'admin').
+1627035336: New connection from 10.244.2.246:49187 on port 1883.
+1627035336: Client source already connected, closing old connection.
+1627035336: New client connected from 10.244.2.246:49187 as source (p2, c1, k60, u'admin').
+1627035337: New connection from 10.244.2.244:32813 on port 1883.
+1627035337: Client source already connected, closing old connection.
+1627035337: New client connected from 10.244.2.244:32813 as source (p2, c1, k60, u'admin').
+1627035338: New connection from 10.244.2.246:53277 on port 1883.
+1627035338: Client source already connected, closing old connection.
+1627035338: New client connected from 10.244.2.246:53277 as source (p2, c1, k60, u'admin').
+1627035339: New connection from 10.244.2.244:49529 on port 1883.
+1627035339: Client source already connected, closing old connection.
+1627035339: New client connected from 10.244.2.244:49529 as source (p2, c1, k60, u'admin').
+1627035340: New connection from 10.244.2.246:36461 on port 1883.
+1627035340: Client source already connected, closing old connection.
+1627035340: New client connected from 10.244.2.246:36461 as source (p2, c1, k60, u'admin').
+1627035341: New connection from 10.244.2.244:47797 on port 1883.
+1627035341: Client source already connected, closing old connection.
+1627035341: New client connected from 10.244.2.244:47797 as source (p2, c1, k60, u'admin').
+1627035342: New connection from 10.244.2.246:44147 on port 1883.
+1627035342: Client source already connected, closing old connection.
+1627035342: New client connected from 10.244.2.246:44147 as source (p2, c1, k60, u'admin').
+1627035343: New connection from 10.244.2.244:59439 on port 1883.
+1627035343: Client source already connected, closing old connection.
+1627035343: New client connected from 10.244.2.244:59439 as source (p2, c1, k60, u'admin').
+1627035344: New connection from 10.244.2.246:56237 on port 1883.
+1627035344: Client source already connected, closing old connection.
+1627035344: New client connected from 10.244.2.246:56237 as source (p2, c1, k60, u'admin').
+1627035345: New connection from 10.244.2.244:57877 on port 1883.
+1627035345: Client source already connected, closing old connection.
+1627035345: New client connected from 10.244.2.244:57877 as source (p2, c1, k60, u'admin').
+1627035346: New connection from 10.244.2.246:49319 on port 1883.
+1627035346: Client source already connected, closing old connection.
+1627035346: New client connected from 10.244.2.246:49319 as source (p2, c1, k60, u'admin').
+1627035347: New connection from 10.244.2.244:47591 on port 1883.
+1627035347: Client source already connected, closing old connection.
+1627035347: New client connected from 10.244.2.244:47591 as source (p2, c1, k60, u'admin').
+1627035348: New connection from 10.244.2.246:59913 on port 1883.
+1627035348: Client source already connected, closing old connection.
+1627035348: New client connected from 10.244.2.246:59913 as source (p2, c1, k60, u'admin').
+1627035349: New connection from 10.244.2.244:39481 on port 1883.
+1627035349: Client source already connected, closing old connection.
+1627035349: New client connected from 10.244.2.244:39481 as source (p2, c1, k60, u'admin').
+1627035350: New connection from 10.244.2.246:38643 on port 1883.
+1627035350: Client source already connected, closing old connection.
+1627035350: New client connected from 10.244.2.246:38643 as source (p2, c1, k60, u'admin').
+1627035351: New connection from 10.244.2.244:33083 on port 1883.
+1627035351: Client source already connected, closing old connection.
+1627035351: New client connected from 10.244.2.244:33083 as source (p2, c1, k60, u'admin').
+1627035352: New connection from 10.244.2.246:52221 on port 1883.
+1627035352: Client source already connected, closing old connection.
+1627035352: New client connected from 10.244.2.246:52221 as source (p2, c1, k60, u'admin').
+1627035353: New connection from 10.244.2.244:42899 on port 1883.
+1627035353: Client source already connected, closing old connection.
+1627035353: New client connected from 10.244.2.244:42899 as source (p2, c1, k60, u'admin').
+1627035354: New connection from 10.244.2.246:44291 on port 1883.
+1627035354: Client source already connected, closing old connection.
+1627035354: New client connected from 10.244.2.246:44291 as source (p2, c1, k60, u'admin').
+1627035355: New connection from 10.244.2.244:58111 on port 1883.
+1627035355: Client source already connected, closing old connection.
+1627035355: New client connected from 10.244.2.244:58111 as source (p2, c1, k60, u'admin').
+1627035356: New connection from 10.244.2.246:34433 on port 1883.
+1627035356: Client source already connected, closing old connection.
+1627035356: New client connected from 10.244.2.246:34433 as source (p2, c1, k60, u'admin').
+1627035357: New connection from 10.244.2.244:37885 on port 1883.
+1627035357: Client source already connected, closing old connection.
+1627035357: New client connected from 10.244.2.244:37885 as source (p2, c1, k60, u'admin').
+1627035358: New connection from 10.244.2.246:35501 on port 1883.
+1627035358: Client source already connected, closing old connection.
+1627035358: New client connected from 10.244.2.246:35501 as source (p2, c1, k60, u'admin').
+1627035359: New connection from 10.244.2.244:49307 on port 1883.
+1627035359: Client source already connected, closing old connection.
+1627035359: New client connected from 10.244.2.244:49307 as source (p2, c1, k60, u'admin').
+1627035360: New connection from 10.244.2.246:58585 on port 1883.
+1627035360: Client source already connected, closing old connection.
+1627035360: New client connected from 10.244.2.246:58585 as source (p2, c1, k60, u'admin').
+1627035361: New connection from 10.244.2.244:52179 on port 1883.
+1627035361: Client source already connected, closing old connection.
+1627035361: New client connected from 10.244.2.244:52179 as source (p2, c1, k60, u'admin').
+1627035362: New connection from 10.244.2.246:37539 on port 1883.
+1627035362: Client source already connected, closing old connection.
+1627035362: New client connected from 10.244.2.246:37539 as source (p2, c1, k60, u'admin').
+1627037126: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627037903: mosquitto version 2.0.11 terminating
+1627037903: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627543469: mosquitto version 2.0.11 starting
+1627543469: Config loaded from /mosquitto/config/mosquitto.conf.
+1627543469: Opening ipv4 listen socket on port 1883.
+1627543469: Opening ipv6 listen socket on port 1883.
+1627543469: mosquitto version 2.0.11 running
+1627543509: New connection from 10.244.2.254:50059 on port 1883.
+1627543509: New client connected from 10.244.2.254:50059 as source (p2, c1, k60, u'admin').
+1627543517: New connection from 10.244.1.118:59183 on port 1883.
+1627543517: Client source already connected, closing old connection.
+1627543517: New client connected from 10.244.1.118:59183 as source (p2, c1, k60, u'admin').
+1627543518: New connection from 10.244.2.254:49091 on port 1883.
+1627543518: Client source already connected, closing old connection.
+1627543518: New client connected from 10.244.2.254:49091 as source (p2, c1, k60, u'admin').
+1627543519: New connection from 10.244.1.118:52379 on port 1883.
+1627543519: Client source already connected, closing old connection.
+1627543519: New client connected from 10.244.1.118:52379 as source (p2, c1, k60, u'admin').
+1627543520: New connection from 10.244.2.254:32809 on port 1883.
+1627543520: Client source already connected, closing old connection.
+1627543520: New client connected from 10.244.2.254:32809 as source (p2, c1, k60, u'admin').
+1627543521: New connection from 10.244.1.118:49017 on port 1883.
+1627543521: Client source already connected, closing old connection.
+1627543521: New client connected from 10.244.1.118:49017 as source (p2, c1, k60, u'admin').
+1627543522: New connection from 10.244.2.254:37939 on port 1883.
+1627543522: Client source already connected, closing old connection.
+1627543522: New client connected from 10.244.2.254:37939 as source (p2, c1, k60, u'admin').
+1627543523: New connection from 10.244.1.118:52889 on port 1883.
+1627543523: Client source already connected, closing old connection.
+1627543523: New client connected from 10.244.1.118:52889 as source (p2, c1, k60, u'admin').
+1627543524: New connection from 10.244.2.254:60821 on port 1883.
+1627543524: Client source already connected, closing old connection.
+1627543524: New client connected from 10.244.2.254:60821 as source (p2, c1, k60, u'admin').
+1627543525: New connection from 10.244.1.118:56641 on port 1883.
+1627543525: Client source already connected, closing old connection.
+1627543525: New client connected from 10.244.1.118:56641 as source (p2, c1, k60, u'admin').
+1627543526: New connection from 10.244.2.254:56315 on port 1883.
+1627543526: Client source already connected, closing old connection.
+1627543526: New client connected from 10.244.2.254:56315 as source (p2, c1, k60, u'admin').
+1627543527: New connection from 10.244.1.118:52657 on port 1883.
+1627543527: Client source already connected, closing old connection.
+1627543527: New client connected from 10.244.1.118:52657 as source (p2, c1, k60, u'admin').
+1627543528: New connection from 10.244.2.254:60165 on port 1883.
+1627543528: Client source already connected, closing old connection.
+1627543528: New client connected from 10.244.2.254:60165 as source (p2, c1, k60, u'admin').
+1627543529: New connection from 10.244.1.118:43171 on port 1883.
+1627543529: Client source already connected, closing old connection.
+1627543529: New client connected from 10.244.1.118:43171 as source (p2, c1, k60, u'admin').
+1627543530: New connection from 10.244.2.254:50757 on port 1883.
+1627543530: Client source already connected, closing old connection.
+1627543530: New client connected from 10.244.2.254:50757 as source (p2, c1, k60, u'admin').
+1627543531: New connection from 10.244.1.118:39303 on port 1883.
+1627543531: Client source already connected, closing old connection.
+1627543531: New client connected from 10.244.1.118:39303 as source (p2, c1, k60, u'admin').
+1627543532: New connection from 10.244.2.254:43937 on port 1883.
+1627543532: Client source already connected, closing old connection.
+1627543532: New client connected from 10.244.2.254:43937 as source (p2, c1, k60, u'admin').
+1627543533: New connection from 10.244.1.118:39361 on port 1883.
+1627543533: Client source already connected, closing old connection.
+1627543533: New client connected from 10.244.1.118:39361 as source (p2, c1, k60, u'admin').
+1627543534: New connection from 10.244.2.254:50131 on port 1883.
+1627543534: Client source already connected, closing old connection.
+1627543534: New client connected from 10.244.2.254:50131 as source (p2, c1, k60, u'admin').
+1627543535: New connection from 10.244.1.118:46819 on port 1883.
+1627543535: Client source already connected, closing old connection.
+1627543535: New client connected from 10.244.1.118:46819 as source (p2, c1, k60, u'admin').
+1627543536: New connection from 10.244.2.254:38909 on port 1883.
+1627543536: Client source already connected, closing old connection.
+1627543536: New client connected from 10.244.2.254:38909 as source (p2, c1, k60, u'admin').
+1627543537: New connection from 10.244.1.118:43971 on port 1883.
+1627543537: Client source already connected, closing old connection.
+1627543537: New client connected from 10.244.1.118:43971 as source (p2, c1, k60, u'admin').
+1627543538: New connection from 10.244.2.254:33297 on port 1883.
+1627543538: Client source already connected, closing old connection.
+1627543538: New client connected from 10.244.2.254:33297 as source (p2, c1, k60, u'admin').
+1627543539: New connection from 10.244.1.118:40267 on port 1883.
+1627543539: Client source already connected, closing old connection.
+1627543539: New client connected from 10.244.1.118:40267 as source (p2, c1, k60, u'admin').
+1627543540: New connection from 10.244.2.254:46231 on port 1883.
+1627543540: Client source already connected, closing old connection.
+1627543540: New client connected from 10.244.2.254:46231 as source (p2, c1, k60, u'admin').
+1627543541: New connection from 10.244.1.118:37531 on port 1883.
+1627543541: Client source already connected, closing old connection.
+1627543541: New client connected from 10.244.1.118:37531 as source (p2, c1, k60, u'admin').
+1627543542: New connection from 10.244.2.254:39183 on port 1883.
+1627543542: Client source already connected, closing old connection.
+1627543542: New client connected from 10.244.2.254:39183 as source (p2, c1, k60, u'admin').
+1627543543: New connection from 10.244.1.118:33043 on port 1883.
+1627543543: Client source already connected, closing old connection.
+1627543543: New client connected from 10.244.1.118:33043 as source (p2, c1, k60, u'admin').
+1627543544: New connection from 10.244.2.254:54769 on port 1883.
+1627543544: Client source already connected, closing old connection.
+1627543544: New client connected from 10.244.2.254:54769 as source (p2, c1, k60, u'admin').
+1627543545: New connection from 10.244.1.118:40329 on port 1883.
+1627543545: Client source already connected, closing old connection.
+1627543545: New client connected from 10.244.1.118:40329 as source (p2, c1, k60, u'admin').
+1627543546: New connection from 10.244.2.254:45881 on port 1883.
+1627543546: Client source already connected, closing old connection.
+1627543546: New client connected from 10.244.2.254:45881 as source (p2, c1, k60, u'admin').
+1627543547: New connection from 10.244.1.118:47829 on port 1883.
+1627543547: Client source already connected, closing old connection.
+1627543547: New client connected from 10.244.1.118:47829 as source (p2, c1, k60, u'admin').
+1627545270: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627545896: mosquitto version 2.0.11 terminating
+1627545896: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627546108: mosquitto version 2.0.11 starting
+1627546108: Config loaded from /mosquitto/config/mosquitto.conf.
+1627546108: Opening ipv4 listen socket on port 1883.
+1627546108: Opening ipv6 listen socket on port 1883.
+1627546108: mosquitto version 2.0.11 running
+1627546805: New connection from 10.244.1.125:51657 on port 1883.
+1627546805: New client connected from 10.244.1.125:51657 as source (p2, c1, k60, u'admin').
+1627547909: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627549710: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627551511: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627553312: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627555113: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627556914: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627558715: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627560516: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627561311: mosquitto version 2.0.11 terminating
+1627561311: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627630669: mosquitto version 2.0.11 starting
+1627630669: Config loaded from /mosquitto/config/mosquitto.conf.
+1627630669: Opening ipv4 listen socket on port 1883.
+1627630669: Opening ipv6 listen socket on port 1883.
+1627630669: mosquitto version 2.0.11 running
+1627630695: New connection from 10.244.1.130:43135 on port 1883.
+1627630695: New client connected from 10.244.1.130:43135 as source (p2, c1, k60, u'admin').
+1627632470: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627632969: Client source closed its connection.
+1627632984: New connection from 10.244.1.136:52297 on port 1883.
+1627632984: New client connected from 10.244.1.136:52297 as source (p2, c1, k60, u'admin').
+1627634271: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627636072: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627637873: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627639674: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627641475: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627643276: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627645077: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1627645847: mosquitto version 2.0.11 terminating
+1627645847: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629708523: mosquitto version 2.0.11 starting
+1629708523: Config loaded from /mosquitto/config/mosquitto.conf.
+1629708523: Opening ipv4 listen socket on port 1883.
+1629708523: Opening ipv6 listen socket on port 1883.
+1629708523: mosquitto version 2.0.11 running
+1629708776: New connection from 10.244.1.150:47415 on port 1883.
+1629708776: New client connected from 10.244.1.150:47415 as source (p2, c1, k60, u'admin').
+1629710324: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629712125: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629713926: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629715727: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629717528: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629717593: mosquitto version 2.0.11 terminating
+1629717593: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629790710: mosquitto version 2.0.11 starting
+1629790710: Config loaded from /mosquitto/config/mosquitto.conf.
+1629790710: Opening ipv4 listen socket on port 1883.
+1629790710: Opening ipv6 listen socket on port 1883.
+1629790710: mosquitto version 2.0.11 running
+1629790711: New connection from 10.244.1.162:44759 on port 1883.
+1629790711: New client connected from 10.244.1.162:44759 as source (p2, c1, k60, u'admin').
+1629792510: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629794311: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629796112: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629797913: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629799714: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629801438: mosquitto version 2.0.11 terminating
+1629801438: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629879044: mosquitto version 2.0.11 starting
+1629879044: Config loaded from /mosquitto/config/mosquitto.conf.
+1629879044: Opening ipv4 listen socket on port 1883.
+1629879044: Opening ipv6 listen socket on port 1883.
+1629879044: mosquitto version 2.0.11 running
+1629879053: New connection from 10.244.1.185:57513 on port 1883.
+1629879053: New client connected from 10.244.1.185:57513 as source (p2, c1, k60, u'admin').
+1629880845: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629882646: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629884447: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629886248: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629888049: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629889850: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629891651: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629891903: mosquitto version 2.0.11 terminating
+1629891903: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629963539: mosquitto version 2.0.11 starting
+1629963539: Config loaded from /mosquitto/config/mosquitto.conf.
+1629963539: Opening ipv4 listen socket on port 1883.
+1629963539: Opening ipv6 listen socket on port 1883.
+1629963539: mosquitto version 2.0.11 running
+1629963542: mosquitto version 2.0.11 terminating
+1629963542: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629964689: mosquitto version 2.0.11 starting
+1629964689: Config loaded from /mosquitto/config/mosquitto.conf.
+1629964689: Opening ipv4 listen socket on port 1883.
+1629964689: Opening ipv6 listen socket on port 1883.
+1629964689: mosquitto version 2.0.11 running
+1629964702: New connection from 10.244.2.120:57363 on port 1883.
+1629964702: New client connected from 10.244.2.120:57363 as source (p2, c1, k60, u'admin').
+1629966490: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629968291: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629970092: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629971893: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1629972688: mosquitto version 2.0.11 terminating
+1629972688: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630307862: mosquitto version 2.0.11 starting
+1630307862: Config loaded from /mosquitto/config/mosquitto.conf.
+1630307862: Opening ipv4 listen socket on port 1883.
+1630307862: Opening ipv6 listen socket on port 1883.
+1630307862: mosquitto version 2.0.11 running
+1630307877: New connection from 10.244.2.137:49617 on port 1883.
+1630307877: New client connected from 10.244.2.137:49617 as source (p2, c1, k60, u'admin').
+1630309663: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630311464: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630313265: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630315066: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630316867: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630318302: New connection from 10.244.2.146:58467 on port 1883.
+1630318302: Client source already connected, closing old connection.
+1630318302: New client connected from 10.244.2.146:58467 as source (p2, c1, k60, u'admin').
+1630318303: New connection from 10.244.2.137:39391 on port 1883.
+1630318303: Client source already connected, closing old connection.
+1630318303: New client connected from 10.244.2.137:39391 as source (p2, c1, k60, u'admin').
+1630318304: New connection from 10.244.2.146:39303 on port 1883.
+1630318304: Client source already connected, closing old connection.
+1630318304: New client connected from 10.244.2.146:39303 as source (p2, c1, k60, u'admin').
+1630318305: New connection from 10.244.2.137:44403 on port 1883.
+1630318305: Client source already connected, closing old connection.
+1630318305: New client connected from 10.244.2.137:44403 as source (p2, c1, k60, u'admin').
+1630318306: New connection from 10.244.2.146:45425 on port 1883.
+1630318306: Client source already connected, closing old connection.
+1630318306: New client connected from 10.244.2.146:45425 as source (p2, c1, k60, u'admin').
+1630318307: New connection from 10.244.2.137:58657 on port 1883.
+1630318307: Client source already connected, closing old connection.
+1630318307: New client connected from 10.244.2.137:58657 as source (p2, c1, k60, u'admin').
+1630318308: New connection from 10.244.2.146:50629 on port 1883.
+1630318308: Client source already connected, closing old connection.
+1630318308: New client connected from 10.244.2.146:50629 as source (p2, c1, k60, u'admin').
+1630318309: New connection from 10.244.2.137:39779 on port 1883.
+1630318309: Client source already connected, closing old connection.
+1630318309: New client connected from 10.244.2.137:39779 as source (p2, c1, k60, u'admin').
+1630318310: New connection from 10.244.2.146:57263 on port 1883.
+1630318310: Client source already connected, closing old connection.
+1630318310: New client connected from 10.244.2.146:57263 as source (p2, c1, k60, u'admin').
+1630318311: New connection from 10.244.2.137:37651 on port 1883.
+1630318311: Client source already connected, closing old connection.
+1630318311: New client connected from 10.244.2.137:37651 as source (p2, c1, k60, u'admin').
+1630318312: New connection from 10.244.2.146:44263 on port 1883.
+1630318312: Client source already connected, closing old connection.
+1630318312: New client connected from 10.244.2.146:44263 as source (p2, c1, k60, u'admin').
+1630318313: New connection from 10.244.2.137:34917 on port 1883.
+1630318313: Client source already connected, closing old connection.
+1630318313: New client connected from 10.244.2.137:34917 as source (p2, c1, k60, u'admin').
+1630318314: New connection from 10.244.2.146:60445 on port 1883.
+1630318314: Client source already connected, closing old connection.
+1630318314: New client connected from 10.244.2.146:60445 as source (p2, c1, k60, u'admin').
+1630318315: New connection from 10.244.2.137:40315 on port 1883.
+1630318315: Client source already connected, closing old connection.
+1630318315: New client connected from 10.244.2.137:40315 as source (p2, c1, k60, u'admin').
+1630318316: New connection from 10.244.2.146:44221 on port 1883.
+1630318316: Client source already connected, closing old connection.
+1630318316: New client connected from 10.244.2.146:44221 as source (p2, c1, k60, u'admin').
+1630318317: New connection from 10.244.2.137:49905 on port 1883.
+1630318317: Client source already connected, closing old connection.
+1630318317: New client connected from 10.244.2.137:49905 as source (p2, c1, k60, u'admin').
+1630318318: New connection from 10.244.2.146:60669 on port 1883.
+1630318318: Client source already connected, closing old connection.
+1630318318: New client connected from 10.244.2.146:60669 as source (p2, c1, k60, u'admin').
+1630318319: New connection from 10.244.2.137:36853 on port 1883.
+1630318319: Client source already connected, closing old connection.
+1630318319: New client connected from 10.244.2.137:36853 as source (p2, c1, k60, u'admin').
+1630318320: New connection from 10.244.2.146:57879 on port 1883.
+1630318320: Client source already connected, closing old connection.
+1630318320: New client connected from 10.244.2.146:57879 as source (p2, c1, k60, u'admin').
+1630318321: New connection from 10.244.2.137:43251 on port 1883.
+1630318321: Client source already connected, closing old connection.
+1630318321: New client connected from 10.244.2.137:43251 as source (p2, c1, k60, u'admin').
+1630318322: New connection from 10.244.2.146:45835 on port 1883.
+1630318322: Client source already connected, closing old connection.
+1630318322: New client connected from 10.244.2.146:45835 as source (p2, c1, k60, u'admin').
+1630318323: New connection from 10.244.2.137:58137 on port 1883.
+1630318323: Client source already connected, closing old connection.
+1630318323: New client connected from 10.244.2.137:58137 as source (p2, c1, k60, u'admin').
+1630318324: New connection from 10.244.2.146:57339 on port 1883.
+1630318324: Client source already connected, closing old connection.
+1630318324: New client connected from 10.244.2.146:57339 as source (p2, c1, k60, u'admin').
+1630318325: New connection from 10.244.2.137:57403 on port 1883.
+1630318325: Client source already connected, closing old connection.
+1630318325: New client connected from 10.244.2.137:57403 as source (p2, c1, k60, u'admin').
+1630318326: New connection from 10.244.2.146:53167 on port 1883.
+1630318326: Client source already connected, closing old connection.
+1630318326: New client connected from 10.244.2.146:53167 as source (p2, c1, k60, u'admin').
+1630318327: New connection from 10.244.2.137:38099 on port 1883.
+1630318327: Client source already connected, closing old connection.
+1630318327: New client connected from 10.244.2.137:38099 as source (p2, c1, k60, u'admin').
+1630318328: New connection from 10.244.2.146:58553 on port 1883.
+1630318328: Client source already connected, closing old connection.
+1630318328: New client connected from 10.244.2.146:58553 as source (p2, c1, k60, u'admin').
+1630318329: New connection from 10.244.2.137:52645 on port 1883.
+1630318329: Client source already connected, closing old connection.
+1630318329: New client connected from 10.244.2.137:52645 as source (p2, c1, k60, u'admin').
+1630318330: New connection from 10.244.2.146:55829 on port 1883.
+1630318330: Client source already connected, closing old connection.
+1630318330: New client connected from 10.244.2.146:55829 as source (p2, c1, k60, u'admin').
+1630318331: New connection from 10.244.2.137:60221 on port 1883.
+1630318331: Client source already connected, closing old connection.
+1630318331: New client connected from 10.244.2.137:60221 as source (p2, c1, k60, u'admin').
+1630318332: New connection from 10.244.2.146:40471 on port 1883.
+1630318332: Client source already connected, closing old connection.
+1630318332: New client connected from 10.244.2.146:40471 as source (p2, c1, k60, u'admin').
+1630318333: New connection from 10.244.2.137:36045 on port 1883.
+1630318333: Client source already connected, closing old connection.
+1630318333: New client connected from 10.244.2.137:36045 as source (p2, c1, k60, u'admin').
+1630318334: New connection from 10.244.2.146:54793 on port 1883.
+1630318334: Client source already connected, closing old connection.
+1630318334: New client connected from 10.244.2.146:54793 as source (p2, c1, k60, u'admin').
+1630318335: New connection from 10.244.2.137:40675 on port 1883.
+1630318335: Client source already connected, closing old connection.
+1630318335: New client connected from 10.244.2.137:40675 as source (p2, c1, k60, u'admin').
+1630318668: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630320469: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630321196: mosquitto version 2.0.11 terminating
+1630321196: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630397087: mosquitto version 2.0.11 starting
+1630397087: Config loaded from /mosquitto/config/mosquitto.conf.
+1630397087: Opening ipv4 listen socket on port 1883.
+1630397087: Opening ipv6 listen socket on port 1883.
+1630397087: mosquitto version 2.0.11 running
+1630397104: New connection from 10.244.2.152:52251 on port 1883.
+1630397104: New client connected from 10.244.2.152:52251 as source (p2, c1, k60, u'admin').
+1630398888: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630400689: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630402490: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630404291: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630406092: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630407893: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630408946: mosquitto version 2.0.11 terminating
+1630408946: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630481891: mosquitto version 2.0.11 starting
+1630481891: Config loaded from /mosquitto/config/mosquitto.conf.
+1630481891: Opening ipv4 listen socket on port 1883.
+1630481891: Opening ipv6 listen socket on port 1883.
+1630481891: mosquitto version 2.0.11 running
+1630481899: New connection from 10.244.2.154:48211 on port 1883.
+1630481899: New client connected from 10.244.2.154:48211 as source (p2, c1, k60, u'admin').
+1630482671: Client source closed its connection.
+1630483692: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630483928: New connection from 10.244.2.156:43395 on port 1883.
+1630483928: New client connected from 10.244.2.156:43395 as source (p2, c1, k60, u'admin').
+1630484336: New connection from 10.244.1.0:7459 on port 1883.
+1630484336: New client connected from 10.244.1.0:7459 as mosq-o75MAYbc1gZzLlIJg9 (p2, c1, k60, u'admin').
+1630484336: Client mosq-o75MAYbc1gZzLlIJg9 disconnected.
+1630484838: Client source closed its connection.
+1630484904: New connection from 10.244.2.158:36585 on port 1883.
+1630484904: New client connected from 10.244.2.158:36585 as source (p2, c1, k60, u'admin').
+1630485207: Client source closed its connection.
+1630485276: New connection from 10.244.2.159:55265 on port 1883.
+1630485276: New client connected from 10.244.2.159:55265 as source (p2, c1, k60, u'admin').
+1630485493: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630486119: Client source closed its connection.
+1630486341: New connection from 10.244.2.160:54067 on port 1883.
+1630486341: New client connected from 10.244.2.160:54067 as source (p2, c1, k60, u'admin').
+1630487294: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630487419: Client source closed its connection.
+1630487649: New connection from 10.244.2.161:45853 on port 1883.
+1630487649: New client connected from 10.244.2.161:45853 as source (p2, c1, k60, u'admin').
+1630487898: Client source closed its connection.
+1630488279: New connection from 10.244.2.162:47589 on port 1883.
+1630488279: New client connected from 10.244.2.162:47589 as source (p2, c1, k60, u'admin').
+1630488336: New connection from 10.244.1.0:6158 on port 1883.
+1630488336: New client connected from 10.244.1.0:6158 as mosq-W3yfTI04GCpilIPrNG (p2, c1, k60, u'admin').
+1630488336: Client mosq-W3yfTI04GCpilIPrNG disconnected.
+1630489320: mosquitto version 2.0.11 starting
+1630489320: Config loaded from /mosquitto/config/mosquitto.conf.
+1630489320: Opening ipv4 listen socket on port 1883.
+1630489320: Opening ipv6 listen socket on port 1883.
+1630489320: mosquitto version 2.0.11 running
+1630491121: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630492922: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630494126: mosquitto version 2.0.11 terminating
+1630494126: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630568746: mosquitto version 2.0.11 starting
+1630568746: Config loaded from /mosquitto/config/mosquitto.conf.
+1630568746: Opening ipv4 listen socket on port 1883.
+1630568746: Opening ipv6 listen socket on port 1883.
+1630568746: mosquitto version 2.0.11 running
+1630568959: mosquitto version 2.0.11 terminating
+1630568959: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630569522: mosquitto version 2.0.11 starting
+1630569522: Config loaded from /mosquitto/config/mosquitto.conf.
+1630569522: Opening ipv4 listen socket on port 1883.
+1630569522: Opening ipv6 listen socket on port 1883.
+1630569522: mosquitto version 2.0.11 running
+1630569522: mosquitto version 2.0.11 terminating
+1630569522: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630569535: mosquitto version 2.0.11 starting
+1630569535: Config loaded from /mosquitto/config/mosquitto.conf.
+1630569535: Opening ipv4 listen socket on port 1883.
+1630569535: Opening ipv6 listen socket on port 1883.
+1630569535: mosquitto version 2.0.11 running
+1630571336: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630573137: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630574938: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630576739: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630578540: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630579894: mosquitto version 2.0.11 terminating
+1630579894: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630661056: mosquitto version 2.0.12 starting
+1630661056: Config loaded from /mosquitto/config/mosquitto.conf.
+1630661056: Opening ipv4 listen socket on port 1883.
+1630661056: Opening ipv6 listen socket on port 1883.
+1630661056: mosquitto version 2.0.12 running
+1630662856: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630664657: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630666199: mosquitto version 2.0.12 terminating
+1630666199: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630913769: mosquitto version 2.0.12 starting
+1630913769: Config loaded from /mosquitto/config/mosquitto.conf.
+1630913769: Opening ipv4 listen socket on port 1883.
+1630913769: Opening ipv6 listen socket on port 1883.
+1630913769: mosquitto version 2.0.12 running
+1630915569: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630917370: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630919171: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630920972: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630922773: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630924574: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630925441: mosquitto version 2.0.12 terminating
+1630925441: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1630999979: mosquitto version 2.0.12 starting
+1630999979: Config loaded from /mosquitto/config/mosquitto.conf.
+1630999979: Opening ipv4 listen socket on port 1883.
+1630999979: Opening ipv6 listen socket on port 1883.
+1630999979: mosquitto version 2.0.12 running
+1631001779: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631003580: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631005381: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631007182: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631008983: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631010784: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631012585: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631012639: mosquitto version 2.0.12 terminating
+1631012639: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631086499: mosquitto version 2.0.12 starting
+1631086499: Config loaded from /mosquitto/config/mosquitto.conf.
+1631086499: Opening ipv4 listen socket on port 1883.
+1631086499: Opening ipv6 listen socket on port 1883.
+1631086499: mosquitto version 2.0.12 running
+1631088300: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631090101: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631091902: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631093703: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631095504: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631097305: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631098755: mosquitto version 2.0.12 terminating
+1631098755: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631172486: mosquitto version 2.0.12 starting
+1631172486: Config loaded from /mosquitto/config/mosquitto.conf.
+1631172486: Opening ipv4 listen socket on port 1883.
+1631172486: Opening ipv6 listen socket on port 1883.
+1631172486: mosquitto version 2.0.12 running
+1631174287: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631176088: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631177889: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631179690: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631181491: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1631183292: Saving in-memory database to /mosquitto/data//mosquitto.db.

@@ -1,0 +1,20 @@
+version: "3.6"
+
+services:
+      
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+      - mosquitto-config:/mosquitto/config
+
+volumes:
+  mosquitto-data:
+  mosquitto-log:
+  mosquitto-config:

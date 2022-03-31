@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mosquitto-log
+  labels:
+    type: local
+spec:
+  storageClassName: mosquitto-log
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mosquitto/log"
