@@ -1,0 +1,15 @@
+<item xmlns="ManufacturingPlan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch_ID="221" item_ID="2212" order_ID="22" productType="1" refRecipe="recipe02" xsi:schemaLocation="ManufacturingPlan ../Item.xsd" state="Production">
+	<action actionPos="4" description="place cover" id="4" plannedFinishTime="2021/03/30 11:36:20" plannedMachineId="11" plannedStartTime="2021/03/30 11:32:20" plannedStationId="1" type="pick_and_place"/>
+	<subitem description="BB_A + upper bearing" productType="BB_B2" state="Production">
+		<action actionPos="3" actualStationId="1" description="insert upper bearing" id="3" plannedFinishTime="2021/03/30 11:36:20" plannedMachineId="11" plannedStartTime="2021/03/30 11:32:20" plannedStationId="1" type="insert"/>
+		<subitem description="BB_B + axis" productType="BB_A" state="Production">
+			<action actionPos="2" actualStationId="1" description="insert axis" id="2" plannedFinishTime="2021/03/30 11:36:20" plannedMachineId="11" plannedStartTime="2021/03/30 11:32:20" plannedStationId="1" type="insert"/>
+			<subitem description="BB + lower bearing" productType="BB_B" state="Production">
+				<action actionPos="1" actualStationId="1" description="insert lower bearing" id="1" plannedFinishTime="2021/09/29 18:39:55" plannedMachineId="11" plannedStartTime="2021/09/29 18:38:50" plannedStationId="1" type="insert"/>
+				<subitem description="Big base" productType="BB" state="Production">
+					<rawMaterial description="Big base" id="BB"/>
+				</subitem>
+			</subitem>
+		</subitem>
+	</subitem>
+</item>

@@ -1,0 +1,15 @@
+<item xmlns="ManufacturingPlan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch_ID="111" item_ID="1113" order_ID="11" productType="1" refRecipe="recipe02" xsi:schemaLocation="ManufacturingPlan ../Item.xsd" state="Completed">
+	<action actionPos="4" description="place cover" id="4" plannedFinishTime="2021/04/27 12:12:04" plannedMachineId="11" plannedStartTime="2021/04/27 12:02:00" plannedStationId="S01" type="pick_and_place" actualStartTime="2021/1/27 14:29:43" actualFinishTime="12021/1/27 14:32:43" actualMachineId="1"/>
+	<subitem description="BB_A + upper bearing" productType="BB_B2" state="Completed">
+		<action actionPos="3" actualStationId="S01" description="insert upper bearing" id="3" plannedFinishTime="2021/04/27 00:02:15" plannedMachineId="M03" plannedStartTime="2021/04/27 00:00:30" plannedStationId="S01" type="insert" actualStartTime="2021/1/27 14:29:43" actualFinishTime="12021/1/27 14:32:43" actualMachineId="1"/>
+		<subitem description="BB_B + axis" productType="BB_A" state="Completed">
+			<action actionPos="2" actualStationId="S01" description="insert axis" id="2" plannedFinishTime="2021/04/27 00:02:45" plannedMachineId="M02" plannedStartTime="2021/04/27 00:02:15" plannedStationId="S01" type="insert" actualStartTime="2021/1/27 14:29:43" actualFinishTime="12021/1/27 14:32:43" actualMachineId="1"/>
+			<subitem description="BB + lower bearing" productType="BB_B" state="Completed">
+				<action actionPos="1" actualStationId="S01" description="insert lower bearing" id="1" plannedFinishTime="2021/04/27 11:10:45" plannedMachineId="11" plannedStartTime="2021/04/27 10:59:20" plannedStationId="S01" type="insert" actualStartTime="2021/1/27 14:29:43" actualFinishTime="12021/1/27 14:32:43" actualMachineId="1"/>
+				<subitem description="Big base" productType="BB" state="Completed">
+					<rawMaterial description="Big base" id="BB"/>
+				</subitem>
+			</subitem>
+		</subitem>
+	</subitem>
+</item>

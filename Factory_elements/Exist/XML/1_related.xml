@@ -1,0 +1,42 @@
+<listOfOperations xmlns="ManufacturingPlan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" productType="1" refRecipe="recipe02" xsi:schemaLocation="ManufacturingPlan ../../ListOfOperations.xsd">
+	<operation id="1" type="insert">
+		<action id="1" type="insert" actionPos="1" description="insert lower bearing"/>
+	</operation>		
+	<operation id="2" type="insert">
+		<action id="2" type="insert" actionPos="2" description="insert axis"/>
+		<action id="1" type="insert" actionPos="1" description="insert lower bearing"/>
+	</operation>		
+	<operation id="3" type="insert">
+		<action id="3" type="insert" actionPos="3" description="insert upper bearing"/>
+		<action id="2" type="insert" actionPos="2" description="insert axis"/>
+		<action id="1" type="insert" actionPos="1" description="insert lower bearing"/>
+	</operation>
+	<operation id="4" type="insert_and_place">
+		<action id="4" type="pick_and_place" actionPos="4" description="place cover"/>
+		<action id="3" type="insert" actionPos="3" description="insert upper bearing"/>
+		<action id="2" type="insert" actionPos="2" description="insert axis"/>
+		<action id="1" type="insert" actionPos="1" description="insert lower bearing"/>
+	</operation>
+	<operation id="5" type="insert">
+		<action id="2" type="insert" actionPos="2" description="insert axis"/>
+	</operation>
+	<operation id="6" type="insert">
+		<action id="3" type="insert" actionPos="3" description="insert upper bearing"/>
+		<action id="2" type="insert" actionPos="2" description="insert axis"/>
+	</operation>
+	<operation id="7" type="insert_and_place">
+		<action id="4" type="pick_and_place" actionPos="4" description="place cover"/>
+		<action id="3" type="insert" actionPos="3" description="insert upper bearing"/>
+		<action id="2" type="insert" actionPos="2" description="insert axis"/>
+	</operation>
+	<operation id="8" type="insert">
+		<action id="3" type="insert" actionPos="3" description="insert upper bearing"/>
+	</operation>
+	<operation id="9" type="insert_and_place">
+		<action id="4" type="pick_and_place" actionPos="4" description="place cover"/>
+		<action id="3" type="insert" actionPos="3" description="insert upper bearing"/>
+	</operation>
+	<operation id="10" type="pick_and_place">
+		<action id="4" type="pick_and_place" actionPos="4" description="place cover"/>		
+	</operation>
+</listOfOperations>
