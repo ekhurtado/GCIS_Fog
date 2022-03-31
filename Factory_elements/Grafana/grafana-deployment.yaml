@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  labels:
+    env: visuals
+spec:
+  selector:
+    matchLabels:
+       env: visuals
+  template:
+    metadata:
+     name: grafana
+     labels:
+       env: visuals
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana
+        # args:
+        # - '--config=/grafana.ini'
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: grafana-persistent-storage-store
+          mountPath: /var/lib/grafana/
+        - name: grafana-script
+          mountPath: /etc/grafana/provisioning/datasources/datasource.yaml
+          subPath: datasource.yaml
+      volumes:
+      - name: grafana-persistent-storage-store
+        persistentVolumeClaim:
+          claimName: grafana-storage
+      - name: grafana-script
+        configMap:
+          name: grafana-config
+      nodeSelector:
+        node-type: factory-components

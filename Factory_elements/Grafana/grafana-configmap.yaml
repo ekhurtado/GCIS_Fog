@@ -1,0 +1,14 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: grafana-config
+data:
+  datasource.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: Influx
+        type: influx
+        access: server
+        url: http://http://192.168.233.131:30086
+        version: 1
+        editable: true
