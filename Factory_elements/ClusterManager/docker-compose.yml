@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+
+  cluster-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile_Cluster_Manager
+    image: gcr.io/clusterekaitz/gcis:cluster-manager
+    container_name: cluster-manager
+    ports:
+      - 6000:6000

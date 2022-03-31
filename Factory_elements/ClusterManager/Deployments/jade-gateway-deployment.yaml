@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: external-jade
+  name: external-jade
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: external-jade
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: external-jade
+    spec:
+      containers:
+      - env:
+        - name: AMS_NAME
+          value: jade-agent-ams
+        image: gcr.io/clusterekaitz/jadedocker:external_jade
+        imagePullPolicy: ""
+        name: jade1
+        ports:
+        - containerPort: 1099
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

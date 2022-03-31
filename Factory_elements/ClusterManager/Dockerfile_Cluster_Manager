@@ -1,0 +1,19 @@
+FROM python:3
+
+RUN pip install kubernetes
+
+RUN pip install requests
+
+RUN pip install flask
+
+COPY clusterManager.py .
+
+COPY Deployments /Deployments
+
+COPY config .kube/config
+
+ENV FLASK_APP=clusterManager.py
+ENV FLASK_RUN_PORT=6000
+
+CMD flask run --host=0.0.0.0
+

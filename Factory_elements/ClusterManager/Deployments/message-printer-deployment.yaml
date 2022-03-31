@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: message-printer
+  name: message-printer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: message-printer
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: message-printer
+    spec:
+      containers:
+      - env:
+        - name: message
+          value: <message>
+        - name: DISPLAY
+          value: :0
+        image: gcr.io/clusterekaitz/appfil2:message_printer
+        imagePullPolicy: ""
+        name: message-printer
+        resources: {}
+        volumeMounts:
+        - mountPath: /tmp/.X11-unix
+          name: message-claim
+          readOnly: true
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: message-claim
+        persistentVolumeClaim:
+          claimName: message-claim
+          readOnly: true
+      nodeSelector:
+        node-type: host
+status: {}
