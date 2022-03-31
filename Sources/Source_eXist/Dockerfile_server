@@ -1,0 +1,9 @@
+FROM openjdk:8-jre-alpine
+
+COPY ./jade.jar /
+
+COPY ./tutorial3zatia /tutorial3zatia
+
+ENV AMS_NAME=172.17.0.2
+
+CMD ["java", "-cp", "/jade.jar:.", "jade.Boot", "-host", "${AMS_NAME}", "-port", "1099", "-container", "servidor:tutorial3zatia.Servidor"]
