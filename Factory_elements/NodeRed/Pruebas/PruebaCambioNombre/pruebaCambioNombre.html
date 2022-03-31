@@ -1,0 +1,54 @@
+<script type="text/javascript">
+    RED.nodes.registerType('PruebaCambioNombre',{
+        category: 'Pruebas',
+        color: '#49e6a7',
+        defaults: {
+            output: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        inputLabels: "Last component input",
+        outputLabels: "Output with definition",
+        icon: "build.png",
+        label: function() {
+            let text = document.getElementById("node-input-output").value;
+            //return this.name||"Prueba cambio nombre";
+            //return this.name || text;
+            return this.name||text;
+        },
+        oneditprepare: function() {
+            this.editor = RED.editor.createEditor({
+               id: 'node-input-example-editor',
+               mode: 'ace/mode/text',
+               value: this.exampleText
+            });
+        },
+        oneditsave: function() {
+            //this.exampleText = this.editor.getValue();
+            //this.editor.destroy();
+            //delete this.editor;
+            this.editor = RED.editor.createEditor({
+               id: 'node-input-example-editor',
+               mode: 'ace/mode/text',
+               value: this.exampleText,
+               label: 'Nuevo nombre'
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="PruebaCambioNombre">
+    <div class="form-row">
+        <label for="node-input-output"><i class="fa fa-tag"></i> Functions</label>
+        <select name="output_gateway" id="node-input-output">
+          <option value="getDataFromAssemblyStation">Get data from assembly station</option>
+          <option value="getDataFromTransportRobot">Get data from transport robot</option>
+          <option value="getDataFromMonitor">Get data from monitor</option>
+        </select>
+    </div>
+    
+</script>
+
+<script type="text/html" data-help-name="PruebaCambioNombre">
+    <p>A simple node that build the fog-in-the-loop application that is defined in the flow.</p>
+</script>

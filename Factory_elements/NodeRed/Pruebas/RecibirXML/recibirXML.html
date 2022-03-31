@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    RED.nodes.registerType('RecibirXML',{
+        category: 'Pruebas',
+        color: '#49e6a7',
+        defaults: {
+            function: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        inputLabels: "Last component input",
+        icon: "build.png",
+        label: function() {
+            return this.name||"Recibir XML";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="RecibirXML">
+    <div class="form-row">
+        <label for="node-input-function"><i class="fa fa-tag"></i> Functions</label>
+        <select name="function" id="node-input-function">
+          <option value="storeAssemblyStationData">Assembly station data</option>
+          <option value="storeTransportRobotData">Transport robot data</option>
+          <option value="storeMonitorData">Monitor data</option>
+        </select>
+</script>
+
+<script type="text/html" data-help-name="RecibirXML">
+    <p>A simple node that build the fog-in-the-loop application that is defined in the flow.</p>
+</script>

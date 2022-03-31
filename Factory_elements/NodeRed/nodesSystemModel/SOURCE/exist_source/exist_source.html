@@ -1,0 +1,42 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Source eXist',{
+        category: 'source',
+        color: '#14a7e0',
+        defaults: {
+            name: {value:""},
+            topic: {value:""},
+            sink: {value:""},
+            output: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        outputLabels: "outPort of the component",
+        icon: "source.png",
+        label: function() {
+            return this.name||"Assembly Station eXist";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Source eXist">
+    <div class="form-row">
+        <label for="node-input-output"><i class="fa fa-tag"></i> Functions</label>
+        <select name="output_gateway" id="node-input-output">
+          <option value="assemblyStationData">Get assembly station data</option>
+          <option value="transportRobotData">Get transport robot data</option>
+          <option value="monitorData">Get monitor data</option>
+        </select>
+</script>
+
+<script type="text/html" data-help-name="Source eXist">
+    <!--<h2>MQTT - SOURCE - HTTP</h2>-->
+    <p>This is a simple node that creates a new instance of source component to read data of eXist database.</p>
+    <p>There are some function to choose in order to create the correct instance for the application.</p>
+    <ul>
+        <li><b>Get assemply station data</b>: This function will get the data of any assembly station of the plant. The data type asociated with this function is TDBStation, so, the outPort will be that type.</li>
+        <li><b>Get transport robot data</b>: This function will get the data of any transport robot of the plant. The data type asociated with this function is TDBTransport, so, the outPort will be that type.</li>
+        <li><b>Get monitor data</b>: This function will get the data of the monitor. The data type asociated with this function is TDBMonitor.</li>
+    </ul>
+    <!--<p><h1>Se podria meter informacion aqui y que aparezca en la figura.</h1></p>
+    <p><h3>Poniendo titulos, puntos, etc. se podria dejar muy bonito.</h3></p>-->
+</script>

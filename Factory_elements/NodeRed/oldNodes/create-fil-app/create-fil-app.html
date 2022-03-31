@@ -1,0 +1,36 @@
+<script type="text/javascript">
+    RED.nodes.registerType('create-fil-app',{
+        category: 'gcis',
+        color: '#1e7ed9',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "icon.png",
+        label: function() {
+            return this.name||"New FiL app";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="create-fil-app">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-version"><i class="fa fa-tag"></i> Version</label>
+        <input type="text" id="node-input-version" placeholder="Version">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="create-fil-app">
+    <p>A simple node that create a new fog-in-the-loop application</p>
+</script>
+
+<script type="text/x-red" data-help-name="create-fil-app">
+    <p>A simple node that create a new fog-in-the-loop application</p>
+</script>
+
+

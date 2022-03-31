@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sink',{
+        category: 'gcis',
+        color: '#d19e1d',
+        defaults: {
+            endpoint: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "sink.png",
+        label: function() {
+            return this.name||"Sink";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="sink">
+    <div class="form-row">
+        <label for="node-input-endpoint"><i class="fa fa-tag"></i> Endpoint</label>
+        <select name="Service type" id="node-input-endpoint">
+          <option value="updateProductInstance">UpdateProductInstance</option>
+          <option value="listAllBatches">ListAllBatches</option>
+          <option value="removeOrder">RemoveOrder</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="sink">
+    <p>A simple node that create a new instance of sink fog-in-the-loop component.</p>
+    <p>If you want to use this component, you will have to choose the type of service to create the sink for you application.</p>
+</script>

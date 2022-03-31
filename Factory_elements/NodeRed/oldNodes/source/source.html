@@ -1,0 +1,44 @@
+<script type="text/javascript">
+    RED.nodes.registerType('source',{
+        category: 'gcis',
+        color: '#d19e1d',
+        defaults: {
+            name: {value:""},
+            topic: {value:""},
+            sink: {value:""},
+            output: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "source.png",
+        label: function() {
+            return this.name||"Source";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="source">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tag"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sink"><i class="fa fa-tag"></i> Sink name</label>
+        <input type="text" id="node-input-sink" placeholder="Sink name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-output"><i class="fa fa-tag"></i> Output gateway</label>
+        <select name="output_gateway" id="node-input-output">
+          <option value="HTTP">HTTP</option>
+          <option value="MQTT">MQTT</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="source">
+    <p>A simple node that create a new instance of source fog-in-the-loop component</p>
+</script>

@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Influx',{
+        category: 'sink',
+        color: '#08bd08',
+        defaults: {
+            function: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        inputLabels: "DataType of inPort is for eXist",
+        icon: "sink.png",
+        label: function() {
+            return this.name||"Assembly Station Influx";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Influx">
+    <div class="form-row">
+        <label for="node-input-function"><i class="fa fa-tag"></i> Functions</label>
+        <select name="function" id="node-input-function">
+          <option value="storeOEEData">OEE</option>
+          <option value="storePerformanceData">Performance</option>
+          <option value="storeQualityData">Quality</option>
+        </select>
+</script>
+
+<script type="text/html" data-help-name="Influx">
+    <p>A simple node that create a new instance of sink component to read data and store in Influx Database</p>
+</script>

@@ -1,0 +1,12 @@
+
+      
+  nodered2:
+    image: <image>
+    container_name: nodered2
+    ports:
+      - 1880:1880
+    volumes:
+      - node-red-data:/nodered/data
+
+volumes:
+  node-red-data:

@@ -1,0 +1,39 @@
+{
+  "name": "build",
+  "version": "1.3.2",
+  "description": "Low-code programming for event-driven applications",
+  "homepage": "http://nodered.org",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-red/node-red-docker.git"
+  },
+  "main": "build.js",
+  "scripts": {
+    "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
+    "debug": "node --inspect=0.0.0.0:9229 $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
+    "debug_brk": "node --inspect=0.0.0.0:9229 --inspect-brk $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+  },
+  "contributors": [
+    "Dave Conway-Jones",
+    "Nick O'Leary",
+    "James Thomas",
+    "Raymond Mouthaan"
+  ],
+  "dependencies": {
+    "node-red": "1.3.2"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "bugs": {
+    "url": "https://github.com/node-red/node-red-docker/issues"
+  },
+  "devDependencies": {},
+  "author": "ekaitz",
+  "node-red" : {
+        "nodes": {
+            "build": "build.js"
+        }
+    }
+}

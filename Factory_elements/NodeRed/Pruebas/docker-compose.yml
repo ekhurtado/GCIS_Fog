@@ -1,0 +1,14 @@
+version: "3.6"
+
+services:
+      
+  nodered:
+    image: <image>
+    container_name: nodered
+    ports:
+      - 1880:1880
+    volumes:
+      - node-red-data:/nodered/data
+
+volumes:
+  node-red-data:
