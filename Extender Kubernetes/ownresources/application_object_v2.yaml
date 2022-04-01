@@ -1,0 +1,13 @@
+apiVersion: mis-recursos.aplicacion/v1alpha1
+kind: Aplicacion
+metadata:
+  name: aplicacion-de-prueba
+spec:
+  componentes: 
+    - name: componente-A
+      properties:
+        image: imagen-base-de-componente-A
+    - name: componente-B
+      properties:
+        image: imagen-base-de-componente-B
+  replicas: 3
