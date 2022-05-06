@@ -1,0 +1,15 @@
+FROM python:alpine3.7
+
+COPY requirements1.txt ./
+
+RUN pip install --no-cache-dir -r requirements1.txt
+
+COPY appCrearNumero.py /
+
+ENV APPSUMA_HOST=app-suma
+ENV APPSUMA_PORT=6000
+
+CMD ["python", "/appCrearNumero.py"]
+
+
+

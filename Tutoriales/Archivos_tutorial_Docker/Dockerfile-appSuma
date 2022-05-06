@@ -1,0 +1,15 @@
+FROM python:3.7.0-alpine3.8
+
+COPY requirements2.txt ./
+
+RUN pip install --no-cache-dir -r requirements2.txt
+
+COPY appSuma.py .
+
+ENV FLASK_APP=appSuma.py
+ENV FLASK_RUN_PORT=6000
+
+CMD flask run --host=0.0.0.0
+
+
+
