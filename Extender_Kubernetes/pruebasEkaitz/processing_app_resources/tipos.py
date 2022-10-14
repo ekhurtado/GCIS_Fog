@@ -14,7 +14,7 @@ def CRD_app():
 def CRD_comp():
     path = os.path.abspath(os.path.dirname(__file__))
     # rel_path = os.path.join(path, "component_definition.yaml")
-    rel_path = os.path.join(os.path.abspath(os.path.join(path, os.pardir)), "CRD/component_definition.yaml")
+    rel_path = os.path.join(os.path.abspath(os.path.join(path, os.pardir)), "CRD", "component_definition.yaml")
     with open(rel_path, 'r') as stream:
         CRD_componente = yaml.safe_load(stream)
     return CRD_componente

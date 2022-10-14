@@ -7,7 +7,10 @@ namespace = "default"
 plural = "aplicaciones"
 
 def pasar_a_ejecucion( nombre):
-    config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+    # config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+    # TODO Cambiarlo para el cluster
+    config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")
+
     cliente = client.CustomObjectsApi()
     app=cliente.get_namespaced_custom_object(grupo, version, namespace, plural, nombre)
     if app['spec']['desplegar'] == False:

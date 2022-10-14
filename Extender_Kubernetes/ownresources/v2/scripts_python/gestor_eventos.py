@@ -25,7 +25,10 @@ def watcher_eventos(cliente):
 
 
 def gestor():
-    config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+    # config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+    # TODO Cambiarlo para el cluster
+    config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")
+
     watcher_eventos(client.CoreV1Api())
 
 if __name__ == '__main__':

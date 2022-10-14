@@ -8,7 +8,10 @@ namespace = "default"
 plural = "aplicaciones"
 
 def desplegar(aplicacion):
-    config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+    # config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+    # TODO Cambiarlo para el cluster
+    config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")
+
     cliente = client.CustomObjectsApi()
     # Creo un objeto aplicacion en la BBDD de kubernetes.
     # El watcher detectará un evento ADDED y le mandará al controlador conciliar los estados spec y status.

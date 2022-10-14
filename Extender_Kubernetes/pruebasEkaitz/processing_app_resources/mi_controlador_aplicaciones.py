@@ -1,7 +1,7 @@
 import logging
 import sys
+import time
 
-import kubernetes.client
 import urllib3.exceptions
 from kubernetes import client, config, watch
 import tipos
@@ -17,6 +17,7 @@ plural = "aplicaciones"
 def controlador():
 
 	# config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
+	# TODO Cambiarlo para el cluster
 	config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
 
 	cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
@@ -33,10 +34,14 @@ def controlador():
 		print("Es posible que la dirección IP del master en el archivo k3s.yaml no sea la correcta")
 		controlador()
 	except Exception as e: #No distingue, pero funciona, como puedo distinguir?
-		# print(str(e))	# Si se quiere
+		print(str(e))	# Si se quiere
 
 		if "Reason: Conflict" in str(e):
 			print("El CRD ya existe, pasando al watcher.")
+		elif "No such file or directory" in str(e):
+			print(("No se ha podido encontrar el archivo YAML con la definicion de las aplicaciones. Revisa que todo esta correcto."))
+			sys.exit()	# en este caso cierro el programa porque si no se reinicia todo el rato
+						# TODO Cuidado al meterlo en un contenedor, no hay que parar el programa ya que se quedaria sin funcionalidad
 
 
 	mi_watcher(cliente) # Activo el watcher de recursos aplicacion.

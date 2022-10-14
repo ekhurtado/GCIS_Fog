@@ -8,8 +8,15 @@ version = "v1alpha4"
 namespace = "default"
 plural = "aplicaciones"
 
+# Comando para ejecutarlo:
+# cd hasta la carpeta donde esta evento_simulado.py
+# C:\Python310\python.exe .\evento_simulado.py aplicacion-solicitada-nuevaapp
+
 def simular_evento():
-    config.load_kube_config('/etc/rancher/k3s/k3s.yaml')
+    # config.load_kube_config('/etc/rancher/k3s/k3s.yaml')
+    # TODO Cambiarlo para el cluster
+    config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")
+
     cliente=client.CoreV1Api()
     nombre=sys.argv[1]
     print('Desplegando:' + nombre)
