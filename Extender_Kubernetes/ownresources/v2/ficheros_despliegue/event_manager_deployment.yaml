@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: despliegue-gestor-eventos
+  labels:
+    app: event-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-manager
+  template:
+    metadata:
+      labels:
+        app: event-manager
+    spec:
+      containers:
+      - name: event-manager
+        image: julencuadra/gcis-fog:gestor-eventos
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+      nodeSelector:
+        node-role.kubernetes.io/master : "true"

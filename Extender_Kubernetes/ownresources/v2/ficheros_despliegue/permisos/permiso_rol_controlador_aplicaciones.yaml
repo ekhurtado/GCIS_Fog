@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mi-rol-controlador-aplicaciones
+rules:
+- apiGroups: ["misrecursos.aplicacion"]
+  resources: ["aplicaciones", "aplicaciones/status"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["misrecursos.aplicacion"]
+  resources: ["componentes"]
+  verbs: ["post", "put", "patch", "create", "update", "delete"] #No estoy seguro de que estos sean los verbos que hay que usar.
+- apiGroups: ["apiextensions.k8s.io"]
+  resources: ["customresourcedefinitions"]
+  verbs: ["post", "put", "patch", "create", "update"]

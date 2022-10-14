@@ -1,0 +1,8 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mi-rol-manipulador-eventos
+rules:
+- apiGroups: ["misrecursos.aplicacion"]
+  resources: ["aplicaciones", "aplicaciones/status"]
+  verbs: ["get", "list", "watch", "post", "put", "patch", "create", "update", "delete"]

@@ -1,0 +1,8 @@
+apiVersion: misrecursos.aplicacion/v1alpha1
+kind: Aplicacion
+metadata:
+  name: aplicacion-de-prueba
+spec:
+  componentes: componentes-A-y-B
+  image: imagen-base-de-los-componentes
+  replicas: 1

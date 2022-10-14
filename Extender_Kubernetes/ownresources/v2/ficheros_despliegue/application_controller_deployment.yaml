@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: despliegue-controlador-aplicaciones
+  labels:
+    app: app-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-controller
+  template:
+    metadata:
+      labels:
+        app: app-controller
+    spec:
+      containers:
+      - name: app-controller
+        image: julencuadra/gcis-fog:controlador-aplicaciones
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+      nodeSelector:
+        node-role.kubernetes.io/master : "true"

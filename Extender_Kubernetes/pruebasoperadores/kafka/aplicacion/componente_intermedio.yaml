@@ -1,0 +1,9 @@
+apiVersion: misrecursos.aplicacion/v1alpha1
+kind: Componente
+metadata:
+  name: componente-transformador
+spec:
+  image: julencuadra/componente:transformador
+  previous: None
+  next: None
+  permanente: True

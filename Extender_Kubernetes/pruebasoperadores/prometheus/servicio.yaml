@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: aplicacion
+  labels:
+    app: aplicacion
+spec:
+  selector:
+    app: nginx
+  ports:
+  - name: web
+    port: 8080

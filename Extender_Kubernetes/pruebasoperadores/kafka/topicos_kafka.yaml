@@ -1,0 +1,25 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: topico-datos-crudos
+  labels:
+    strimzi.io/cluster: mi-cluster-mensajeria
+spec:
+  partitions: 2
+  replicas: 2
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: topico-datos-procesados
+  labels:
+    strimzi.io/cluster: mi-cluster-mensajeria
+spec:
+  partitions: 2
+  replicas: 2
+  config:
+    retention.ms: 604800000
+    segment.bytes: 1073741824
