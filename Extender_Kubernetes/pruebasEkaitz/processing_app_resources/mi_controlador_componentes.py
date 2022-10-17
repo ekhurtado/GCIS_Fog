@@ -1,3 +1,5 @@
+import pytz
+from dateutil import parser
 from kubernetes import client, config, watch
 import tipos
 import datetime
@@ -11,7 +13,9 @@ plural = "componentes"
 
 def controlador():
 
-	config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
+	# config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
+	# TODO Cambiarlo para el cluster
+	config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
 
 	cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
 
@@ -36,11 +40,19 @@ def mi_watcher(cliente):
     watcher=watch.Watch()
 
     print("Estoy en el watcher.") # Comprobacion por consola.
+    startedTime = pytz.utc.localize(datetime.datetime.utcnow())
 
     for event in watcher.stream(cliente.list_namespaced_custom_object, grupo, version, namespace, plural):
 
         objeto = event['object']
         tipo = event['type']
+
+        creationTimeZ = objeto['metadata']['creationTimestamp']
+        creationTime = parser.isoparse(creationTimeZ)
+
+        if creationTime < startedTime:
+           print("El evento es anterior, se ha quedado obsoleto")  # TODO se podria mirar si añadir una comprobacion por si hay algun evento que no se ha gestionado
+           continue
 
         print("Nuevo evento: ", "Hora del evento: ", datetime.datetime.now(), "Tipo de evento: ", tipo,
               "Nombre del objeto: ", objeto['metadata']['name'])

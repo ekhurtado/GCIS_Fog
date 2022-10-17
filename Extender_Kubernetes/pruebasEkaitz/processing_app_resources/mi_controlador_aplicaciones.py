@@ -3,9 +3,13 @@ import sys
 import time
 
 import urllib3.exceptions
+from dateutil import parser
 from kubernetes import client, config, watch
 import tipos
 import datetime
+from datetime import timezone
+
+import pytz
 
 # Parámetros de la configuración del objeto
 grupo = "misrecursos.aplicacion"
@@ -50,12 +54,24 @@ def mi_watcher(cliente):
 
     watcher=watch.Watch() # Activo el watcher.
     print('Estoy en el watcher.')
+    startedTime = pytz.utc.localize(datetime.datetime.utcnow())	 # TODO CUIDADO! En el contenedor habria que instalar pytz
+
 
     for event in watcher.stream(cliente.list_namespaced_custom_object, grupo, version, namespace, plural):
 
         print('He detectado un evento.')
         objeto = event['object']
         tipo = event['type']
+
+        a = cliente.get_namespaced_custom_object(grupo, version, namespace, plural, objeto['metadata']['name'])
+        b = cliente.get_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'])
+
+        creationTimeZ = objeto['metadata']['creationTimestamp']
+        creationTime = parser.isoparse(creationTimeZ)
+
+        if creationTime < startedTime:
+           print("El evento es anterior, se ha quedado obsoleto")	#TODO se podria mirar si añadir una comprobacion por si hay algun evento que no se ha gestionado
+           continue
 
         print("Nuevo evento: ", "Hora del evento: ", datetime.datetime.now(), "Tipo de evento: ", tipo, "Nombre del objeto: ", objeto['metadata']['name'])
 

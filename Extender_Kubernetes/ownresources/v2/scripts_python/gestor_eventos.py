@@ -1,3 +1,4 @@
+from dateutil import parser
 from kubernetes import client, config, watch
 import datetime
 import tipos
@@ -15,9 +16,27 @@ def pasar_a_ejecucion(nombre):
 
 def watcher_eventos(cliente):
     watcher = watch.Watch()
+    startedTime = datetime.datetime.now(datetime.timezone.utc)
+
     for event in watcher.stream(cliente.list_event_for_all_namespaces):
         objeto = event['object']
         tipo = event['type']
+
+        '''
+        if objeto.last_timestamp is None and objeto.event_time is None and objeto.action != "REACCIONO":
+            continue
+
+        creationTime = objeto.last_timestamp
+        if creationTime is None:
+            creationTime = objeto.event_time
+            # print(objeto)
+            # print(creationTime)
+
+        if creationTime < startedTime:
+            print("El evento es anterior, se ha quedado obsoleto")  # TODO se podria mirar si añadir una comprobacion por si hay algun evento que no se ha gestionado
+            continue
+        '''
+
         print("Nuevo evento: ", "Hora del evento: ", objeto.first_timestamp, "Tipo de evento: ", tipo, "Motivo:", objeto.reason, "Mensaje:", objeto.message)
         if objeto.action== 'DESPLEGAR':
             pasar_a_ejecucion(objeto.involved_object.name)

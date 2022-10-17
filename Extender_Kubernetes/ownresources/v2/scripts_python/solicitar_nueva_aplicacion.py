@@ -1,3 +1,5 @@
+import datetime
+
 from kubernetes import client, config
 
 import tipos
@@ -66,6 +68,8 @@ def solicitar_nueva_aplicacion():
             aplicacion['spec']['componentes'][i] = tipos.componente(chr(100+i), "piotrzan/nginx-demo:green", chr(100+i-1), "none")
         else:
             aplicacion['spec']['componentes'][i] = tipos.componente(chr(100+i), "piotrzan/nginx-demo:green", chr(100+i-1), chr(100+i+1))
+
+
 
     desplegar(aplicacion)
 

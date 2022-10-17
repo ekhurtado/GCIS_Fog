@@ -110,9 +110,9 @@ def job_pasar_a_ejecucion(nombre):
 def evento(mensaje, reason, nombre, nombre_app): # https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/CoreV1Event.md
     estructura_evento = {
         'api_Version' : 'v1',
-        'event_time' : datetime.datetime.now(),
-        'first_timestamp' : datetime.datetime.now(),
-        'last_timestamp' :datetime.datetime.now(),
+        'event_time' : datetime.datetime.now(datetime.timezone.utc),
+        'first_timestamp' : datetime.datetime.now(datetime.timezone.utc),
+        'last_timestamp' : datetime.datetime.now(datetime.timezone.utc),
         'action': 'REACCIONO',
         'involvedObject': {
             'apiVersion' : 'misrecursos.aplicacion/v1alpha4',

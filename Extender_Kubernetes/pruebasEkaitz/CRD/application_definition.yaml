@@ -3,6 +3,13 @@ kind: CustomResourceDefinition
 metadata:
   name: aplicaciones.misrecursos.aplicacion
 spec:
+  additionalPrinterColumns:
+    - JSONPath: .spec.replicas
+      name: Desired
+      type: string
+    - JSONPath: .status.replicas
+      name: Current
+      type: string
   group: misrecursos.aplicacion
   versions:
     - name: v1alpha1
