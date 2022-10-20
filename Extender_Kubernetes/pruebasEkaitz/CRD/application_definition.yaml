@@ -3,13 +3,6 @@ kind: CustomResourceDefinition
 metadata:
   name: aplicaciones.misrecursos.aplicacion
 spec:
-  additionalPrinterColumns:
-    - JSONPath: .spec.replicas
-      name: Desired
-      type: string
-    - JSONPath: .status.replicas
-      name: Current
-      type: string
   group: misrecursos.aplicacion
   versions:
     - name: v1alpha1
@@ -132,6 +125,26 @@ spec:
               properties:
                 replicas:
                   type: integer
+      additionalPrinterColumns:
+        - jsonPath: .spec.replicas
+          name: Desired Replicas
+          type: integer
+          priority: 0 # si es prioridad 0 aparece en la vista estandar
+        - jsonPath: .status.replicas
+          name: Current Replicas
+          type: integer
+          priority: 0
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+          priority: 0
+        - jsonPath: .spec.componentes[*].name
+          name: Image
+          type: string
+          priority: 0 # si es prioridad mayor que 1 aparece solo en la vista amplicada (-o wide)
+        - jsonPath: .status.ready
+          name: Ready
+          type: string
       subresources:
         status: { }
         scale:
