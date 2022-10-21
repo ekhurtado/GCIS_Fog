@@ -140,10 +140,12 @@ spec:
           priority: 0
         - jsonPath: .spec.componentes[*].name
           name: Image
+          description: Docker image of the component
           type: string
-          priority: 0 # si es prioridad mayor que 1 aparece solo en la vista amplicada (-o wide)
+          priority: 1 # si es prioridad mayor que 1 aparece solo en la vista amplicada (-o wide)
         - jsonPath: .status.ready
           name: Ready
+          description: Readiness of the created resource
           type: string
       subresources:
         status: { }

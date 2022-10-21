@@ -29,6 +29,24 @@ spec:
               properties:
                 replicas:
                   type: integer
+      additionalPrinterColumns:
+        - jsonPath: .spec.image
+          name: Image
+          description: Docker image of the component
+          type: string
+          priority: 0 # si es prioridad 0 aparece en la vista estandar
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+          priority: 0
+        - jsonPath: .spec.previous
+          name: Previous
+          type: string
+          priority: 1 # prioridad 1 solo aparece en la vista ampliada (-o wide)
+        - jsonPath: .spec.next
+          name: Next
+          type: string
+          priority: 1
       subresources:
         status: {}
   scope: Namespaced

@@ -1,3 +1,5 @@
+import os
+
 from dateutil import parser
 from kubernetes import client, config, watch
 import datetime
@@ -44,9 +46,15 @@ def watcher_eventos(cliente):
 
 
 def gestor():
-    # config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+
+    path = os.path.abspath(os.path.dirname(__file__))
+    path = path.replace("Extender_Kubernetes\\ownresources\\v2\\scripts_python", "")
+    print(os.path.join(os.path.abspath(path), "k3s.yaml"))
+
+    # config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
     # TODO Cambiarlo para el cluster
-    config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")
+    # config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
+    config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     watcher_eventos(client.CoreV1Api())
 

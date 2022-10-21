@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 import time
 
@@ -17,12 +18,18 @@ version = "v1alpha4"
 namespace = "default"
 plural = "aplicaciones"
 
+# TODO si se quieren saber los atributos de un CRD 	> kubectl explain aplicacion --recursive=true
 
 def controlador():
+	path = os.path.abspath(os.path.dirname(__file__))
+	path = path.replace("Extender_Kubernetes\pruebasEkaitz\processing_app_resources", "")
+	print(os.path.join(os.path.abspath(path), "k3s.yaml"))
 
 	# config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
 	# TODO Cambiarlo para el cluster
-	config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
+	# config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
+	config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
+
 
 	cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
 

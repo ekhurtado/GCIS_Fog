@@ -1,3 +1,6 @@
+import json
+import os
+
 import pytz
 from dateutil import parser
 from kubernetes import client, config, watch
@@ -13,9 +16,14 @@ plural = "componentes"
 
 def controlador():
 
+	path = os.path.abspath(os.path.dirname(__file__))
+	path = path.replace("Extender_Kubernetes\pruebasEkaitz\processing_app_resources", "")
+	print(os.path.join(os.path.abspath(path), "k3s.yaml"))
+
 	# config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
 	# TODO Cambiarlo para el cluster
-	config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
+	# config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
+	config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
 	cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
 
@@ -84,6 +92,14 @@ def conciliar_spec_status(objeto, cliente):
 	# Miro el status.
 	componente_desplegado = cliente.get_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'])
 
+	# cluster_object = cliente.get_cluster_custom_object(grupo, version, plural, objeto['metadata']['name'])
+	#
+	# cluster_status = cliente.get_cluster_custom_object_status(grupo, version, plural, objeto['metadata']['name'])
+	#
+	# scale = cliente.get_namespaced_custom_object_scale(grupo, version, namespace, plural, objeto['metadata']['name'])
+	#
+	# cluster_scale = cliente.get_cluster_custom_object_scale(grupo, version, plural, objeto['metadata']['name'])
+
 	# Compruebo.
 
 	# ESTO ES UNA PRUEBA HASTA QUE PUEDA ACCEDER AL STATUS
@@ -95,6 +111,16 @@ def conciliar_spec_status(objeto, cliente):
 	#Busco el status del deployment.
 	status_deployment = cliente_despliegue.read_namespaced_deployment_status(deployment_yaml['metadata']['name'], namespace)
 	replicas_desplegadas = status_deployment.status.available_replicas
+
+	# TODO Intento de actualizar el status del componente
+	replicas_desplegadas = 1 # TODO borrar, es para ver si actualiza el status
+	status_object = {'replicas': replicas_desplegadas}
+	print(json.dumps(status_object))
+	cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'], status_object)
+
+	componente_actualizado = cliente.get_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'])
+
+	print("Actualizacion de status finalizada")
 
 	# if componente_deseado['spec']['replicas'] != componente_desplegado['spec']['replicas']:
 	# 	if componente_deseado['spec']['replicas'] > componente_desplegado['spec']['replicas']:

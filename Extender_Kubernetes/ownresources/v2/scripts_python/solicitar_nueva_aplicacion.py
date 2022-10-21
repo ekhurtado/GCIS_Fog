@@ -1,4 +1,5 @@
 import datetime
+import os
 
 from kubernetes import client, config
 
@@ -10,9 +11,15 @@ namespace = "default"
 plural = "aplicaciones"
 
 def desplegar(aplicacion):
-    # config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+
+    path = os.path.abspath(os.path.dirname(__file__))
+    path = path.replace("Extender_Kubernetes\\ownresources\\v2\\scripts_python", "")
+    print(os.path.join(os.path.abspath(path), "k3s.yaml"))
+
+    # config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
     # TODO Cambiarlo para el cluster
-    config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")
+    # config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
+    config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     cliente = client.CustomObjectsApi()
     # Creo un objeto aplicacion en la BBDD de kubernetes.

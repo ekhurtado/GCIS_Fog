@@ -1,3 +1,5 @@
+import os
+
 from kubernetes import client, config
 import tipos
 
@@ -7,9 +9,15 @@ namespace = "default"
 plural = "aplicaciones"
 
 def pasar_a_ejecucion( nombre):
-    # config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+
+    path = os.path.abspath(os.path.dirname(__file__))
+    path = path.replace("Extender_Kubernetes\\ownresources\\v2\\scripts_python", "")
+    print(os.path.join(os.path.abspath(path), "k3s.yaml"))
+
+    # config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
     # TODO Cambiarlo para el cluster
-    config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")
+    # config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
+    config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     cliente = client.CustomObjectsApi()
     app=cliente.get_namespaced_custom_object(grupo, version, namespace, plural, nombre)
@@ -20,4 +28,4 @@ def pasar_a_ejecucion( nombre):
         pass
 
 if __name__ == '__main__':
-    pasar_a_ejecucion('aplicacion-solicitada-prueba')
+    pasar_a_ejecucion('aplicacion-solicitada-prueba1')
