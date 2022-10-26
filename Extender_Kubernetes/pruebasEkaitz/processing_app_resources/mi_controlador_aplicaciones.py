@@ -30,6 +30,11 @@ def controlador():
 	# config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
 	config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
+	# TODO PARA AÑADIR LA COMPROBACION DE ESTAR EN EL CLUSTER O FUERA DE EL
+	# if 'KUBERNETES_PORT' in os.environ:
+	# 	config.load_incluster_config()
+	# else:
+	# 	config.load_kube_config()
 
 	cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
 
