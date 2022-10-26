@@ -43,7 +43,7 @@ def componente(nombre, imagen, anterior, siguiente, **kwargs):
     }
     return componente
 
-def componente_recurso(nombre, imagen, anterior, siguiente, **kwargs):
+def componente_recurso(nombre, imagen, anterior, siguiente, appName, **kwargs):
     permanente = kwargs.get('Permanente', None)
     if permanente == None:
         componente_recurso = {
@@ -51,6 +51,9 @@ def componente_recurso(nombre, imagen, anterior, siguiente, **kwargs):
             'kind': 'Componente',
             'metadata':{
                 'name': 'componente' + '-' + nombre,
+                'labels': {
+                    'applicationName': appName
+                }
             },
             'spec': {
                 'image': imagen,

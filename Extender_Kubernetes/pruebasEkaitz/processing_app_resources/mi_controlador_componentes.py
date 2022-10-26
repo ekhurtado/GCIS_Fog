@@ -84,6 +84,10 @@ def conciliar_spec_status(objeto, cliente):
 	# De momento esta version solo va a mirar el numero de replicas.
 	# Chequea si la aplicacion que ha generado el evento esta al día en .spec y .status
 
+	# TODO El componente ya se ha creado, ahora se va a desplegar. Por eso se va a actualizar el estado
+	status_object = {'status': {'situation': 'Deploying'}}
+	cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'], status_object)
+
 	cliente_despliegue = client.AppsV1Api()
 
 	# Miro el spec.
@@ -112,9 +116,15 @@ def conciliar_spec_status(objeto, cliente):
 	status_deployment = cliente_despliegue.read_namespaced_deployment_status(deployment_yaml['metadata']['name'], namespace)
 	replicas_desplegadas = status_deployment.status.available_replicas
 
+	while replicas_desplegadas is None:	# hasta que no se haya desplegado, esperamos
+		status_deployment = cliente_despliegue.read_namespaced_deployment_status(deployment_yaml['metadata']['name'],
+																				 namespace)
+		replicas_desplegadas = status_deployment.status.available_replicas
+		print(replicas_desplegadas)
+
 	# TODO Intento de actualizar el status del componente
-	replicas_desplegadas = 1 # TODO borrar, es para ver si actualiza el status
-	status_object = {'replicas': replicas_desplegadas}
+	# replicas_desplegadas = 1 # TODO borrar, es para ver si actualiza el status
+	status_object = {'status': {'replicas': replicas_desplegadas, 'situation': 'Running'}}
 	print(json.dumps(status_object))
 	cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'], status_object)
 

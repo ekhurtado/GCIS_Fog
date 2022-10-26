@@ -167,18 +167,32 @@ def crear_componentes(cliente, componente, app):
 			permanente = componente['permanente']
 		except KeyError:
 			pass
-		if permanente == True:
+		if permanente == True:	# En este if se repiten muchos comandos (la linea de crear el objeto, actualizar status...), arreglarlo
 			componente_body = tipos.componente_recurso(componente['name'],
 												  componente['image'],
 												  componente['previous'],
+												  app['metadata']['name'],
 												  componente['next'], Permanente = True)
 			cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
+
+
 			break
 		else:
-			componente_body = tipos.componente_recurso(componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'], componente['image'], componente['previous'], componente['next'])
+			componente_body = tipos.componente_recurso(componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
+													   componente['image'], componente['previous'], componente['next'], app['metadata']['name'])
 			cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
+
+
 		# Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.
 		# Si no distinguimos los nombres bien surge el problema de que los nombres de los componentes al solicitar dos aplicaciones colisionan.
+
+		# TODO Una vez creado el Custom Resource, vamos a añadirle el status de que se están creando los componentes
+		status_object = {'status': {'replicas': 0, 'situation': 'Creating'}}
+		cliente.patch_namespaced_custom_object_status(grupo, 'v1alpha1', namespace, 'componentes', componente_body['metadata']['name'], status_object)
+
+
+	# TODO CONSEGUIR AÑADIR LA INFORMACION DEL NOMBRE DE LA APLICACION EN EL METADATA DE LOS COMPONENTES (para que sepan a que aplicacion pertenecen)
+
 
 def eliminar_componentes(aplicacion): # Ya no borrará deployments.
 	cliente=client.CustomObjectsApi()
