@@ -2,6 +2,10 @@ apiVersion: misrecursos.aplicacion/v1alpha4
 kind: Aplicacion
 metadata:
   name: aplicacion-oee
+  labels:
+    applicationName: mi-nombre-app
+  annotations:
+    anotacionNombre : "aplicacion anotacion"
 spec:
   componentes:
     - name: dataprocessing-exist

@@ -132,6 +132,13 @@ def conciliar_spec_status(objeto, cliente):
 
 	print("Actualizacion de status finalizada")
 
+	# TODO Prueba de captura de nombre de la aplicacion a la que pertenece
+	myAppName = componente_desplegado['metadata']['labels']['applicationName']
+	print("My application is: " + str(myAppName))
+
+	# TODO Ahora hay que crear el status de cada componente en el custom resource de la aplicacion y que el componente lo actualice cuando se haya desplegado
+	# 	para eso utilizará el nombre de su aplicacion y modificará su custom resource, creando un evento MODIFIED que pueda leer el controlador de aplicaciones
+
 	# if componente_deseado['spec']['replicas'] != componente_desplegado['spec']['replicas']:
 	# 	if componente_deseado['spec']['replicas'] > componente_desplegado['spec']['replicas']:
 	# 		pass
