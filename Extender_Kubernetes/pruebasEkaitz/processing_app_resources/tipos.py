@@ -56,6 +56,7 @@ def componente_recurso(nombre, imagen, anterior, siguiente, appName, **kwargs):
                 }
             },
             'spec': {
+                'name': nombre.split("-")[0],   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
                 'image': imagen,
                 'previous': anterior,
                 'next': siguiente

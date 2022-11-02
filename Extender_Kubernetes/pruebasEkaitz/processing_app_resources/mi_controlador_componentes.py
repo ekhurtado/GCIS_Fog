@@ -13,6 +13,11 @@ version = "v1alpha1"
 namespace = "default"
 plural = "componentes"
 
+# Parámetros de la configuracion de las aplicaciones
+version_aplicaciones = "v1alpha4"
+plural_aplicaciones = "aplicaciones"
+
+# TODO Hay que ver que datos se repiten mucho y crear variables globales (como el nombre del componente (tambien es aplicable a las aplicaciones))
 
 def controlador():
 
@@ -65,17 +70,35 @@ def mi_watcher(cliente):
         print("Nuevo evento: ", "Hora del evento: ", datetime.datetime.now(), "Tipo de evento: ", tipo,
               "Nombre del objeto: ", objeto['metadata']['name'])
 
-        if tipo != 'DELETED':
-            # Lógica para llevar el recurso al estado deseado.
-            conciliar_spec_status(objeto, cliente)
-        if tipo == 'DELETED':
-            eliminar_despliegues(objeto, 1)
-            # Lógica para borrar lo asociado al recurso.
+        match tipo:
+            case "MODIFIED":
+                # Logica para analizar que se ha modificado
+                check_modifications(objeto, cliente)
+            case "DELETED":
+                eliminar_despliegues(objeto, 1)
+                # Lógica para borrar lo asociado al recurso.
+            case _:
+                # Lógica para llevar el recurso al estado deseado.
+                conciliar_spec_status(objeto, cliente)
+
+		# TODO se ha reformateado para no añadir tantos IFs
+        # if tipo != 'DELETED':
+        #     # Lógica para llevar el recurso al estado deseado.
+        #     conciliar_spec_status(objeto, cliente)
+        # if tipo == 'DELETED':
+        #     eliminar_despliegues(objeto, 1)
+        #     # Lógica para borrar lo asociado al recurso.
 
     # listado=cliente.list_namespaced_custom_object(grupo,version,namespace,plural,pretty="true", watch="true")
 
 
     print("Despues del watcher.")
+
+
+def check_modifications(objeto, cliente):
+
+	print("Algo se ha modificado")
+	print(objeto)
 
 def conciliar_spec_status(objeto, cliente):
 
@@ -87,6 +110,7 @@ def conciliar_spec_status(objeto, cliente):
 	# TODO El componente ya se ha creado, ahora se va a desplegar. Por eso se va a actualizar el estado
 	status_object = {'status': {'situation': 'Deploying'}}
 	cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'], status_object)
+
 
 	cliente_despliegue = client.AppsV1Api()
 
@@ -120,7 +144,7 @@ def conciliar_spec_status(objeto, cliente):
 		status_deployment = cliente_despliegue.read_namespaced_deployment_status(deployment_yaml['metadata']['name'],
 																				 namespace)
 		replicas_desplegadas = status_deployment.status.available_replicas
-		print(replicas_desplegadas)
+		# print(replicas_desplegadas)
 
 	# TODO Intento de actualizar el status del componente
 	# replicas_desplegadas = 1 # TODO borrar, es para ver si actualiza el status
@@ -138,6 +162,19 @@ def conciliar_spec_status(objeto, cliente):
 
 	# TODO Ahora hay que crear el status de cada componente en el custom resource de la aplicacion y que el componente lo actualice cuando se haya desplegado
 	# 	para eso utilizará el nombre de su aplicacion y modificará su custom resource, creando un evento MODIFIED que pueda leer el controlador de aplicaciones
+
+	# TODO Prueba para leer y actualizar el status de la aplicacion
+	mi_aplicacion = cliente.get_namespaced_custom_object_status(grupo, version_aplicaciones, namespace, plural_aplicaciones,
+																myAppName)
+	for i in range(len(mi_aplicacion['status']['componentes'])):
+		if (mi_aplicacion['status']['componentes'][i]['name'] == objeto['spec']['name']):
+			mi_aplicacion['status']['componentes'][i]['status'] = "Running"
+			cliente.patch_namespaced_custom_object_status(grupo, version_aplicaciones, namespace,
+														  plural_aplicaciones, myAppName, {'status': mi_aplicacion['status']})
+			break
+
+	print(mi_aplicacion)
+
 
 	# if componente_deseado['spec']['replicas'] != componente_desplegado['spec']['replicas']:
 	# 	if componente_deseado['spec']['replicas'] > componente_desplegado['spec']['replicas']:

@@ -125,6 +125,15 @@ spec:
               properties:
                 replicas:
                   type: integer
+                componentes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      status:
+                        type: string
       additionalPrinterColumns:
         - jsonPath: .spec.replicas
           name: Desired Replicas

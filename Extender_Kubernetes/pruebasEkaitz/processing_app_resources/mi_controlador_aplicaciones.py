@@ -68,7 +68,6 @@ def mi_watcher(cliente):
     print('Estoy en el watcher.')
     startedTime = pytz.utc.localize(datetime.datetime.utcnow())	 # TODO CUIDADO! En el contenedor habria que instalar pytz
 
-
     for event in watcher.stream(cliente.list_namespaced_custom_object, grupo, version, namespace, plural):
 
         print('He detectado un evento.')
@@ -87,12 +86,28 @@ def mi_watcher(cliente):
 
         print("Nuevo evento: ", "Hora del evento: ", datetime.datetime.now(), "Tipo de evento: ", tipo, "Nombre del objeto: ", objeto['metadata']['name'])
 
-        if tipo != 'DELETED':
-            # Lógica para llevar el recurso al estado deseado.
-            conciliar_spec_status(objeto, cliente)
-        if tipo == 'DELETED':
-            eliminar_componentes(objeto)
-            # Lógica para borrar lo asociado al recurso.
+        match tipo:
+            case "MODIFIED":
+                # Logica para analizar que se ha modificado
+                check_modifications(objeto, cliente)
+            case "DELETED":
+                eliminar_componentes(objeto)
+                # Lógica para borrar lo asociado al recurso.
+            case _:	# default case
+                # Lógica para llevar el recurso al estado deseado.
+                conciliar_spec_status(objeto, cliente)
+
+        # elif tipo != 'DELETED':
+        #     # Lógica para llevar el recurso al estado deseado.
+        #     conciliar_spec_status(objeto, cliente)
+        # elif tipo == 'DELETED':
+        #     eliminar_componentes(objeto)
+        #     # Lógica para borrar lo asociado al recurso.
+
+
+def check_modifications(objeto, cliente):
+	print("Algo se ha modificado")
+	print(objeto)
 
 def conciliar_spec_status(objeto, cliente):
 
@@ -114,6 +129,16 @@ def conciliar_spec_status(objeto, cliente):
 	# ESTO ES UNA PRUEBA HASTA QUE PUEDA ACCEDER AL STATUS
 	# print(a)
 	# La aplicación crea los componentes que la forman.
+
+	# TODO Primero añadiremos el status en el CR de aplicacion para notificar que sus componentes se estan creando
+	#  para ello, tendremos que analizar cuantos componentes tiene la aplicacion para crear el objeto status
+	num_componentes = len(aplicacion_desplegada['spec']['componentes'])
+	status_object = {'status': {'componentes': [0] * num_componentes, 'replicas': 0}}	# las replicas en este punto están a 0
+	for i in range(int(num_componentes)):
+		status_object['status']['componentes'][i] = {'name': aplicacion_desplegada['spec']['componentes'][i]['name'],
+													 'status': "Creating"}
+	cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
+												  objeto['metadata']['name'], status_object)
 
 
 	if objeto['spec']['desplegar'] == True:
