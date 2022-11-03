@@ -109,6 +109,39 @@ def check_modifications(objeto, cliente):
 	print("Algo se ha modificado")
 	print(objeto)
 
+	# TODO Analizar quien ha realizado el ultimo cambio (el parametro field_manager del metodo patch)
+	if "componente" in objeto['metadata']['managedFields'][len(objeto['metadata']['managedFields']) - 1]['manager']:
+		# Solo si ha actualizado el status un componente realizamos las comprobaciones
+		print("Cambio realizado por un componente")
+
+
+		# TODO IDEA: El atributo READY es un String ("current/desired")-> comprobar los componentes que estan en running e ir actualizando el current
+		#  	Kubernetes no tiene un tipo de datos para hacer el ready 1/3, asi que hay que hacerlo con strings
+
+		runningCount = 0
+		for i in range(len(objeto['status']['componentes'])):
+			if (objeto['status']['componentes'][i]['status'] == "Running"):	# TODO CUIDADO! Si se añaden replicas habria que comprobar que todas las replicas esten en Running
+				# readyComponents = objeto['status']['ready'].split("/")[0]
+				# readyNumComponents = int(readyComponents) + 1
+				# objeto['status']['ready'] = str(readyNumComponents) + "/" + objeto['status']['ready'].split("/")[1]
+				runningCount = runningCount + 1
+			# else:
+			# 	notRunningCount = notRunningCount + 1	# Si encuentra alguno que no está en Running, toda la aplicacion no esta desplegada
+
+		if runningCount != 0:	# Algun componente esta en Running
+			objeto['status']['ready'] = str(runningCount) + "/" + objeto['status']['ready'].split("/")[1]
+
+			if runningCount == len(objeto['status']['componentes']):  # Significa que todos los componentes esta en running
+				currentReplicas = objeto['status']['replicas']
+				objeto['status']['replicas'] = int(currentReplicas) + 1
+
+			# Finalmente, actualizamos el objeto
+			field_manager = objeto['metadata']['name']
+			cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
+														  objeto['metadata']['name'], {'status': objeto['status']}, field_manager=field_manager)
+			# cliente.replace_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'], {'status': objeto['status']})
+	else:
+		print("Cambio realizado por una aplicacion")
 def conciliar_spec_status(objeto, cliente):
 
 	# Esta funcion es llamada por el watcher cuando hay un evento ADDED o MODIFIED.
@@ -130,15 +163,7 @@ def conciliar_spec_status(objeto, cliente):
 	# print(a)
 	# La aplicación crea los componentes que la forman.
 
-	# TODO Primero añadiremos el status en el CR de aplicacion para notificar que sus componentes se estan creando
-	#  para ello, tendremos que analizar cuantos componentes tiene la aplicacion para crear el objeto status
-	num_componentes = len(aplicacion_desplegada['spec']['componentes'])
-	status_object = {'status': {'componentes': [0] * num_componentes, 'replicas': 0}}	# las replicas en este punto están a 0
-	for i in range(int(num_componentes)):
-		status_object['status']['componentes'][i] = {'name': aplicacion_desplegada['spec']['componentes'][i]['name'],
-													 'status': "Creating"}
-	cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
-												  objeto['metadata']['name'], status_object)
+
 
 
 	if objeto['spec']['desplegar'] == True:
@@ -186,6 +211,18 @@ def conciliar_spec_status(objeto, cliente):
 	# 		# 	desplegar_replica()
 
 def crear_componentes(cliente, componente, app):
+
+	# TODO Primero añadiremos el status en el CR de aplicacion para notificar que sus componentes se estan creando
+	#  para ello, tendremos que analizar cuantos componentes tiene la aplicacion para crear el objeto status
+	num_componentes = len(app['spec']['componentes'])
+	status_object = {'status': {'componentes': [0] * num_componentes, 'replicas': 0, 'ready': "0/" + str(num_componentes)}}	# las replicas en este punto están a 0
+	for i in range(int(num_componentes)):
+		status_object['status']['componentes'][i] = {'name': app['spec']['componentes'][i]['name'],
+													 'status': "Creating"}
+	cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
+												  app['metadata']['name'], status_object)
+
+
 	for j in range(app['spec']['replicas']):  # No me convence el aplicar así las replicas
 		permanente = False
 		try:

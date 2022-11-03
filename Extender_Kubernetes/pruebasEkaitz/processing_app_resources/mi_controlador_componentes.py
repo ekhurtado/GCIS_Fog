@@ -166,11 +166,12 @@ def conciliar_spec_status(objeto, cliente):
 	# TODO Prueba para leer y actualizar el status de la aplicacion
 	mi_aplicacion = cliente.get_namespaced_custom_object_status(grupo, version_aplicaciones, namespace, plural_aplicaciones,
 																myAppName)
+	field_manager = objeto['metadata']['name']
 	for i in range(len(mi_aplicacion['status']['componentes'])):
 		if (mi_aplicacion['status']['componentes'][i]['name'] == objeto['spec']['name']):
 			mi_aplicacion['status']['componentes'][i]['status'] = "Running"
 			cliente.patch_namespaced_custom_object_status(grupo, version_aplicaciones, namespace,
-														  plural_aplicaciones, myAppName, {'status': mi_aplicacion['status']})
+														  plural_aplicaciones, myAppName, {'status': mi_aplicacion['status']}, field_manager=field_manager)
 			break
 
 	print(mi_aplicacion)
