@@ -133,7 +133,8 @@ def check_modifications(objeto, cliente):
 
 			if runningCount == len(objeto['status']['componentes']):  # Significa que todos los componentes esta en running
 				currentReplicas = objeto['status']['replicas']
-				objeto['status']['replicas'] = int(currentReplicas) + 1
+				# objeto['status']['replicas'] = int(currentReplicas) + 1
+				objeto['status']['replicas'] = objeto['spec']['replicas']
 
 			# Finalmente, actualizamos el objeto
 			field_manager = objeto['metadata']['name']
