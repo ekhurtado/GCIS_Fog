@@ -205,3 +205,5 @@ spec:
     plural: aplicaciones
     singular: aplicacion
     kind: Aplicacion
+    shortNames:
+      - app

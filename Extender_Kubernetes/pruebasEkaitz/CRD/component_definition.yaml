@@ -71,3 +71,5 @@ spec:
     plural: componentes
     singular: componente
     kind: Componente
+    shortNames:
+      - comp

@@ -1,4 +1,5 @@
 # Tipos para la definicion de aplicaciones.
+import pytz
 import yaml
 import os
 import datetime
@@ -181,3 +182,49 @@ def deployment(componente, replicas): # Añadir replicas como input
         }
     }
     return despliegue
+
+
+def customResourceEventObject(action, CR_type, CR_name, CR_UID, message, reason, eventName):
+    create_time = pytz.utc.localize(datetime.datetime.utcnow())
+
+    apiVersion = None
+    kind= None
+    namespace = None
+    match CR_type:
+        case "aplicacion":
+            apiVersion = 'misrecursos.aplicacion/v1alpha4'
+            kind = 'Aplicacion'
+            namespace = 'default'
+        case "componente":
+            apiVersion = 'misrecursos.aplicacion/v1alpha1'
+            kind = 'Componente'
+            namespace = 'default'
+
+    return {
+        'api_Version': 'v1',
+        'eventTime': create_time,
+        'firstTimestamp' : create_time,
+        'lastTimestamp' : create_time,
+        'action': action,
+        'involvedObject': {  # probar tambien con related
+            'apiVersion': apiVersion,
+            'kind': kind,
+            'name': CR_name,
+            'namespace': namespace,
+            'fieldPath': 'Events',  # No hace nada.
+            'uid': CR_UID,
+        },
+        'kind': 'Event',
+        'message': message,
+        'reason': reason,
+        'reportingComponent': CR_name,
+        'reportingInstance': CR_name,
+        'type': 'Normal',
+        'metadata': {
+            'name': eventName,
+            'creation_timestamp': create_time
+        },
+        'source': {
+            'component': CR_name
+        }
+    }
