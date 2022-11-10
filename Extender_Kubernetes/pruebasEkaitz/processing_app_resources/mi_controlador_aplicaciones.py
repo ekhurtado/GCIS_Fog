@@ -102,6 +102,21 @@ def mi_watcher(cliente):
                 eliminar_componentes(objeto)
                 # Lógica para borrar lo asociado al recurso.
             case _:  # default case
+                # TODO en nuestro caso es tip ADDED
+
+                # TODO Creamos el evento notificando que se ha creado la aplicacion
+                eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
+                                                              CR_name=objeto['metadata']['name'],
+                                                              CR_UID=objeto['metadata']['uid'],
+                                                              message='Aplicacion creada correctamente.',
+                                                              reason='Created',
+                                                              eventName=objeto['metadata']['name'] + '-creada-' +
+                                                                        ''.join(random.choices(
+                                                                            string.ascii_lowercase + string.digits,
+                                                                            k=4)))
+                eventAPI = client.CoreV1Api()
+                eventAPI.create_namespaced_event("default", eventObject)
+
                 # Lógica para llevar el recurso al estado deseado.
                 conciliar_spec_status(objeto, cliente)
 
@@ -189,13 +204,14 @@ def conciliar_spec_status(objeto, cliente):
         eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
                                                       CR_name=objeto['metadata']['name'],
                                                       CR_UID=objeto['metadata']['uid'],
-                                                      message='Aplicacion creada correctamente.',
-                                                      reason='Created',
-                                                      eventName=objeto['metadata']['name'] + '-creada-' +
-                                                      ''.join(random.choices(string.ascii_lowercase + string.digits, k=4)))
+                                                      message='Iniciado despliegue de aplicación.',
+                                                      reason='Deploying',
+                                                      eventName=objeto['metadata']['name'] + '-desplegando-' +
+                                                                ''.join(random.choices(
+                                                                    string.ascii_lowercase + string.digits,
+                                                                    k=4)))
         eventAPI = client.CoreV1Api()
         eventAPI.create_namespaced_event("default", eventObject)
-
 
         listado_componentes_desplegados = cliente.list_namespaced_custom_object(grupo, 'v1alpha1', namespace,
                                                                                 'componentes')

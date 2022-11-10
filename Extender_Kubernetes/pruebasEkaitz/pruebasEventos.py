@@ -31,7 +31,7 @@ estructura_evento = {
         'name': 'aplicacion-solicitada-prueba1',
         'namespace': 'default',
         'fieldPath': 'Events',  # No hace nada.
-        'uid': '02556c7b-7a80-419e-aa7d-5f4bb6e44a69',
+        'uid': '5336519b-ba88-4c72-9189-824da674a382',
     },
     'kind': 'Event',
     'message': 'Aplicacion desplegada correctamente2',
@@ -40,7 +40,7 @@ estructura_evento = {
     'reportingInstance': 'controlador-externo',
     'type': 'Normal',
     'metadata': {
-        # 'name': 'evento-creado21',
+        'name': 'evento-creado5545421',
         'creation_timestamp': create_time
     },
     'source': {
@@ -51,4 +51,3 @@ estructura_evento = {
 # coreAPI.create_namespaced_event(self=None, namespace="default", body=estructura_evento)
 coreAPI.create_namespaced_event("default", estructura_evento)
 # eventAPI.create_namespaced_event("default", estructura_evento)
-coreAPI.list_namespaced_event()
