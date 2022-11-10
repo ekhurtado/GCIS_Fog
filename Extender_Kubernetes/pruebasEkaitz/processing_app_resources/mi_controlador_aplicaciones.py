@@ -1,5 +1,7 @@
 import logging
 import os
+import random
+import string
 import sys
 import time
 
@@ -91,16 +93,6 @@ def mi_watcher(cliente):
         print("Nuevo evento: ", "Hora del evento: ", datetime.datetime.now(), "Tipo de evento: ", tipo,
               "Nombre del objeto: ", objeto['metadata']['name'])
 
-        # TODO Creamos el evento notificando que se ha creado la aplicacion
-        eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
-                                                      CR_name=objeto['metadata']['name'],
-                                                      CR_UID=objeto['metadata']['uid'],
-                                                      message='Aplicacion creada correctamente.',
-                                                      reason='Created',
-                                                      eventName=objeto['metadata']['name'] + '-app-creada')
-        eventAPI = client.CoreV1Api()
-        eventAPI.create_namespaced_event("default", eventObject)
-
 
         match tipo:
             case "MODIFIED":
@@ -126,7 +118,8 @@ def check_modifications(objeto, cliente):
     print(objeto)
 
     # TODO Analizar quien ha realizado el ultimo cambio (el parametro field_manager del metodo patch)
-    if "componente" in objeto['metadata']['managedFields'][len(objeto['metadata']['managedFields']) - 1]['manager']:
+    lastManager = objeto['metadata']['managedFields'][len(objeto['metadata']['managedFields']) - 1]['manager']
+    if "componente" in lastManager:
         # Solo si ha actualizado el status un componente realizamos las comprobaciones
         print("Cambio realizado por un componente")
 
@@ -159,6 +152,9 @@ def check_modifications(objeto, cliente):
                                                           objeto['metadata']['name'], {'status': objeto['status']},
                                                           field_manager=field_manager)
         # cliente.replace_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'], {'status': objeto['status']})
+    elif "gestor-ejecuciones" in lastManager:
+        print("Se quiere desplegar la aplicacion")
+        conciliar_spec_status(objeto, cliente)
     else:
         print("Cambio realizado por una aplicacion")
 
@@ -188,6 +184,19 @@ def conciliar_spec_status(objeto, cliente):
     # TODO Creamos el evento de que se están empezando a crear los componentes
 
     if objeto['spec']['desplegar'] == True:
+
+        # TODO Creamos el evento notificando que se ha creado la aplicacion
+        eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
+                                                      CR_name=objeto['metadata']['name'],
+                                                      CR_UID=objeto['metadata']['uid'],
+                                                      message='Aplicacion creada correctamente.',
+                                                      reason='Created',
+                                                      eventName=objeto['metadata']['name'] + '-creada-' +
+                                                      ''.join(random.choices(string.ascii_lowercase + string.digits, k=4)))
+        eventAPI = client.CoreV1Api()
+        eventAPI.create_namespaced_event("default", eventObject)
+
+
         listado_componentes_desplegados = cliente.list_namespaced_custom_object(grupo, 'v1alpha1', namespace,
                                                                                 'componentes')
         for i in objeto['spec']['componentes']:  # Por cada componente de la aplicacion a desplegar
@@ -301,4 +310,5 @@ def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
 
 
 if __name__ == '__main__':
+
     controlador()

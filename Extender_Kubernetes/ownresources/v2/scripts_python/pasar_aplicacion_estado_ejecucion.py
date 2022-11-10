@@ -23,7 +23,7 @@ def pasar_a_ejecucion( nombre):
     app=cliente.get_namespaced_custom_object(grupo, version, namespace, plural, nombre)
     if app['spec']['desplegar'] == False:
         app['spec']['desplegar'] = True
-        cliente.patch_namespaced_custom_object(grupo, version, namespace, plural, nombre, app)
+        cliente.patch_namespaced_custom_object(grupo, version, namespace, plural, nombre, app, field_manager="gestor-ejecuciones")
     else:
         pass
 

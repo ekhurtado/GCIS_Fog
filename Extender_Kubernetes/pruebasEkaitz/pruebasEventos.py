@@ -51,3 +51,4 @@ estructura_evento = {
 # coreAPI.create_namespaced_event(self=None, namespace="default", body=estructura_evento)
 coreAPI.create_namespaced_event("default", estructura_evento)
 # eventAPI.create_namespaced_event("default", estructura_evento)
+coreAPI.list_namespaced_event()
