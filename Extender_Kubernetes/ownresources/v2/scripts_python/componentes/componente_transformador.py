@@ -2,7 +2,6 @@ from kubernetes import client, config
 import kafka
 from json import dumps, loads
 
-
 def func_transformador():
     config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
     # config.load_incluster_config()

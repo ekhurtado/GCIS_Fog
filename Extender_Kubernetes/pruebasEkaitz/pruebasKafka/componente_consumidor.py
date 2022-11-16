@@ -7,14 +7,7 @@ import time
 from json import loads
 
 def func_consumidor():
-    path = os.path.abspath(os.path.dirname(__file__))
-    path = path.replace("Extender_Kubernetes\pruebasEkaitz\pruebasKafka", "")
-    print(os.path.join(os.path.abspath(path), "k3s.yaml"))
-
-    # config.load_kube_config("k3s.yaml")  # Cargamos la configuracion del cluster
-    # TODO Cambiarlo para el cluster
-    # config.load_kube_config("C:\\Users\\ekait\\PycharmProjects\\GCIS\\GCIS_Fog\\k3s.yaml")  # Cargamos la configuracion del cluster
-    config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
+    config.load_incluster_config()
 
     cliente = client.CoreV1Api()
     servicios=cliente.list_namespaced_service("default")

@@ -6,15 +6,20 @@ from json import dumps
 
 def func_productor():
     #config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+    print("Started")
     config.load_incluster_config()
+
+    print("Configured")
     cliente = client.CoreV1Api()
-    servicios=cliente.list_namespaced_service("default")
+    servicios=cliente.list_namespaced_service("kafka-ns")
     j = 0
     for i in servicios.items:
         if 'bootstrap' in i.metadata.name:
             break
         j = j + 1
     IP_server = servicios.items[j].spec.cluster_ip
+    IP_server="mi-cluster-kafka-bootstrap.kafka-ns"
+    print(IP_server)
     productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='mi-productor', value_serializer=lambda x: dumps(x).encode('utf-8'))
     #test=productor.bootstrap_connected()
     while True:

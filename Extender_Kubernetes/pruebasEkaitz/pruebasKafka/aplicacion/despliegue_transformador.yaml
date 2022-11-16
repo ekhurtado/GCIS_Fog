@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-transformador
+  labels:
+    app: transformador
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transformador
+  template:
+    metadata:
+      labels:
+        app: transformador
+    spec:
+      containers:
+      - name: kafka-transformador
+        image: ekaitzhara/pruebas-kafka:transformador
+        imagePullPolicy: Always

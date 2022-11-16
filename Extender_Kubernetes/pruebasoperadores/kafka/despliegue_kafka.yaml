@@ -1,10 +1,11 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: mi-cluster-mensajeria
+  name: mi-cluster
+  namespace: kafka-ns
 spec:
   kafka:
-    version: 3.1.0
+    version: 3.3.1
     replicas: 3
     listeners:
       - name: plain
@@ -21,7 +22,7 @@ spec:
       transaction.state.log.min.isr: 2
       default.replication.factor: 3
       min.insync.replicas: 2
-      inter.broker.protocol.version: '3.1'
+      inter.broker.protocol.version: "3.3"
     storage:
       type: ephemeral
   zookeeper:
