@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-productor2
+#  namespace: kafka-ns
+  labels:
+    app: productor2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productor2
+  template:
+    metadata:
+      labels:
+        app: productor2
+    spec:
+      containers:
+      - name: kafka-productor2
+        image: ekaitzhara/pruebas-kafka:productor2
+        imagePullPolicy: Always

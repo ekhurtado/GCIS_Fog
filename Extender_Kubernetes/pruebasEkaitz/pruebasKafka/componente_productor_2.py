@@ -15,12 +15,14 @@ def func_productor():
             break
         j = j + 1
     IP_server = servicios.items[j].spec.cluster_ip
-    productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='mi-productor-2', value_serializer=lambda x: dumps(x).encode('utf-8'))
+    productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='mi-productor-2', value_serializer=lambda x: dumps(x).encode('utf-8'),
+                                    key_serializer=str.encode)
     #test=productor.bootstrap_connected()
     while True:
         numero = random.randrange(100,200,1)        
         print(numero)
-        productor.send('topico-datos-crudos', value=numero, key='App-2') # b'Hola'
+        # productor.send('topico-datos-crudos', value=numero, key='App-2') # b'Hola'
+        productor.send('topico-datos-procesados', value=numero, key='App-2') # b'Hola'
         # productor.flush()
         time.sleep(2)
 
