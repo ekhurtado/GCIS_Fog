@@ -27,7 +27,6 @@ def func_productor():
         f = open("producer.txt", "a")
         f.write(str(numero) +"\n")
         f.close()
-        # productor.send('topico-datos-crudos', value=b'Hola', key=b'App-1') # b'Hola'
         # productor.send('topico-datos-crudos', value={'numero': numero, 'key': 'app-1'}, key='App-1') # b'Hola'
 
         # TODO Prueba para PQP

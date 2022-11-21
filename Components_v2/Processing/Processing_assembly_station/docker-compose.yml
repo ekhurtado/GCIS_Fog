@@ -6,8 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_PQP
-    image: gcr.io/clusterekaitz/processing:assembly-station
+    image: ekaitzhara/processing-v2:assembly-station
     container_name: processing-assembly-station
-    ports:
-      - 6000:6000
 

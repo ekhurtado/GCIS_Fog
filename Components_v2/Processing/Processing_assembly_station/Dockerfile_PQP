@@ -1,4 +1,4 @@
-FROM ekaitzhara/processing:base
+FROM ekaitzhara/processing-v2:base
 
 RUN pip install influxdb-client
 
