@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+
+  processing-assembly-station:
+    build:
+      context: .
+      dockerfile: Dockerfile_PQP
+    image: gcr.io/clusterekaitz/processing:assembly-station
+    container_name: processing-assembly-station
+    ports:
+      - 6000:6000
+

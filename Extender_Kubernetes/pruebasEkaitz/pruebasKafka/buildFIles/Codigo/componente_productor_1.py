@@ -28,12 +28,7 @@ def func_productor():
         f.write(str(numero) +"\n")
         f.close()
         # productor.send('topico-datos-crudos', value=b'Hola', key=b'App-1') # b'Hola'
-        # productor.send('topico-datos-crudos', value={'numero': numero, 'key': 'app-1'}, key='App-1') # b'Hola'
-
-        # TODO Prueba para PQP
-        productor.send('topico-datos-oee', value={'range': numero, 'start': '21/11/2022 11:02:16',
-                                                  'finish': '21/11/2022 11:03:52', 'machines': 'machine1'}, key='App-1')  # b'Hola'
-
+        productor.send('topico-datos-crudos', value={'numero': numero, 'key': 'app-1'}, key='App-1') # b'Hola'
         # productor.flush()
         time.sleep(2)
 
