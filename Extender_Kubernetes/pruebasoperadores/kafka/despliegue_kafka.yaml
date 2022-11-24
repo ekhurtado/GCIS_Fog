@@ -4,6 +4,8 @@ metadata:
   name: mi-cluster-mensajeria
   namespace: kafka-ns
 spec:
+#  clusterCa:
+#    generateCertificateAuthority: false
   kafka:
     version: 3.3.1
     replicas: 3
@@ -26,7 +28,7 @@ spec:
     storage:
       type: ephemeral
   zookeeper:
-    replicas: 3
+    replicas: 1
     storage:
       type: ephemeral
   entityOperator:

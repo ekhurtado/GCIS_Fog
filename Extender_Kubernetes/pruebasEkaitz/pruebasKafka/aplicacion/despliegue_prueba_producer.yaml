@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-productor-java
+  labels:
+    app: productor-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productor-java
+  template:
+    metadata:
+      labels:
+        app: productor-java
+    spec:
+      containers:
+      - name: kafka-productor-java
+        image: ekaitzhara/pruebas-kafka:productor-java
+        imagePullPolicy: Always
