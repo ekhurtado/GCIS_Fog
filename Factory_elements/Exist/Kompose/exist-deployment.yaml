@@ -25,7 +25,8 @@ spec:
         io.kompose.service: exist
     spec:
       containers:
-      - image: existdb/existdb:latest
+#      - image: existdb/existdb:latest
+      - image: existdb/existdb:6.0.1
         imagePullPolicy: ""
         name: existdb
         ports:
@@ -46,6 +47,6 @@ spec:
       - name: exist-config
         persistentVolumeClaim:
           claimName: exist-config
-      nodeSelector:
-        node-type: factory-components
+#      nodeSelector:
+#        node-type: factory-components
 status: {}

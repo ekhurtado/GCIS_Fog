@@ -1,9 +1,9 @@
 #FROM gcr.io/clusterekaitz/source:exist-base
 FROM openjdk:8-jre-alpine
 
-COPY lib /lib
+COPY Source_eXist_lib /Source_eXist_lib
 
-COPY SDE.jar /
+COPY Source_eXist.jar /
 
 ENV MACHINE_ID=NULL
 
@@ -13,4 +13,4 @@ ENV KAFKA_KEY=app1-source-exist
 
 WORKDIR /
 
-CMD ["java", "-jar", "SDE.jar"]
+CMD ["java", "-jar", "Source_eXist.jar"]

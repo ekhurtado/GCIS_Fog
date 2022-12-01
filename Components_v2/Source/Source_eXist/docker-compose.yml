@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+
+  source-exist:
+    build:
+      context: .
+      dockerfile: Dockerfile_Source_eXist
+    image: ekaitzhara/source-v2:source-exist
+    container_name: source-exist
+    environment:
+      - FUNCTION=getAssemblyStationData
+
