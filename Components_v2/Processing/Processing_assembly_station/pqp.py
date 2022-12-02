@@ -3,6 +3,8 @@ from datetime import datetime
 import kafka
 from threading import Thread
 
+import influxAPI
+
 # PQP --> Proc Quality Performance
 
 limit = os.environ.get('LIMIT')
@@ -17,7 +19,7 @@ def printFile(message):
 
 
 def calculateTotalTime(actualTimes, horaInicio, horaFin):
-    print("Calculating total time... ", file=sys.stderr)
+    print("Calculating total time... ")
 
     totalTime = 0.0
 
@@ -37,7 +39,7 @@ def calculateTotalTime(actualTimes, horaInicio, horaFin):
 
 
 def calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin):
-    print("Calculating performance value... ", file=sys.stderr)
+    print("Calculating performance value... ")
 
     produccionReal = 0.0
     capacidadProductiva = 0.0
@@ -48,8 +50,8 @@ def calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin):
         actualFinish = actual["Finish"]
         if (actualFinish < horaFin):
             restaActual = calculateDifferenceHours(actualStart, actualFinish)
-            print("##################", file=sys.stderr)
-            print("Resta " + str(actualStart) + "-" + str(actualFinish) + "=" + str(restaActual), file=sys.stderr)
+            print("##################")
+            print("Resta " + str(actualStart) + "-" + str(actualFinish) + "=" + str(restaActual))
             produccionReal = produccionReal + float(restaActual)
             relatedPlannedTime = plannedTimes[i]
             if (relatedPlannedTime["Start"] != None):
@@ -82,7 +84,7 @@ def calculateDifferenceHours(hour1, hour2):
 
 
 def sendCreateDeployMessage(elementName, newDeployName, update, message):
-    print("Vamos a enviar la peticion de crear el elemento message-printer al EventManager", file=sys.stderr)
+    print("Vamos a enviar la peticion de crear el elemento message-printer al EventManager")
     headers = {'Content-Type': 'text/plain'}
     url = 'http://' + elementName + ':6000/createDeploy/' + newDeployName + '/' + update + '/'
     # r = requests.post(url, headers=headers, data=message)
@@ -90,7 +92,7 @@ def sendCreateDeployMessage(elementName, newDeployName, update, message):
 
 
 def sendCreateDeployJADE(elementName, newDeployName, update):
-    print("Vamos a enviar la peticion de crear un nuevo agente JADE al EventManager", file=sys.stderr)
+    print("Vamos a enviar la peticion de crear un nuevo agente JADE al EventManager")
     headers = {'Content-Type': 'text/plain'}
     url = 'http://' + elementName + ':6000/createDeploy/' + newDeployName + '/' + update + '/'
     # r = requests.get(url, headers=headers)
@@ -101,10 +103,10 @@ def sendCreateDeployJADE(elementName, newDeployName, update):
 # MÉTODOS DE LOS HILOS DE EJECUCIÓN DE LAS FUNCIONES
 ####################################################
 def performance_function_thread():
-    print("Hilo de ejecución para la función 'Calculate performance'")
+    printFile("Hilo de ejecución para la función 'Calculate performance'")
 
 def oee_function_thread():
-    print("Hilo de ejecución para la función 'Calculate OEE'")
+    printFile("Hilo de ejecución para la función 'Calculate OEE'")
 
     # Configuracion Kafka Consumer
     consumidor = kafka.KafkaConsumer('topico-datos-oee', bootstrap_servers=[IP_server + ':9092'],
@@ -112,7 +114,7 @@ def oee_function_thread():
                                      value_deserializer=lambda x: json.loads(x.decode('utf-8')),
                                      client_id='mi-consumidor-processing')
 
-    print("Limit selected: " + str(limit))
+    printFile("Limit selected: " + str(limit))
 
     # Se detectará cuando alguien publique un mensaje en el tópico
     for msg in consumidor:
@@ -137,7 +139,7 @@ def oee_function_thread():
 
         for machine in machines:
             machineID = machine['machineID']
-            printFile("--> Vamos a calcular el OEE para la maquina " + str(machineID), file=sys.stderr)
+            printFile("--> Vamos a calcular el OEE para la maquina " + str(machineID))
 
             oee = 0.0
             disponibilidad = 0.0
@@ -158,28 +160,31 @@ def oee_function_thread():
             rendimiento = round(rendimiento, 2)
             oee = round(oee, 2)
 
-            printFile("-----> Disponibilidad value: " + str(disponibilidad), file=sys.stderr)
-            printFile("-----> Rendimiento value: " + str(rendimiento), file=sys.stderr)
-            printFile("-----> OEE value: " + str(oee), file=sys.stderr)
+            printFile("-----> Disponibilidad value: " + str(disponibilidad))
+            printFile("-----> Rendimiento value: " + str(rendimiento))
+            printFile("-----> OEE value: " + str(oee))
 
             printFile("-----------------------------")
             printFile("Limit selected: " + str(limit))
 
             oeeLimit = float(limit) / 100
             if (oee < oeeLimit):
-                printFile("OEE below the limit " + limit + ": " + str(oee), file=sys.stderr)
+                printFile("OEE below the limit " + limit + ": " + str(oee))
                 # Primero, crea los nuevos despliegues del cluster
                 # De momento le paso el nombre con el .yaml, pero igual seria mejor pasarle solo el nombre y que el manager añada el .yaml
-                printFile("Asking for new event to create new JADE Agent and message printer", file=sys.stderr)
+                printFile("Asking for new event to create new JADE Agent and message printer")
                 message = "OEE of machine " + str(machineID) + " is below the limit (" + limit + "), " + str(oee)
 
-                sendCreateDeployMessage("cluster-manager", "message-printer", "False", message)
-                sendCreateDeployJADE("cluster-manager", "jade-gateway", "False")
+                # TODO DE MOMENTO COMENTADO
+                # sendCreateDeployMessage("cluster-manager", "message-printer", "False", message)
+                # sendCreateDeployJADE("cluster-manager", "jade-gateway", "False")
+
 
             # Guarda los datos en la BBDD Influx
             calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
-            subprocess.getoutput('python3 influxAPI.py storeData ' + str(machineID) + ' ' + str(calcs))
-            printFile("Calcs stored on InfluxDB", file=sys.stderr)
+            # subprocess.getoutput('python3 influxAPI.py storeData ' + str(machineID) + ' ' + str(calcs))
+            influxAPI.storeData()
+            printFile("Calcs stored on InfluxDB")
 
             oee = 0.0
             disponibilidad = 0.0
@@ -191,7 +196,7 @@ def oee_function_thread():
 
 
 def trend_function_thread():
-    print("Hilo de ejecución para la función 'Calculate Trend'")
+    printFile("Hilo de ejecución para la función 'Calculate Trend'")
 
 
 
@@ -199,6 +204,10 @@ def main_pqp():
 
     printFile("Comienzo de ejecución del componente Processing Assembly Station")
     printFile("Started\n")
+
+    # Creamos el bucket de Influx DB
+    influxAPI.createBucket()
+    printFile("Bucket created in Influx DB.")
 
     # Cada funcion tendrá su hilo de ejecución propio
     while True:

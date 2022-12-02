@@ -1,6 +1,6 @@
 FROM ekaitzhara/processing-v2:base
 
-RUN pip install influxdb-client
+RUN pip3 install influxdb-client
 
 COPY pqp.py .
 
