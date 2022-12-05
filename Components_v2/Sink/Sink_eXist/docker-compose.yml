@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+
+  sink-exist:
+    build:
+      context: .
+      dockerfile: Dockerfile_sink
+    image: gcr.io/clusterekaitz/sink:exist
+    container_name: sink-exist
+    ports:
+      - 8080:8080

@@ -1,14 +1,14 @@
-package appfil2;
+package functions;
 
-
-import java.io.DataOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.TimeZone;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -27,12 +27,9 @@ import org.xmldb.api.base.ErrorCodes;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-import com.google.gson.JsonObject;
+import appfil2.AllInfo;
 
-
-public class SDE_v2 {
-	
-	// SDE --> Source Datos Estaciones
+public class GetAssemblyStationData extends Thread {
 	
 	// eXist variables
     private static String serverExist = "http://exist:8080";
@@ -41,22 +38,19 @@ public class SDE_v2 {
     
     // Kafka variables
     public static String Kafka_server = "mi-cluster-mensajeria-kafka-bootstrap.kafka-ns";
-
+    
     //Error Messages
     private static final String PERMISSION_DENIED_EXCEPTION = "org.exist.security.PermissionDeniedException";
     private static final String PERMISSION_DENIED_EXCEPTION_MESSAGE = "Permission denied";
 
     private static AllInfo machineInfo = null;
-    
-	public static void main(String[] args) {
 	
-		String function = System.getenv("FUNCTION");
+	public void run() {
+		System.out.println("GetAssemblyStationData function is running...");
 		
-		if (function.equals("getAssemblyStationData"))
-			getAssemblyStationData();
+		getAssemblyStationData();
 	}
-	
-	
+
 
 	private static void getAssemblyStationData() {
 		
@@ -191,7 +185,7 @@ public class SDE_v2 {
 					
 					// Teniendo todos los datos, los publicaremos en Kafka
 					String topic = "topico-datos-oee";	// TODO es este el topico? Donde se define? Viene dado en una variable de entorno?
-					String key = "sde-1";	// TODO Aquí habría que añadirlo por variable de entorno (diseñado por el usuario, dependiendo de la aplicacion, p.e. app1-getassemblystation)
+					String key = System.getenv("KAFKA_KEY");;	// TODO Aquí habría que añadirlo por variable de entorno (diseñado por el usuario, dependiendo de la aplicacion, p.e. app1-getassemblystation)
 					publishDataKafka(topic, key, json);
 				
 					
@@ -538,5 +532,5 @@ public class SDE_v2 {
 		producer.close();
 		return "OK";
 	}
-
+	
 }
