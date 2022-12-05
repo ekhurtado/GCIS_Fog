@@ -14,4 +14,6 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 # Install chart
 helm install influxdb-gcis --set auth.admin.password=admingcis \
      --set auth.admin.token=hkC8oAkLLa43mp6DJQ2maXPWTL1d=A9Caa!?onlkyrtWel3iD9wtF32CWBs4cdEzElxu \
+     --set auth.admin.org=EHU \
+     --set auth.admin.bucket=gcis \
      bitnami/influxdb --version 5.4.11

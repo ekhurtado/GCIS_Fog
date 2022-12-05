@@ -183,7 +183,7 @@ def oee_function_thread():
             # Guarda los datos en la BBDD Influx
             calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
             # subprocess.getoutput('python3 influxAPI.py storeData ' + str(machineID) + ' ' + str(calcs))
-            influxAPI.storeData()
+            influxAPI.storeData(machineID, calcs)
             printFile("Calcs stored on InfluxDB")
 
             oee = 0.0
@@ -204,10 +204,6 @@ def main_pqp():
 
     printFile("Comienzo de ejecución del componente Processing Assembly Station")
     printFile("Started\n")
-
-    # Creamos el bucket de Influx DB
-    influxAPI.createBucket()
-    printFile("Bucket created in Influx DB.")
 
     # Cada funcion tendrá su hilo de ejecución propio
     while True:

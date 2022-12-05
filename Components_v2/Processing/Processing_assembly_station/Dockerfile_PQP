@@ -2,6 +2,8 @@ FROM ekaitzhara/processing-v2:base
 
 RUN pip3 install influxdb-client
 
+RUN pip install kubernetes
+
 COPY pqp.py .
 
 COPY influxAPI.py .
