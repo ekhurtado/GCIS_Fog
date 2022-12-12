@@ -181,10 +181,21 @@ def oee_function_thread():
 
 
             # Guarda los datos en la BBDD Influx
+            # Para ello, los enviaremos por Kafka para que Sink Influx los recoja
             calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
-            # subprocess.getoutput('python3 influxAPI.py storeData ' + str(machineID) + ' ' + str(calcs))
-            influxAPI.storeData(machineID, calcs)
+            message = {'machineID': machineID, 'data': calcs}
+
+            # Configuracion Productor Kafka
+            productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
+                                            value_serializer=lambda x: json.dumps(x).encode('utf-8'),
+                                            key_serializer=str.encode)
+
+            productor.send('topico-datos-oee-influx', value=message, key='App-2')
+
+            # influxAPI.storeData(machineID, calcs)
             printFile("Calcs stored on InfluxDB")
+
+
 
             oee = 0.0
             disponibilidad = 0.0
