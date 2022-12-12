@@ -20,7 +20,7 @@ def getInfluxIP():
     influx_svc = cliente_svc.read_namespaced_service(name="influxdb-gcis", namespace="default")
     influx_ip = influx_svc.spec.cluster_ip
 
-    print(influx_ip)
+    printFile(influx_ip)
     return influx_ip
 
 def storeData(machineID, data):

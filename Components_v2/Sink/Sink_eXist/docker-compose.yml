@@ -4,9 +4,10 @@ services:
 
   sink-exist:
     build:
-      context: .
-      dockerfile: Dockerfile_sink
-    image: gcr.io/clusterekaitz/sink:exist
+      context: ../../../../../Downloads
+      dockerfile: Dockerfile_Sink_eXist
+    image: ekaitzhara/sink-v2:sink-exist
     container_name: sink-exist
-    ports:
-      - 8080:8080
+    environment:
+      - FUNCTION=storeAssemblyStationData
+

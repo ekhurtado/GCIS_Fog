@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: sourcem01
-  name: sourcem01
+    io.kompose.service: sink-exist
+  name: sink-exist
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: sourcem01
+      io.kompose.service: sink-exist
   strategy: {}
   template:
     metadata:
@@ -21,24 +21,16 @@ spec:
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: sourcem01
+        io.kompose.service: sink-exist
     spec:
       containers:
       - env:
-        - name: CLIENT_NAME
-          value: sourceM01
-        - name: SINK_NAME
-          value: sink01
-        - name: TOPIC
-          value: "11"
-        - name: TRANSFORM_FILE
-          value: sendData.py
-        image: gcr.io/clusterekaitz/appfil1:source
-        imagePullPolicy: ""
-        name: sourcem01
-        resources:
-          limits:
-            memory: "536870912"
+        - name: FUNCTION
+          value: storeAssemblyStationData
+        image: ekaitzhara/sink-v2:sink-exist
+        imagePullPolicy: Always
+        name: sink-exist
+        resources: {}
       restartPolicy: Always
       serviceAccountName: ""
       volumes: null
