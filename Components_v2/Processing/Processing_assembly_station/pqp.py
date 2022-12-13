@@ -116,92 +116,94 @@ def oee_function_thread():
 
     printFile("Limit selected: " + str(limit))
 
-    # Se detectará cuando alguien publique un mensaje en el tópico
-    for msg in consumidor:
-        print('He recibido algo del consumidor.')
-        print(msg)
+    while True:
+        printFile('En el bucle de la función OEE.')
 
-        msgJSONValue = msg.value
+        # Se detectará cuando alguien publique un mensaje en el tópico
+        for msg in consumidor:
+            print('He recibido algo del consumidor.')
+            print(msg)
 
-        timeRange = msgJSONValue['range']
-        horaInicio = msgJSONValue['start']
-        horaFin = msgJSONValue['finish']
-        machines = msgJSONValue['machines']
+            msgJSONValue = msg.value
 
-        #Como los prints no van bien, guardamos el log en un fichero
-        printFile("timeRange:" + str(timeRange) + "\n")
-        printFile("horaInicio:" + str(horaInicio) + "\n")
-        printFile("horaFin:" + str(horaFin) + "\n")
-        printFile("machines:" + str(machines) + "\n\n")
+            timeRange = msgJSONValue['range']
+            horaInicio = msgJSONValue['start']
+            horaFin = msgJSONValue['finish']
+            machines = msgJSONValue['machines']
 
-        if not machines:
-            return 'There are no machine IDs'
+            #Como los prints no van bien, guardamos el log en un fichero
+            printFile("timeRange:" + str(timeRange) + "\n")
+            printFile("horaInicio:" + str(horaInicio) + "\n")
+            printFile("horaFin:" + str(horaFin) + "\n")
+            printFile("machines:" + str(machines) + "\n\n")
 
-        for machine in machines:
-            machineID = machine['machineID']
-            printFile("--> Vamos a calcular el OEE para la maquina " + str(machineID))
+            if not machines:
+                return 'There are no machine IDs'
 
-            oee = 0.0
-            disponibilidad = 0.0
-            rendimiento = 0.0
+            for machine in machines:
+                machineID = machine['machineID']
+                printFile("--> Vamos a calcular el OEE para la maquina " + str(machineID))
 
-            actualTimes = machine['actualTimes']
-            plannedTimes = machine['plannedTimes']
+                oee = 0.0
+                disponibilidad = 0.0
+                rendimiento = 0.0
 
-            # totalTime = float(timeRange) * 60.0;    # Range vendrá en minutos, asi que lo pasaremos a segundos
-            totalTime = 60.0;
-            totalActualTime = calculateTotalTime(actualTimes, horaInicio, horaFin)
-            rendimiento = calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin);
+                actualTimes = machine['actualTimes']
+                plannedTimes = machine['plannedTimes']
 
-            disponibilidad = totalActualTime / totalTime;
-            oee = disponibilidad * rendimiento;
+                # totalTime = float(timeRange) * 60.0;    # Range vendrá en minutos, asi que lo pasaremos a segundos
+                totalTime = 60.0
+                totalActualTime = calculateTotalTime(actualTimes, horaInicio, horaFin)
+                rendimiento = calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin)
 
-            disponibilidad = round(disponibilidad, 2)
-            rendimiento = round(rendimiento, 2)
-            oee = round(oee, 2)
+                disponibilidad = totalActualTime / totalTime
+                oee = disponibilidad * rendimiento
 
-            printFile("-----> Disponibilidad value: " + str(disponibilidad))
-            printFile("-----> Rendimiento value: " + str(rendimiento))
-            printFile("-----> OEE value: " + str(oee))
+                disponibilidad = round(disponibilidad, 2)
+                rendimiento = round(rendimiento, 2)
+                oee = round(oee, 2)
 
-            printFile("-----------------------------")
-            printFile("Limit selected: " + str(limit))
+                printFile("-----> Disponibilidad value: " + str(disponibilidad))
+                printFile("-----> Rendimiento value: " + str(rendimiento))
+                printFile("-----> OEE value: " + str(oee))
 
-            oeeLimit = float(limit) / 100
-            if (oee < oeeLimit):
-                printFile("OEE below the limit " + limit + ": " + str(oee))
-                # Primero, crea los nuevos despliegues del cluster
-                # De momento le paso el nombre con el .yaml, pero igual seria mejor pasarle solo el nombre y que el manager añada el .yaml
-                printFile("Asking for new event to create new JADE Agent and message printer")
-                message = "OEE of machine " + str(machineID) + " is below the limit (" + limit + "), " + str(oee)
+                printFile("-----------------------------")
+                printFile("Limit selected: " + str(limit))
 
-                # TODO DE MOMENTO COMENTADO
-                # sendCreateDeployMessage("cluster-manager", "message-printer", "False", message)
-                # sendCreateDeployJADE("cluster-manager", "jade-gateway", "False")
+                oeeLimit = float(limit) / 100
+                if (oee < oeeLimit):
+                    printFile("OEE below the limit " + limit + ": " + str(oee))
+                    # Primero, crea los nuevos despliegues del cluster
+                    # De momento le paso el nombre con el .yaml, pero igual seria mejor pasarle solo el nombre y que el manager añada el .yaml
+                    printFile("Asking for new event to create new JADE Agent and message printer")
+                    message = "OEE of machine " + str(machineID) + " is below the limit (" + limit + "), " + str(oee)
 
-
-            # Guarda los datos en la BBDD Influx
-            # Para ello, los enviaremos por Kafka para que Sink Influx los recoja
-            calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
-            message = {'machineID': machineID, 'data': calcs}
-
-            # Configuracion Productor Kafka
-            productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
-                                            value_serializer=lambda x: json.dumps(x).encode('utf-8'),
-                                            key_serializer=str.encode)
-
-            productor.send('topico-datos-oee-influx', value=message, key='App-2')
-
-            # influxAPI.storeData(machineID, calcs)
-            printFile("Calcs stored on InfluxDB")
+                    # TODO DE MOMENTO COMENTADO
+                    # sendCreateDeployMessage("cluster-manager", "message-printer", "False", message)
+                    # sendCreateDeployJADE("cluster-manager", "jade-gateway", "False")
 
 
+                # Guarda los datos en la BBDD Influx
+                # Para ello, los enviaremos por Kafka para que Sink Influx los recoja
+                calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
+                message = {'machineID': machineID, 'data': calcs}
 
-            oee = 0.0
-            disponibilidad = 0.0
-            rendimiento = 0.0
-            totalActualTime = 0.0
-            totalTime = 0.0
+                # Configuracion Productor Kafka
+                productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
+                                                value_serializer=lambda x: json.dumps(x).encode('utf-8'), key_serializer=str.encode)
+
+                productor.send('topico-datos-oee-influx', value=message, key=os.environ.get('KAFKA_KEY'))
+
+                # influxAPI.storeData(machineID, calcs)
+                printFile("Calcs stored on InfluxDB")
+
+
+
+                oee = 0.0
+                disponibilidad = 0.0
+                rendimiento = 0.0
+                totalActualTime = 0.0
+                totalTime = 0.0
 
 
 
@@ -217,15 +219,13 @@ def main_pqp():
     printFile("Started\n")
 
     # Cada funcion tendrá su hilo de ejecución propio
-    while True:
-        printFile('En el bucle.')
-        thread_func1 = Thread(target=performance_function_thread(), args=())
-        thread_func2 = Thread(target=oee_function_thread(), args=())
-        thread_func3 = Thread(target=trend_function_thread(), args=())
+    thread_func1 = Thread(target=performance_function_thread(), args=())
+    thread_func2 = Thread(target=oee_function_thread(), args=())
+    thread_func3 = Thread(target=trend_function_thread(), args=())
 
-        thread_func1.start()
-        thread_func2.start()
-        thread_func3.start()
+    thread_func1.start()
+    thread_func2.start()
+    thread_func3.start()
 
 
 

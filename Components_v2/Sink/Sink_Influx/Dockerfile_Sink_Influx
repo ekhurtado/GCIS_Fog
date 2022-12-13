@@ -1,0 +1,15 @@
+FROM python:3.10-alpine
+
+RUN pip install kafka-python
+
+RUN pip3 install influxdb-client
+
+RUN pip install kubernetes
+
+COPY sink_influx.py /
+
+COPY influx_API.py /
+
+WORKDIR /
+
+CMD ["python3", "sink_influx.py"]

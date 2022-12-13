@@ -12,5 +12,7 @@ COPY influxAPI.py .
 
 ENV LIMIT=67
 
+ENV KAFKA_KEY=app2-pqp-assembly
+
 #CMD flask run --host=0.0.0.0
 CMD python3 pqp.py

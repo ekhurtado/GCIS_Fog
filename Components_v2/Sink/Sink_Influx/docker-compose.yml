@@ -2,12 +2,12 @@ version: "2"
 
 services:
 
-  sink-exist:
+  sink-influx:
     build:
       context: .
       dockerfile: Dockerfile_Sink_Influx
-    image: ekaitzhara/sink-v2:sink-exist
-    container_name: sink-exist
+    image: ekaitzhara/sink-v2:sink-influx
+    container_name: sink-influx
     environment:
       - FUNCTION=storeAssemblyStationData
 
