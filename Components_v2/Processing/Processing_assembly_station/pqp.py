@@ -192,7 +192,7 @@ def oee_function_thread():
                 productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
                                                 value_serializer=lambda x: json.dumps(x).encode('utf-8'), key_serializer=str.encode)
 
-                productor.send('topico-datos-oee-influx', value=message, key=os.environ.get('KAFKA_KEY'))
+                productor.send('topico-datos-oee-influx', value=message, key=msg.key)
 
                 # influxAPI.storeData(machineID, calcs)
                 printFile("Calcs stored on InfluxDB")

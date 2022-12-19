@@ -1,3 +1,4 @@
+import os
 from threading import Thread
 import kafka
 
@@ -14,7 +15,7 @@ def process_assembly_message(client, userdata, message):
     productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='source-mqtt-kafka',
                                     value_serializer=str.encode,
                                     key_serializer=str.encode)
-    productor.send('topico-datos-assembly-mqtt', value=topicData, key='App-1')
+    productor.send('topico-datos-assembly-mqtt', value=topicData, key=os.environ.get('KAFKA_KEY'))
 
 
 def assembly_station_function_thread():
