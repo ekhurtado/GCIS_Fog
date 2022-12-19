@@ -1,10 +1,21 @@
 import paho.mqtt.client as mqtt
 import time, sys, os, subprocess
 
+import mqtt2kafka
+
 MQTT_HOST = "mosquitto"
 USER = 'admin'
 PASSWORD = 'mosquittoGCIS'
+CLIENT_NAME = "source-http-kafka"
+TOPIC = os.environ.get('TOPIC')
 
+connected = False
+
+client = mqtt.Client(CLIENT_NAME)
+client.username_pw_set(USER, password=PASSWORD)
+
+print("--> Client: " + str(CLIENT_NAME))
+print("--> Topic: " + str(TOPIC))
 
 def run_command(command):
     p = subprocess.Popen(command,
@@ -25,11 +36,16 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, message):
     print("Datos del topico: " + str(message.topic))
-    aux = str(message.payload).split("'")
-    print("Vamos a enviar los datos recogidos al elemento MQTT2HTTP")
-    OUTPUT_GW = os.environ.get('OUTPUT_GW')
-    result = subprocess.getoutput('python3 ' + str(OUTPUT_GW) + ' \"' + str(aux[1]) + "\"")
-    print(result)
+    print("Datos del payload: " + str(message.payload))
+
+    if message.topic == "assembly-station":
+        mqtt2kafka.assembly_station_function(message.payload)
+
+    # aux = str(message.payload).split("'")
+    # print("Vamos a enviar los datos recogidos al elemento MQTT2HTTP")
+    # OUTPUT_GW = os.environ.get('OUTPUT_GW')
+    # result = subprocess.getoutput('python3 ' + str(OUTPUT_GW) + ' \"' + str(aux[1]) + "\"")
+    # print(result)
 
     # Intentamos enviar tambien los datos que se han quedado sin enviar
     # dataFile = open('/dataNotSent.txt')
@@ -38,34 +54,54 @@ def on_message(client, userdata, message):
 
     sys.stdout.flush()
 
-def subscribe(clientName, topic, on_message_method):
-    # Method to subscribe to a Mosquitto topic
 
-    connected = False
+client.on_connect = on_connect
+client.on_message = on_message
 
-    client = mqtt.Client(clientName)
-    client.username_pw_set(USER, password=PASSWORD)
+client.connect(MQTT_HOST)
+client.loop_start()
 
-    client.on_connect = on_connect
-    client.on_message = on_message_method
+while connected != True:    #Wait for connection
+    time.sleep(0.1)
 
-    client.connect(MQTT_HOST)
-    client.loop_start()
+client.subscribe(TOPIC, qos=0)
 
-    while connected != True:  # Wait for connection
-        time.sleep(0.1)
+try:
+    while True:
+        time.sleep(1)
 
-    client.subscribe(topic, qos=0)
-
-    try:
-        while True:
-            time.sleep(1)
-
-    except(KeyboardInterrupt):
-        print("exiting")
-        client.disconnect()
-        client.loop_stop()
+except(KeyboardInterrupt):
+    print("exiting")
+    client.disconnect()
+    client.loop_stop()
 
 
-
-
+# def subscribe(client, clientName, topic, on_message_method):
+#     # Method to subscribe to a Mosquitto topic
+#
+#     print("CLIENT -> " + clientName)
+#     print("TOPIC -> " + topic)
+#
+#     client.on_connect = on_connect
+#     client.on_message = on_message
+#
+#     client.connect(MQTT_HOST)
+#     client.loop_start()
+#
+#     while connected != True:  # Wait for connection
+#         time.sleep(0.1)
+#
+#     client.subscribe(topic, qos=0)
+#
+#     try:
+#         while True:
+#             time.sleep(1)
+#
+#     except(KeyboardInterrupt):
+#         print("exiting")
+#         client.disconnect()
+#         client.loop_stop()
+#
+#
+#
+#

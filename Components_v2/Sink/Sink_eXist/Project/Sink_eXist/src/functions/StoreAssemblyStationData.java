@@ -97,7 +97,12 @@ public class StoreAssemblyStationData extends Thread {
 //                        record.key(), record.value(),
 //                        record.partition(), record.offset());
                 
-                processPLCData(record.value());
+            	try {
+					updatePLCInfo(record.value());
+				} catch (XMLDBException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             });
 
             consumer.commitAsync();

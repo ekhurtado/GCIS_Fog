@@ -6,7 +6,7 @@ RUN pip install kubernetes
 
 COPY pqp.py .
 
-COPY influxAPI.py .
+#COPY influxAPI.py .
 
 #ENV FLASK_APP=pqp.py
 
