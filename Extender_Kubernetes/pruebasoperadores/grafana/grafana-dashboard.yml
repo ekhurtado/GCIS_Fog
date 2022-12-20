@@ -1,0 +1,14 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: mydashboard
+  labels:
+    app: grafana-gcis-grafana-operator-grafana
+spec:
+  url: https://raw.githubusercontent.com/grafana/github-datasource/master/src/dashboards/dashboard.json
+  plugins:
+    - name: "grafana-github-datasource"
+      version: "1.0.6"
+  datasources:
+    - inputName: "DS_GITHUB"
+      datasourceName: "GitHub"

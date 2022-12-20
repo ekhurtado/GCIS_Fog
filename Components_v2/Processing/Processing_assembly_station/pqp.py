@@ -3,8 +3,6 @@ from datetime import datetime
 import kafka
 from threading import Thread
 
-import influxAPI
-
 # PQP --> Proc Quality Performance
 
 limit = os.environ.get('LIMIT')

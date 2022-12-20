@@ -1,0 +1,20 @@
+datasources:
+  secretName: ""
+  secretDefinition:
+    apiVersion: 1
+    datasources:
+      - name: InfluxDB_Flux
+        type: influxdb
+        access: proxy
+        url: http://influxdb-gcis:8086
+        secureJsonData:
+          token: hkC8oAkLLa43mp6DJQ2maXPWTL1d=A9Caa!?onlkyrtWel3iD9wtF32CWBs4cdEzElxu
+        jsonData:
+          version: Flux
+          organization: EHU
+          defaultBucket: gcis
+          tlsSkipVerify: true
+dashboardsConfigMaps:
+   - configMapName: oee-config-map
+     folderName: json_files
+     fileName: oee_dashboard.json
