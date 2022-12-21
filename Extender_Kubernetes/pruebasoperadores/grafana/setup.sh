@@ -12,6 +12,7 @@ kubectl config view --raw > ~/.kube/config
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 # Creas el configmap para el dashboard
+kubectl create secret generic oee-secret --from-file=oee-secret.yaml
 kubectl create configmap oee-config-map --from-file=oee_dashboard.json
 
 # Install Grafana
@@ -24,6 +25,9 @@ kubectl create configmap oee-config-map --from-file=oee_dashboard.json
 #helm install grafana-gcis -f values.yaml bitnami/grafana-operator
 helm install grafana-gcis --set admin.user=admin \
      --set admin.password=admingcis \
+     --set persistence.enabled=true \
+     --set dashboardsProvider.enabled=true \
+     --set datasources.secretName=oee-secret \
      bitnami/grafana --version 8.2.21 -f values.yaml
 
 #kubectl apply -f influx-data-source.yaml

@@ -3,7 +3,7 @@
             "list": [
               {
                 "builtIn": 1,
-                "datasource": "InfluxDB",
+                "datasource": "InfluxDB_Flux",
                 "enable": true,
                 "hide": true,
                 "iconColor": "rgba(0, 211, 255, 1)",
@@ -23,7 +23,7 @@
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": null,
+              "datasource": "InfluxDB_Flux",
               "fieldConfig": {
                 "defaults": {},
                 "overrides": []
@@ -148,7 +148,7 @@
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": null,
+              "datasource": "InfluxDB_Flux",
               "fieldConfig": {
                 "defaults": {},
                 "overrides": []
@@ -280,7 +280,7 @@
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": null,
+              "datasource": "InfluxDB_Flux",
               "fieldConfig": {
                 "defaults": {},
                 "overrides": []
@@ -405,7 +405,7 @@
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": null,
+              "datasource": "InfluxDB_Flux",
               "fieldConfig": {
                 "defaults": {},
                 "overrides": []

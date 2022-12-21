@@ -2,3 +2,4 @@
 kubectl config view --raw > ~/.kube/config
 
 helm delete influxdb-gcis
+

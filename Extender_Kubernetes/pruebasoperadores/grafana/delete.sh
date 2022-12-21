@@ -2,3 +2,7 @@
 kubectl config view --raw > ~/.kube/config
 
 helm delete grafana-gcis
+
+kubectl delete secret oee-secret
+
+kubectl delete configmap oee-config-map
