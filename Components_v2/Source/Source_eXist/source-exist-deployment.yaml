@@ -28,7 +28,7 @@ spec:
         - name: FUNCTION
           value: getAssemblyStationData
         image: ekaitzhara/source-v2:source-exist
-        imagePullPolicy: ""
+        imagePullPolicy: Always
         name: source-exist
         resources: {}
       restartPolicy: Always

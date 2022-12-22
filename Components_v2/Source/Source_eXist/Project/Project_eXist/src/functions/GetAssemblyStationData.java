@@ -71,6 +71,11 @@ public class GetAssemblyStationData extends Thread {
 				e.printStackTrace();
 			}
 			
+			// TODO Borrar: Pruebas para conexion desde Eclipse
+//			String machineID= "NULL";
+//			String output=null;
+//			int rangeMinute = 60;
+			
 			// Cogemos las variables de entorno con las que se modela la aplicacion
 			String machineID = System.getenv("MACHINE_ID");
 			String output = System.getenv("OUTPUT");
@@ -151,6 +156,9 @@ public class GetAssemblyStationData extends Thread {
 							System.out.print(" - " + m.getMachineID());
 						allMachineInfo = cleanList(allMachineInfo);
 						
+						if (allMachineInfo.isEmpty())	// Si despues de limpiar la lista, no hay nada, es que no tenia datos de tiempos actuales
+							continue;
+						
 						
 						for (AllInfo info: allMachineInfo) {
 							System.out.println("\nOperaciones realizadas por la maquina "+info.getMachineID()+" en el intervalo de tiempo establecido:");
@@ -229,6 +237,7 @@ public class GetAssemblyStationData extends Thread {
 
             System.out.println(eXistName + " DATABASE DRIVER INITIALIZED");
 
+//            String URI = "xmldb:exist://192.168.1.1:30808/exist/xmlrpc/db";	// TODO BORRAR
             String URI = "xmldb:exist://" +eXistName+ ":8080/exist/xmlrpc/db";
             dbCollection = DatabaseManager.getCollection(URI, "admin", "");	// TODO mirar de donde conseguir el usuario y contrasena
 
@@ -316,6 +325,11 @@ public class GetAssemblyStationData extends Thread {
 		    		            String actualFinishTime = actionElem.getAttribute("actualFinishTime").split(" ")[1];
 		    		            String actionID = actionElem.getAttribute("id");
 		    		            
+		    		            if (actionElem.getAttribute("actualStartTime") == "") {	// Si no tiene tiempo actual, es que esa accion todavía no se ha realizado.
+		    		            	System.out.println("  ! action "+ actionElem.getAttribute("id") +" of item " + itemID +" has not actual time.");
+		    		            	continue;
+		    		            }
+		    		            
 		    		            if ((plannedStartTime !=null) && (actualStartTime != null)) {
 	
 		    		            	// Solo vamos a guardar si existen los dos datos: planeado y real
@@ -383,7 +397,10 @@ public class GetAssemblyStationData extends Thread {
 	    		        if (actionNode.getNodeType() == Node.ELEMENT_NODE) {
 	    		            Element actionElem = (Element) actionNode;
 	    		            
-	    		           
+	    		            if (actionElem.getAttribute("actualStartTime") == "") {	// Si no tiene tiempo actual, es que esa accion todavía no se ha realizado.
+	    		            	System.out.println("  ! action "+ actionElem.getAttribute("id") +" of item " + itemID +" has not actual time.");
+	    		            	continue;
+	    		            }
 	    		            	
     		            	// Quito la fecha y me quedo solo con las horas
 

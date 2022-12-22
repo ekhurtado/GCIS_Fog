@@ -129,6 +129,15 @@ def oee_function_thread():
             horaFin = msgJSONValue['finish']
             machines = msgJSONValue['machines']
 
+            print(msgJSONValue)
+            print(machines)
+
+            if not machines:    # machines is empty
+                print("  ! El mensaje recibido no es correcto. No contiene datos")
+                printFile("  ! El mensaje recibido no es correcto. No contiene datos")
+                continue
+
+
             #Como los prints no van bien, guardamos el log en un fichero
             printFile("timeRange:" + str(timeRange) + "\n")
             printFile("horaInicio:" + str(horaInicio) + "\n")
@@ -190,7 +199,7 @@ def oee_function_thread():
                 productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
                                                 value_serializer=lambda x: json.dumps(x).encode('utf-8'), key_serializer=str.encode)
 
-                productor.send('topico-datos-oee-influx', value=message, key=msg.key)
+                productor.send('topico-datos-oee-influx', value=message, key=str(msg.key))
 
                 # influxAPI.storeData(machineID, calcs)
                 printFile("Calcs stored on InfluxDB")
