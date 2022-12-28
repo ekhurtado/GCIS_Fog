@@ -12,7 +12,7 @@ COPY pqp.py .
 
 ENV LIMIT=67
 
-ENV KAFKA_KEY=app2-pqp-assembly
+ENV KAFKA_TOPIC=topico-datos-oee-influx
 
 #CMD flask run --host=0.0.0.0
 CMD python3 pqp.py

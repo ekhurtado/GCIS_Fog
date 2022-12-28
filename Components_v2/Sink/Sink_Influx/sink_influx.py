@@ -1,4 +1,5 @@
 import json
+import os
 from threading import Thread
 import kafka
 import influx_API
@@ -15,7 +16,7 @@ def assembly_station_oee_function_thread():
     printFile("Primero, recibiremos los datos por Kafka")
 
     # Configuracion Kafka Consumer
-    consumidor = kafka.KafkaConsumer('topico-datos-oee-influx', bootstrap_servers=[IP_server + ':9092'],
+    consumidor = kafka.KafkaConsumer(os.environ.get('KAFKA_TOPIC'), bootstrap_servers=[IP_server + ':9092'],
                                      group_id='mi-grupo-transformadores',
                                      value_deserializer=lambda x: json.loads(x.decode('utf-8')),
                                      client_id='mi-consumidor-processing')

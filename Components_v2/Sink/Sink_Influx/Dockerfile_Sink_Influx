@@ -10,6 +10,8 @@ COPY sink_influx.py /
 
 COPY influx_API.py /
 
+ENV KAFKA_TOPIC=topico-datos-oee-influx
+
 WORKDIR /
 
 CMD ["python3", "sink_influx.py"]
