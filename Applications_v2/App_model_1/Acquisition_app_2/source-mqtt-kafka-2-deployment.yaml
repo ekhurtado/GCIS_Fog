@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: source-mqtt-kafka
+  name: acquisition-app-model1-source-mqtt-kafka-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: acquisition-app-model1-source-mqtt-kafka
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: acquisition-app-model1-source-mqtt-kafka-2
+    spec:
+      containers:
+      - env:
+          - name: KAFKA_KEY
+            value: acquisition-app-model1-2
+          - name: KAFKA_TOPIC
+            value: topico-datos-assembly-mqtt   # TODO Definir bien los topicos de cada aplicacion (tambien hay que volver a generar las imagenes de los componentes)
+        image: ekaitzhara/source-v2:source-mqtt-kafka
+        imagePullPolicy: Always
+        name: source-mqtt-kafka
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

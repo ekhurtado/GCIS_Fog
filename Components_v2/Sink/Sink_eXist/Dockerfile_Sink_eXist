@@ -4,6 +4,8 @@ COPY Sink_eXist_lib /Sink_eXist_lib
 
 COPY Sink_eXist.jar /
 
+ENV KAFKA_TOPIC=topico-datos-assembly-mqtt
+
 ENV KAFKA_KEY=app1-sink-exist
 
 WORKDIR /

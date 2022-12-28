@@ -9,7 +9,9 @@ ENV MACHINE_ID=NULL
 
 ENV RANGE=60
 
-ENV KAFKA_KEY=app1-source-exist
+ENV KAFKA_TOPIC=topico-datos-oee
+
+ENV KAFKA_KEY=app2-source-exist
 
 WORKDIR /
 

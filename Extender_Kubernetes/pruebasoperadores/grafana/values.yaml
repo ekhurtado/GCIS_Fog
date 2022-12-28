@@ -15,7 +15,12 @@ datasources:
           defaultBucket: gcis
           tlsSkipVerify: true
 dashboardsConfigMaps:
-   - configMapName: oee-config-map
-#     fileName: oee_dashboard.json
+   - configMapName: oee-11-config-map
+     fileName: oee_machine_11_dashboard.json
+   - configMapName: oee-22-config-map
+     fileName: oee_machine_22_dashboard.json
+   - configMapName: oee-all-config-map
+     fileName: oee_all_machines_dashboard.json
+#     fileName: oee_machine_11_dashboard.json
 #     folderName: json_files
-#     fileName: oee_dashboard.json
+#     fileName: oee_machine_11_dashboard.json

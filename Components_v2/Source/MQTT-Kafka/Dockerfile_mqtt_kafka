@@ -8,6 +8,8 @@ RUN pip install paho-mqtt
 
 ENV KAFKA_KEY=App-1
 
+ENV KAFKA_TOPIC=topico-datos-assembly-mqtt
+
 ENV TOPIC=#
 
 #ENV FUNCTION=getDataFrom

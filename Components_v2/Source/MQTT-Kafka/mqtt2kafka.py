@@ -12,7 +12,7 @@ def assembly_station_function(message):
     productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='source-mqtt-kafka',
                                     value_serializer=str.encode,
                                     key_serializer=str.encode)
-    productor.send('topico-datos-assembly-mqtt', value=topicData, key=os.environ.get('KAFKA_KEY'))
+    productor.send(os.environ.get('KAFKA_TOPIC'), value=topicData, key=os.environ.get('KAFKA_KEY'))
 
     # subscriber.subscribe(client=client, clientName=clientName, topic="#", on_message_method=process_assembly_message)
 

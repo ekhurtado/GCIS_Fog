@@ -5,4 +5,6 @@ helm delete grafana-gcis
 
 kubectl delete secret oee-secret
 
-kubectl delete configmap oee-config-map
+kubectl delete configmap oee-11-config-map
+kubectl delete configmap oee-22-config-map
+kubectl delete configmap  oee-all-config-map

@@ -11,9 +11,16 @@ kubectl config view --raw > ~/.kube/config
 # Add repository
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
-# Creas el configmap para el dashboard
+# Creas el secret genérico para todos los dashboards
 kubectl create secret generic oee-secret --from-file=oee-secret.yaml
-kubectl create configmap oee-config-map --from-file=oee_dashboard.json
+
+# Creas el configmap para los dashboard de las maquinas individuales
+kubectl create configmap oee-11-config-map --from-file=oee_machine_11_dashboard.json
+kubectl create configmap oee-22-config-map --from-file=oee_machine_22_dashboard.json
+
+# Creas el configmap para el dashboard de todas las maquinas
+kubectl create configmap oee-all-config-map --from-file=oee_all_machines_dashboard.json
+
 
 # Install Grafana
 #helm install grafana-gcis --set admin.userkey=admin \
