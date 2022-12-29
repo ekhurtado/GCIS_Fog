@@ -6,8 +6,6 @@ COPY Sink_eXist.jar /
 
 ENV KAFKA_TOPIC=topico-datos-assembly-mqtt
 
-ENV KAFKA_KEY=app1-sink-exist
-
 WORKDIR /
 
 CMD ["java", "-jar", "Sink_eXist.jar"]

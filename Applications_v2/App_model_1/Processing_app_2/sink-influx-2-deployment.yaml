@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: source-exist
-  name: processing-app-model1-source-exist-1
+    io.kompose.service: processing-app-model1-sink-influx-2
+  name: sink-influx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: processing-app-model1-source-exist-1
+      io.kompose.service: processing-app-model1-sink-influx-2
   strategy: {}
   template:
     metadata:
@@ -21,17 +21,15 @@ spec:
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: processing-app-model1-source-exist-1
+        io.kompose.service: processing-app-model1-sink-influx-2
     spec:
       containers:
       - env:
         - name: KAFKA_TOPIC
-          value: datos-assembly-oee
-        - name: KAFKA_KEY
-          value: processing-app-model1-1
-        image: ekaitzhara/source-v2:source-exist
+          value: datos-assembly-oee-influx
+        image: ekaitzhara/sink-v2:sink-influx
         imagePullPolicy: Always
-        name: source-exist
+        name: sink-influx
         resources: {}
       restartPolicy: Always
       serviceAccountName: ""

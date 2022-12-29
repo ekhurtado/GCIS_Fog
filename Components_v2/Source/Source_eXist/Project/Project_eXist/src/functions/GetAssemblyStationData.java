@@ -192,8 +192,8 @@ public class GetAssemblyStationData extends Thread {
 				if (machineWorking == true) {
 					
 					// Teniendo todos los datos, los publicaremos en Kafka
-					String topic = "topico-datos-oee";	// TODO es este el topico? Donde se define? Viene dado en una variable de entorno?
-					String key = System.getenv("KAFKA_KEY");;	// TODO Aquí habría que añadirlo por variable de entorno (diseñado por el usuario, dependiendo de la aplicacion, p.e. app1-getassemblystation)
+					String topic = System.getenv("KAFKA_TOPIC");	// TODO es este el topico? Donde se define? Viene dado en una variable de entorno?
+					String key = System.getenv("KAFKA_KEY");	// TODO Aquí habría que añadirlo por variable de entorno (diseñado por el usuario, dependiendo de la aplicacion, p.e. app1-getassemblystation)
 					publishDataKafka(topic, key, json);
 				
 					

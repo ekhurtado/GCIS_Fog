@@ -7,12 +7,12 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: source-exist
-  name: processing-app-model1-source-exist-1
+  name: processing-app-model1-source-exist-2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: source-exist
+      io.kompose.service: processing-app-model1-source-exist-2
   strategy: {}
   template:
     metadata:
@@ -21,16 +21,14 @@ spec:
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: processing-app-model1-source-exist-1
+        io.kompose.service: processing-app-model1-source-exist-2
     spec:
       containers:
       - env:
-        - name: FUNCTION
-          value: getAssemblyStationData
         - name: KAFKA_TOPIC
-          value: datos-oee-processing-app-model1
+          value: datos-assembly-oee
         - name: KAFKA_KEY
-          value: processing-app-model1-1
+          value: processing-app-model1-2
         image: ekaitzhara/source-v2:source-exist
         imagePullPolicy: Always
         name: source-exist

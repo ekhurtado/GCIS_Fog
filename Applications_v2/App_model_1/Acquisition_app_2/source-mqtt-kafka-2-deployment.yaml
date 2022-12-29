@@ -12,7 +12,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: acquisition-app-model1-source-mqtt-kafka
+      io.kompose.service: acquisition-app-model1-source-mqtt-kafka-2
   strategy: {}
   template:
     metadata:
@@ -28,7 +28,7 @@ spec:
           - name: KAFKA_KEY
             value: acquisition-app-model1-2
           - name: KAFKA_TOPIC
-            value: topico-datos-assembly-mqtt   # TODO Definir bien los topicos de cada aplicacion (tambien hay que volver a generar las imagenes de los componentes)
+            value: datos-assembly-mqtt   # TODO Definir bien los topicos de cada aplicacion (tambien hay que volver a generar las imagenes de los componentes)
         image: ekaitzhara/source-v2:source-mqtt-kafka
         imagePullPolicy: Always
         name: source-mqtt-kafka

@@ -43,7 +43,7 @@ public class StoreAssemblyStationData extends Thread {
 	
 	// Kafka variables
     private static String Kafka_server = "mi-cluster-mensajeria-kafka-bootstrap.kafka-ns";
-    private static String Kafka_topic = "topico-datos-assembly-mqtt";
+    private static String Kafka_topic = System.getenv("KAFKA_TOPIC");
     
     // eXist variables
     private static Collection dbCollection = null;

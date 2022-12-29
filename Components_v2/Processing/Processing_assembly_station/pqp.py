@@ -107,7 +107,7 @@ def oee_function_thread():
     printFile("Hilo de ejecución para la función 'Calculate OEE'")
 
     # Configuracion Kafka Consumer
-    consumidor = kafka.KafkaConsumer('topico-datos-oee', bootstrap_servers=[IP_server + ':9092'],
+    consumidor = kafka.KafkaConsumer(os.environ.get('KAFKA_TOPIC'), bootstrap_servers=[IP_server + ':9092'],
                                      group_id='mi-grupo-transformadores',
                                      value_deserializer=lambda x: json.loads(x.decode('utf-8')),
                                      client_id='mi-consumidor-processing')
@@ -199,7 +199,7 @@ def oee_function_thread():
                 productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
                                                 value_serializer=lambda x: json.dumps(x).encode('utf-8'), key_serializer=str.encode)
 
-                productor.send(os.environ.get('KAFKA_TOPIC'), value=message, key=str(msg.key))
+                productor.send(os.environ.get('KAFKA_INFLUX_TOPIC'), value=message, key=str(msg.key))
 
                 # influxAPI.storeData(machineID, calcs)
                 printFile("Calcs stored on InfluxDB")

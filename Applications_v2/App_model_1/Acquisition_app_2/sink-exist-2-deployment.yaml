@@ -12,7 +12,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: sink-exist
+      io.kompose.service: acquisition-app-model1-sink-exist-2
   strategy: {}
   template:
     metadata:
@@ -25,8 +25,8 @@ spec:
     spec:
       containers:
       - env:
-        - name: FUNCTION
-          value: storeAssemblyStationData
+        - name: KAFKA_TOPIC
+          value: datos-assembly-mqtt
         image: ekaitzhara/sink-v2:sink-exist
         imagePullPolicy: Always
         name: sink-exist

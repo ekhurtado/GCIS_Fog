@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: sink-influx
+    io.kompose.service: processing-app-model1-sink-influx-1
   name: sink-influx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: sink-influx
+      io.kompose.service: processing-app-model1-sink-influx-1
   strategy: {}
   template:
     metadata:
@@ -21,12 +21,12 @@ spec:
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: sink-influx
+        io.kompose.service: processing-app-model1-sink-influx-1
     spec:
       containers:
       - env:
         - name: KAFKA_TOPIC
-          value: topico-datos-oee-influx
+          value: datos-assembly-oee-influx
         image: ekaitzhara/sink-v2:sink-influx
         imagePullPolicy: Always
         name: sink-influx

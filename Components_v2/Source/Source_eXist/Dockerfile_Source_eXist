@@ -9,7 +9,7 @@ ENV MACHINE_ID=NULL
 
 ENV RANGE=60
 
-ENV KAFKA_TOPIC=topico-datos-oee
+ENV KAFKA_TOPIC=topico-datos-assembly-oee
 
 ENV KAFKA_KEY=app2-source-exist
 

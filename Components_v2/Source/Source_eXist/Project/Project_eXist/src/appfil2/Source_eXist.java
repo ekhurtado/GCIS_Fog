@@ -36,11 +36,11 @@ public class Source_eXist {
 		
 		Thread t_getAssemblyStationData = new GetAssemblyStationData();
 		
-		String function = System.getenv("FUNCTION");
+//		String function = System.getenv("FUNCTION");
 //		String function = "getAssemblyStationData";
 		
-		if (function.equals("getAssemblyStationData"))
-			t_getAssemblyStationData.start();
+//		if (function.equals("getAssemblyStationData"))
+		t_getAssemblyStationData.start();
 //			getAssemblyStationData();
 		
 		

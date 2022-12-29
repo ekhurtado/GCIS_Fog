@@ -7,7 +7,7 @@ MQTT_HOST = "mosquitto"
 USER = 'admin'
 PASSWORD = 'mosquittoGCIS'
 CLIENT_NAME = "source-http-kafka"
-TOPIC = os.environ.get('TOPIC')
+TOPIC = os.environ.get('MQTT_TOPIC')
 
 connected = False
 

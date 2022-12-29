@@ -7,12 +7,12 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: processing-assembly-station
-  name: processing-assembly-station
+  name: processing-app-model1-processing-assembly-station-1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: processing-assembly-station
+      io.kompose.service: processing-app-model1-processing-assembly-station-1
   strategy: {}
   template:
     metadata:
@@ -21,12 +21,16 @@ spec:
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: processing-assembly-station
+        io.kompose.service: processing-app-model1-processing-assembly-station-1
     spec:
       containers:
       - env:
           - name: KAFKA_TOPIC
-            value: topico-datos-oee-influx  # TODO Analizar los topicos
+            value: datos-assembly-oee  # TODO Analizar los topicos
+          - name: KAFKA_INFLUX_TOPIC
+            value: datos-assembly-oee-influx  # TODO Analizar los topicos
+          - name: LIMIT
+            value: "72"
         image: ekaitzhara/processing-v2:assembly-station
         imagePullPolicy: Always
         name: processing-assembly-station
