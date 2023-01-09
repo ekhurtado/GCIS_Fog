@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: processing-assembly-station
-  name: processing-app-model1-processing-assembly-station-2
+    io.kompose.service: sink-exist
+  name: acquisition-app-model2-sink-exist-1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: processing-app-model1-processing-assembly-station-2
+      io.kompose.service: acquisition-app-model2-sink-exist-1
   strategy: {}
   template:
     metadata:
@@ -21,19 +21,15 @@ spec:
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: processing-app-model1-processing-assembly-station-2
+        io.kompose.service: acquisition-app-model2-sink-exist-1
     spec:
       containers:
       - env:
-          - name: KAFKA_TOPIC
-            value: datos-assembly-oee-2  # TODO Analizar los topicos
-          - name: KAFKA_INFLUX_TOPIC
-            value: datos-assembly-oee-influx-2  # TODO Analizar los topicos
-          - name: LIMIT
-            value: "72"
-        image: ekaitzhara/processing-v2:assembly-station
+        - name: KAFKA_TOPIC
+          value: datos-assembly-mqtt
+        image: ekaitzhara/sink-v2:sink-exist
         imagePullPolicy: Always
-        name: processing-assembly-station
+        name: sink-exist
         resources: {}
       restartPolicy: Always
       serviceAccountName: ""

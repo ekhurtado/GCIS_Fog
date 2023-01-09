@@ -26,9 +26,9 @@ spec:
       containers:
       - env:
           - name: KAFKA_TOPIC
-            value: datos-assembly-oee  # TODO Analizar los topicos
+            value: datos-assembly-oee-1  # TODO Analizar los topicos
           - name: KAFKA_INFLUX_TOPIC
-            value: datos-assembly-oee-influx  # TODO Analizar los topicos
+            value: datos-assembly-oee-influx-1  # TODO Analizar los topicos
           - name: LIMIT
             value: "72"
         image: ekaitzhara/processing-v2:assembly-station

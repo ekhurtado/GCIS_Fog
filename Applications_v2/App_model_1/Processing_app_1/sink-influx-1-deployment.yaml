@@ -6,8 +6,8 @@ metadata:
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: processing-app-model1-sink-influx-1
-  name: sink-influx
+    io.kompose.service: sink-influx
+  name: processing-app-model1-sink-influx-1
 spec:
   replicas: 1
   selector:
@@ -26,7 +26,7 @@ spec:
       containers:
       - env:
         - name: KAFKA_TOPIC
-          value: datos-assembly-oee-influx
+          value: datos-assembly-oee-influx-1
         image: ekaitzhara/sink-v2:sink-influx
         imagePullPolicy: Always
         name: sink-influx

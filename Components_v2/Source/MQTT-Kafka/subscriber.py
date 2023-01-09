@@ -6,7 +6,7 @@ import mqtt2kafka
 MQTT_HOST = "mosquitto"
 USER = 'admin'
 PASSWORD = 'mosquittoGCIS'
-CLIENT_NAME = "source-http-kafka"
+CLIENT_NAME = os.environ.get('MQTT_CLIENT_NAME')
 TOPIC = os.environ.get('MQTT_TOPIC')
 
 connected = False
@@ -38,7 +38,7 @@ def on_message(client, userdata, message):
     print("Datos del topico: " + str(message.topic))
     print("Datos del payload: " + str(message.payload))
 
-    if message.topic == "assembly-station":
+    if "assembly-station" in message.topic:
         mqtt2kafka.assembly_station_function(message.payload)
 
     # aux = str(message.payload).split("'")

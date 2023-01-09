@@ -25,6 +25,10 @@ spec:
     spec:
       containers:
       - env:
+          - name: MQTT_TOPIC
+            value: assembly-station-11
+          - name: MQTT_CLIENT_NAME
+            value: acquisition-app-model1-source-mqtt-kafka-1
           - name: KAFKA_KEY
             value: acquisition-app-model1-1
           - name: KAFKA_TOPIC

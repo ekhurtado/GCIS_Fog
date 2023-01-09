@@ -195,11 +195,23 @@ def oee_function_thread():
                 calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
                 message = {'machineID': machineID, 'data': calcs}
 
-                # Configuracion Productor Kafka
-                productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
-                                                value_serializer=lambda x: json.dumps(x).encode('utf-8'), key_serializer=str.encode)
+                kafka_influx_topics = os.environ.get('KAFKA_INFLUX_TOPIC')
 
-                productor.send(os.environ.get('KAFKA_INFLUX_TOPIC'), value=message, key=str(msg.key))
+                if "," in kafka_influx_topics:
+                    for topic in kafka_influx_topics.split(","):
+                        # Configuracion Productor Kafka
+                        productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'],
+                                                        client_id='pqp-assembly-oee',
+                                                        value_serializer=lambda x: json.dumps(x).encode('utf-8'),
+                                                        key_serializer=str.encode)
+
+                        productor.send(topic, value=message, key=str(msg.key))
+                else:
+                    # Configuracion Productor Kafka
+                    productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
+                                                    value_serializer=lambda x: json.dumps(x).encode('utf-8'), key_serializer=str.encode)
+
+                    productor.send(os.environ.get('KAFKA_INFLUX_TOPIC'), value=message, key=str(msg.key))
 
                 # influxAPI.storeData(machineID, calcs)
                 printFile("Calcs stored on InfluxDB")

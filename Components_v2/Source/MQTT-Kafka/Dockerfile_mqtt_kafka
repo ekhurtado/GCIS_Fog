@@ -12,6 +12,8 @@ ENV KAFKA_TOPIC=topico-datos-assembly-mqtt
 
 ENV MQTT_TOPIC=#
 
+ENV MQTT_CLIENT_NAME=source-mqtt-kafka
+
 #ENV FUNCTION=getDataFrom
 
 #ENV OUTPUT=sinkName
