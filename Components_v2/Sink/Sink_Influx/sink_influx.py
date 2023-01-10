@@ -5,6 +5,7 @@ import kafka
 import influx_API
 
 IP_server = "mi-cluster-mensajeria-kafka-bootstrap.kafka-ns"
+Kafka_key = os.environ.get('KAFKA_KEY')
 
 def printFile(message):
     f = open("sink_influx.txt", "a")
@@ -19,6 +20,7 @@ def assembly_station_oee_function_thread():
     consumidor = kafka.KafkaConsumer(os.environ.get('KAFKA_TOPIC'), bootstrap_servers=[IP_server + ':9092'],
                                      group_id='mi-grupo-transformadores',
                                      value_deserializer=lambda x: json.loads(x.decode('utf-8')),
+                                     key_deserializer=lambda x: x.decode('utf-8'),
                                      client_id='mi-consumidor-processing')
 
     # Se detectará cuando alguien publique un mensaje en el tópico
@@ -31,7 +33,14 @@ def assembly_station_oee_function_thread():
         machineID = msgJSONValue['machineID']
         data = msgJSONValue['data']
 
-        influx_API.storeData(machineID, data)
+        msg_key = msg.key.split("'")[1] # tenemos que hacer esto ya que no se deserializa bien, viene en forma: b'<key>'
+
+        if Kafka_key == msg_key:
+
+            influx_API.storeData(machineID, data)
+
+        else:
+            printFile("This message is not for this component (key does not match)")
 
 def transport_robot_oee_function_thread():
     printFile("Metodo para guardar datos del OEE de transport robot")

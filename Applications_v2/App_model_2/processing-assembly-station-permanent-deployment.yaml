@@ -28,7 +28,7 @@ spec:
           - name: KAFKA_TOPIC
             value: datos-assembly-oee  # TODO Analizar los topicos
           - name: KAFKA_INFLUX_TOPIC
-            value: datos-assembly-oee-influx-1,datos-assembly-oee-influx-2  # TODO Analizar los topicos
+            value: datos-assembly-oee-influx-1=app2,datos-assembly-oee-influx-2  # TODO Analizar los topicos
           - name: LIMIT
             value: "72"
         image: ekaitzhara/processing-v2:assembly-station

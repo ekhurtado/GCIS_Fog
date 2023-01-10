@@ -205,7 +205,7 @@ def oee_function_thread():
                                                         value_serializer=lambda x: json.dumps(x).encode('utf-8'),
                                                         key_serializer=str.encode)
 
-                        productor.send(topic, value=message, key=str(msg.key))
+                        productor.send(topic, value=message, key=msg.key)
                 else:
                     # Configuracion Productor Kafka
                     productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',

@@ -27,6 +27,8 @@ spec:
       - env:
         - name: KAFKA_TOPIC
           value: datos-assembly-mqtt
+        - name: KAFKA_KEY
+          value: acquisition-app-model2-2
         image: ekaitzhara/sink-v2:sink-exist
         imagePullPolicy: Always
         name: sink-exist

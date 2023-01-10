@@ -30,7 +30,7 @@ spec:
         - name: KAFKA_TOPIC
           value: datos-assembly-oee
         - name: KAFKA_KEY
-          value: processing-app-model1-1
+          value: processing-app-model2-1
         image: ekaitzhara/source-v2:source-exist
         imagePullPolicy: Always
         name: source-exist

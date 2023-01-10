@@ -27,6 +27,8 @@ spec:
       - env:
         - name: KAFKA_TOPIC
           value: datos-assembly-oee-influx-2
+        - name: KAFKA_KEY
+          value: processing-app-model1-2
         image: ekaitzhara/sink-v2:sink-influx
         imagePullPolicy: Always
         name: sink-influx

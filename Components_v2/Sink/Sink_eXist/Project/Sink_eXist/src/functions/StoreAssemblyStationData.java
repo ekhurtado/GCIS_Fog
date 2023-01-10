@@ -44,13 +44,14 @@ public class StoreAssemblyStationData extends Thread {
 	// Kafka variables
     private static String Kafka_server = "mi-cluster-mensajeria-kafka-bootstrap.kafka-ns";
     private static String Kafka_topic = System.getenv("KAFKA_TOPIC");
+    private static String Kafka_key = System.getenv("KAFKA_KEY");
     
     // eXist variables
     private static Collection dbCollection = null;
     private static String eXistName = "exist";
 	
 	public void run() {
-		System.out.println("GetAssemblyStationData function is running...");
+		System.out.println("StoreAssemblyStationData function is running...");
 		
 		storeAssemblyStationData();
 	}
@@ -96,13 +97,19 @@ public class StoreAssemblyStationData extends Thread {
 //                System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
 //                        record.key(), record.value(),
 //                        record.partition(), record.offset());
+            	
+            	printFile(record.key());
+            	
+            	if (Kafka_key.equals(record.key())) {
                 
-            	try {
-					updatePLCInfo(record.value());
-				} catch (XMLDBException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	            	try {
+						updatePLCInfo(record.value());
+					} catch (XMLDBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            	} else
+            		printFile("This message is not for this component (key does not match)");
             });
 
             consumer.commitAsync();
