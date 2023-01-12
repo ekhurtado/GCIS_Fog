@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  annotations:
+    primera: app
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        env:
+          - name: MI_VAR_ENT
+            valueFrom:
+              fieldRef:
+                fieldPath: annotations.primera
+#        env:
+#          - name: HOST_NAME
+#            value: "server1.com"
+#        envFrom:
+#          - configMapRef: #used to state the configmap you need.
+#              name: cm1
+        volumeMounts:
+        - name: cm-volume
+          mountPath: /etc/config
+      volumes:
+      - name: cm-volume
+        configMap:
+          name: cm1

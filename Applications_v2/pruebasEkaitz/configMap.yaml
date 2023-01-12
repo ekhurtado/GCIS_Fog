@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm1
+data:
+  HOST_NAME: "server2.com"
+  APP_PORT_NUMBER: "3000"
