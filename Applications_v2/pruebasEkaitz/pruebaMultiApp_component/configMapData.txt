@@ -1,0 +1,7 @@
+samplevar: samplevalue
+segunda: app
+
+
+
+// PARA CREARLO CON EL ARCHIVO TXT:
+>  kubectl create configmap cm1 --from-file=configMapData.txt

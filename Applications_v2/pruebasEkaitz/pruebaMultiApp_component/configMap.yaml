@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm1
+  namespace: default
+data:
+  configmap_data.txt: |
+    samplevar: samplevalue
+    processing-app-2: topic-proc-app-2
+    acquisition-app-2: topic-acq-app-2

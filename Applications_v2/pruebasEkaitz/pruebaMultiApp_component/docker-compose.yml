@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+
+  prueba-cm:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: ekaitzhara/pruebas:prueba-cm
+    container_name: prueba-cm
+

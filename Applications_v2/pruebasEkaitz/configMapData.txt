@@ -1,2 +1,0 @@
-HOST_NAME: "server2.com"
-APP_PORT_NUMBER: "3000"

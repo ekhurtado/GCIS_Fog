@@ -2,28 +2,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: nginx
+    app: prueba-cm
   annotations:
     primera: app
-  name: nginx
+  name: prueba-cm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: prueba-cm
   template:
     metadata:
       labels:
-        app: nginx
+        app: prueba-cm
     spec:
       containers:
-      - image: nginx:latest
-        name: nginx
-        env:
-          - name: MI_VAR_ENT
-            valueFrom:
-              fieldRef:
-                fieldPath: annotations.primera
+      - image: ekaitzhara/pruebas:prueba-cm
+        imagePullPolicy: Always
+        name: prueba-cm
+#        env:
+#          - name: MI_VAR_ENT
+#            valueFrom:
+#              fieldRef:
+#                fieldPath: annotations.primera
 #        env:
 #          - name: HOST_NAME
 #            value: "server1.com"
