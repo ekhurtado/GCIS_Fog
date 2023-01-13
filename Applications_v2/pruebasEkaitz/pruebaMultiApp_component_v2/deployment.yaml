@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prueba-cm
+  annotations:
+    primera: app
+  name: prueba-cm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prueba-cm
+  template:
+    metadata:
+      labels:
+        app: prueba-cm
+    spec:
+      containers:
+      - image: ekaitzhara/pruebas:prueba-cm-V2
+        imagePullPolicy: Always
+        name: prueba-cm
+#        env:
+#          - name: MI_VAR_ENT
+#            valueFrom:
+#              fieldRef:
+#                fieldPath: annotations.primera
+#        env:
+#          - name: HOST_NAME
+#            value: "server1.com"
+#        envFrom:
+#          - configMapRef: #used to state the configmap you need.
+#              name: cm1
+        volumeMounts:
+        - name: cm-volume
+          mountPath: /etc/config
+      volumes:
+      - name: cm-volume
+        configMap:
+          name: cm-v2

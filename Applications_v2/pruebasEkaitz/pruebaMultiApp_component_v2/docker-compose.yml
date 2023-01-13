@@ -6,6 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ekaitzhara/pruebas:prueba-cm
+    image: ekaitzhara/pruebas:prueba-cm-V2
     container_name: prueba-cm
 

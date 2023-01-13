@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-v2
+  namespace: default
+data:
+  component-data.properties: |
+    samplevar=samplevalue
+    processing-app-2=topic-proc-app-2
+    acquisition-app-2=topic-acq-app-2
+    apps.app1=primera
+    apps.app2=segunda
