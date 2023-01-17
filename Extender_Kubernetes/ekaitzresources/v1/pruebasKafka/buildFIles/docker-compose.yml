@@ -4,28 +4,28 @@ services:
 
   kafka-productor1:
     build:
-      context: ../../../../../../Desktop/Fotos Universal Robot
+      context: ../../../../../../../Desktop/Fotos Universal Robot
       dockerfile: Dockerfile_productor1
     image: ekaitzhara/pruebas-kafka:productor1
     container_name: kafka-productor1
 
   kafka-productor2:
     build:
-      context: ../../../../../../Desktop/Fotos Universal Robot
+      context: ../../../../../../../Desktop/Fotos Universal Robot
       dockerfile: Dockerfile_productor2
     image: ekaitzhara/pruebas-kafka:productor2
     container_name: kafka-productor2
 
   kafka-transformador:
     build:
-      context: ../../../../../../Desktop/Fotos Universal Robot
+      context: ../../../../../../../Desktop/Fotos Universal Robot
       dockerfile: Dockerfile_transformador
     image: ekaitzhara/pruebas-kafka:transformador
     container_name: kafka-transformador
 
   kafka-consumidor:
     build:
-      context: ../../../../../../Desktop/Fotos Universal Robot
+      context: ../../../../../../../Desktop/Fotos Universal Robot
       dockerfile: Dockerfile_consumidor
     image: ekaitzhara/pruebas-kafka:consumidor
     container_name: kafka-consumidor

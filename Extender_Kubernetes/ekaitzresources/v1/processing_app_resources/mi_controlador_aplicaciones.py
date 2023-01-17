@@ -1,16 +1,13 @@
-import logging
 import os
 import random
 import string
 import sys
-import time
 
 import urllib3.exceptions
 from dateutil import parser
 from kubernetes import client, config, watch
 import tipos
 import datetime
-from datetime import timezone
 
 import pytz
 

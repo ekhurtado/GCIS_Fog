@@ -194,7 +194,7 @@ def conciliar_spec_status(objeto, cliente):
 
 def eliminar_despliegues(objeto, replicas):
 	cliente_despliegue = client.AppsV1Api()
-	cliente_despliegue.delete_namespaced_deployment(tipos.deployment(objeto , replicas)['metadata']['name'], namespace)
+	cliente_despliegue.delete_namespaced_deployment(tipos.deployment(objeto, replicas)['metadata']['name'], namespace)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+
+  app-controller:
+    build:
+      context: .
+      dockerfile: Dockerfile_contr_apps
+    image: ekaitzhara/gcis-fog:controlador-aplicaciones
+    container_name: app-controller
+  component-controller:
+    build:
+      context: .
+      dockerfile: Dockerfile_contr_comps
+    image: ekaitzhara/gcis-fog:controlador-componentes
+    container_name: component-controller
+
