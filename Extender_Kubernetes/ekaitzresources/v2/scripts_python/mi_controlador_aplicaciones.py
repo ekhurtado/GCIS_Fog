@@ -68,20 +68,15 @@ def mi_watcher(cliente):
         objeto = event['object']
         tipo = event['type']
 
-        a = cliente.get_namespaced_custom_object(grupo, version, namespace, plural, objeto['metadata']['name'])
-        b = cliente.get_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'])
-
         creationTimeZ = objeto['metadata']['creationTimestamp']
         creationTime = parser.isoparse(creationTimeZ)
 
         if creationTime < startedTime:
-            print(
-                "El evento es anterior, se ha quedado obsoleto")  # TODO se podria mirar si añadir una comprobacion por si hay algun evento que no se ha gestionado
+            print("El evento es anterior, se ha quedado obsoleto")  # TODO se podria mirar si añadir una comprobacion por si hay algun evento que no se ha gestionado
             continue
 
         print("Nuevo evento: ", "Hora del evento: ", datetime.datetime.now(), "Tipo de evento: ", tipo,
-              "Nombre del objeto: ", objeto['metadata']['name'])
-
+                    "Nombre del objeto: ", objeto['metadata']['name'])
 
         match tipo:
             case "MODIFIED":
@@ -91,7 +86,7 @@ def mi_watcher(cliente):
                 eliminar_componentes(objeto)
                 # Lógica para borrar lo asociado al recurso.
             case _:  # default case
-                # TODO en nuestro caso es tip ADDED
+                # TODO en nuestro caso es tipo ADDED
 
                 # TODO Creamos el evento notificando que se ha creado la aplicacion
                 eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
@@ -109,13 +104,6 @@ def mi_watcher(cliente):
                 # Lógica para llevar el recurso al estado deseado.
                 conciliar_spec_status(objeto, cliente)
 
-        # elif tipo != 'DELETED':
-        #     # Lógica para llevar el recurso al estado deseado.
-        #     conciliar_spec_status(objeto, cliente)
-        # elif tipo == 'DELETED':
-        #     eliminar_componentes(objeto)
-        #     # Lógica para borrar lo asociado al recurso.
-
 
 def check_modifications(objeto, cliente):
     print("Algo se ha modificado")
@@ -132,22 +120,16 @@ def check_modifications(objeto, cliente):
 
         runningCount = 0
         for i in range(len(objeto['status']['componentes'])):
-            if (objeto['status']['componentes'][i][
-                'status'] == "Running"):  # TODO CUIDADO! Si se añaden replicas habria que comprobar que todas las replicas esten en Running
-                # readyComponents = objeto['status']['ready'].split("/")[0]
-                # readyNumComponents = int(readyComponents) + 1
-                # objeto['status']['ready'] = str(readyNumComponents) + "/" + objeto['status']['ready'].split("/")[1]
+            if (objeto['status']['componentes'][i]['status'] == "Running"):  # TODO CUIDADO! Si se añaden replicas habria que comprobar que todas las replicas esten en Running
                 runningCount = runningCount + 1
-        # else:
-        # 	notRunningCount = notRunningCount + 1	# Si encuentra alguno que no está en Running, toda la aplicacion no esta desplegada
 
-        if runningCount != 0:  # Algun componente esta en Running
+        # TODO Otra forma de hacerlo que devuelve los elementos que son Running, luego solo habría que analizar su longitud para saber cuantas hay
+        # runningComps = [x for x in objeto['status']['componentes'] if x['status'] == "Running"]
+
+        if runningCount != 0:  # Algún componente está en Running
             objeto['status']['ready'] = str(runningCount) + "/" + objeto['status']['ready'].split("/")[1]
 
-            if runningCount == len(
-                    objeto['status']['componentes']):  # Significa que todos los componentes esta en running
-                currentReplicas = objeto['status']['replicas']
-                # objeto['status']['replicas'] = int(currentReplicas) + 1
+            if runningCount == len(objeto['status']['componentes']):  # Significa que todos los componentes están en running
                 objeto['status']['replicas'] = objeto['spec']['replicas']
 
             # Finalmente, actualizamos el objeto
@@ -155,7 +137,7 @@ def check_modifications(objeto, cliente):
             cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
                                                           objeto['metadata']['name'], {'status': objeto['status']},
                                                           field_manager=field_manager)
-        # cliente.replace_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'], {'status': objeto['status']})
+
     elif "gestor-ejecuciones" in lastManager:
         print("Se quiere desplegar la aplicacion")
         conciliar_spec_status(objeto, cliente)
@@ -165,9 +147,9 @@ def check_modifications(objeto, cliente):
 
 def conciliar_spec_status(objeto, cliente):
     # Esta funcion es llamada por el watcher cuando hay un evento ADDED o MODIFIED.
-    # Habria que chequear las replicas, las versiones...
-    # De momento esta version solo va a mirar el numero de replicas.
-    # Chequea si la aplicacion que ha generado el evento esta al día en .spec y .status
+    # Habria que chequear las réplicas, las versiones...
+    # De momento esta version solo va a mirar el número de réplicas.
+    # Chequea si la aplicacion que ha generado el evento está al día en .spec y .status
 
     cliente_despliegue = client.AppsV1Api()
 
@@ -179,13 +161,10 @@ def conciliar_spec_status(objeto, cliente):
     aplicacion_desplegada = cliente.get_namespaced_custom_object_status(grupo, version, namespace, plural,
                                                                         objeto['metadata']['name'])
 
-    # Compruebo.
 
-    # ESTO ES UNA PRUEBA HASTA QUE PUEDA ACCEDER AL STATUS
-    # print(a)
     # La aplicación crea los componentes que la forman.
 
-    # TODO Creamos el evento de que se están empezando a crear los componentes
+    # TODO Creamos el evento de que se indicando que está empezando a crear los componentes
 
     if objeto['spec']['desplegar'] == True:
 
@@ -210,8 +189,7 @@ def conciliar_spec_status(objeto, cliente):
                 permanente = i['permanente']
             except KeyError:
                 pass
-            if (
-                    permanente != True):  # Si el componente de la aplicacion esta marcado como permanente y es alguno de los componentes ya desplegados en el cluster y marcado como permanente.
+            if (permanente != True):  # Si el componente de la aplicacion está marcado como permanente y es alguno de los componentes ya desplegados en el cluster y marcado como permanente.
                 crear_componentes(cliente, i, objeto)
             else:
                 encontrado = False
@@ -224,35 +202,15 @@ def conciliar_spec_status(objeto, cliente):
                     crear_componentes(cliente, i, objeto)
 
 
-
     elif objeto['spec']['desplegar'] == False:
         pass
 
-
-# Busco el status del deployment.
-# status_deployment = cliente_despliegue.read_namespaced_deployment_status(deployment_yaml['metadata']['name'], namespace)
-# replicas_desplegadas = status_deployment.status.available_replicas
-
-# if aplicacion_deseada['spec']['replicas'] != aplicacion_desplegada['spec']['replicas']:
-# 	if aplicacion_deseada['spec']['replicas'] > aplicacion_desplegada['spec']['replicas']:
-# 		pass
-# 		# En caso de modificacion del numero de replicas o objeto recien añadido.
-# 		# Habria que desplegar las replicas restantes.
-# 		# for i in aplicacion_deseada['spec']['replicas'] - aplicacion_desplegada['status']['replicas']:
-# 		# 	desplegar_replica()
-# 	if aplicacion_deseada['spec']['replicas'] < aplicacion_desplegada['spec']['replicas']: # Actualizar a 'status' cuando pueda acceder
-# 		pass
-# 		# En caso de modificacion del numero de replicas.
-# 		# Habria que eliminar las replicas sobrantes.
-# 		# for i in aplicacion_deseada['status']['replicas'] - aplicacion_desplegada['spec']['replicas']:
-# 		# 	desplegar_replica()
-
 def crear_componentes(cliente, componente, app):
-    # TODO Primero añadiremos el status en el CR de aplicacion para notificar que sus componentes se estan creando
-    #  para ello, tendremos que analizar cuantos componentes tiene la aplicacion para crear el objeto status
+    # TODO Primero añadiremos el status en el CR de aplicacion para notificar que sus componentes se están creando.
+    #       Para ello, tendremos que analizar cuantos componentes tiene la aplicacion para crear el objeto status
     num_componentes = len(app['spec']['componentes'])
     status_object = {'status': {'componentes': [0] * num_componentes, 'replicas': 0,
-                                'ready': "0/" + str(num_componentes)}}  # las replicas en este punto están a 0
+                                'ready': "0/" + str(num_componentes)}}  # las réplicas en este punto están a 0
     for i in range(int(num_componentes)):
         status_object['status']['componentes'][i] = {'name': app['spec']['componentes'][i]['name'],
                                                      'status': "Creating"}

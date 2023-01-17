@@ -1,0 +1,3 @@
+Esta carpeta contiene los ficheros de la segunda versión de los controladores de los niveles de Aplicación y Componente. En este caso, se han diseñado los controladores para que sean capaces de hacer un seguimiento de los recursos, añadiendo el ciclo de despliegue y vida de estos mediante el apartado status y al conseguir información de estos mediante el CLI.
+
+En el controlador de componentes se han añadido los archivos de despliegue personalizables para las aplicaciones de adquisición y procesamiento de datos.
