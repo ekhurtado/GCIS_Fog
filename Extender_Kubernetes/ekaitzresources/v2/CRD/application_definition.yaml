@@ -112,6 +112,7 @@ spec:
                         type: string
                       next:
                         type: string
+                        # TODO FALTA KAFKA_TOPIC y customization
                       permanente:
                         type: boolean
                 replicas:

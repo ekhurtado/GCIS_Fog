@@ -247,8 +247,6 @@ def crear_componentes(cliente, componente, app):
                                                       componente_body['metadata']['name'], status_object)
 
 
-# TODO CONSEGUIR AÑADIR LA INFORMACION DEL NOMBRE DE LA APLICACION EN EL METADATA DE LOS COMPONENTES (para que sepan a que aplicacion pertenecen)
-
 
 def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
     cliente = client.CustomObjectsApi()

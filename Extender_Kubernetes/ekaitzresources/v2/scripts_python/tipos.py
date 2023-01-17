@@ -183,6 +183,49 @@ def deployment(componente, replicas): # Añadir replicas como input
     }
     return despliegue
 
+def deploymentObject(componente, controllerName, appName, replicas):
+    # TODO Existe la posibilidad de crear el objeto utilizando los objetos de la API
+    #       https://github.com/kubernetes-client/python/blob/master/examples/deployment_crud.py
+    deployObject = {
+        'apiVersion': 'apps/v1',
+        'kind': 'Deployment',
+        'metadata': {
+            'name': componente['metadata']['name'],
+            'labels': {
+                'resource.controller': controllerName,
+                'component.name': componente['metadata']['name'],
+                'applicationName': appName
+            }
+        },
+        'spec': {
+            'replicas': replicas,
+            'selector': {
+                'matchLabels': {
+                    'component.name': componente['metadata']['name']
+                }
+            },
+            'template': {
+                'metadata': {
+                    'labels': {
+                        'component.name': componente['metadata']['name']
+                    }
+                },
+                'spec': {
+                    'containers': [{
+                        'imagePullPolicy': 'Always',
+                        'name': componente['metadata']['name'],
+                        'image': componente['spec']['image'],
+                        'env' : [{'name': 'KAFKA_TOPIC',
+                                  'value': 'TOPICO A DEFINIR'},
+                                 {'name': 'KAFKA_KEY',
+                                  'value': appName}]
+                    }]
+                }
+            }
+        }
+    }
+
+    return deployObject
 
 def customResourceEventObject(action, CR_type, CR_name, CR_UID, message, reason, eventName):
     create_time = pytz.utc.localize(datetime.datetime.utcnow())

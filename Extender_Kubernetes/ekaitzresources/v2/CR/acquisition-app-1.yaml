@@ -1,0 +1,23 @@
+apiVersion: misrecursos.aplicacion/v1alpha4
+kind: Aplicacion
+metadata:
+  name: data-acquisition-app-1
+spec:
+  componentes:
+    - name: data-acquisition-source-mqtt-kafka
+      image: ekaitzhara/source-v2:source-mqtt-kafka
+      previous: none
+      next: dataprocessing-assembystation
+      kafka_topic: datos-assembly-mqtt
+      customization:
+        - MQTT_TOPIC: assembly-station-11
+        - MQTT_CLIENT_NAME: acquisition-app-model2-source-mqtt-kafka-1
+      permanente: False
+    - name: data-acquisition-sink-exist
+      image: ekaitzhara/sink-v2:sink-exist
+      previous: dataprocessing-exist
+      next: none
+      kafka_topic: datos-assembly-mqtt
+      permanente: False
+  replicas: 1
+  desplegar: False
