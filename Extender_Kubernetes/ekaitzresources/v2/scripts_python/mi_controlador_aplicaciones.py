@@ -23,7 +23,9 @@ plural = "aplicaciones"
 
 def controlador():
     path = os.path.abspath(os.path.dirname(__file__))
-    path = path.replace("Extender_Kubernetes\ekaitzresources\v2\scripts_python", "")
+    path = path.replace('Extender_Kubernetes\ekaitzresources', "")
+    path = path.replace('\\v2\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    # path = path.replace("Extender_Kubernetes\ekaitzresources\v2\scripts_python", "")
     config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     # TODO Cambiarlo para el cluster
@@ -224,18 +226,37 @@ def crear_componentes(cliente, componente, app):
         except KeyError:
             pass
         if permanente == True:  # En este if se repiten muchos comandos (la linea de crear el objeto, actualizar status...), arreglarlo
-            componente_body = tipos.componente_recurso(componente['name'],
-                                                       componente['image'],
-                                                       componente['previous'],
-                                                       app['metadata']['name'],
-                                                       componente['next'], Permanente=True)
+            componente_body = tipos.componente_recurso(nombre=componente['name'] + "-" + app['metadata']['name'],
+                                                       nombre_corto=componente['name'],
+                                                       imagen=componente['image'],
+                                                       anterior=componente['previous'],
+                                                       appName=app['metadata']['name'],
+                                                       siguiente=componente['next'], permanente=True)
             cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
 
             break
         else:
-            componente_body = tipos.componente_recurso(
-                componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
-                componente['image'], componente['previous'], componente['next'], app['metadata']['name'])
+            # componente_body = tipos.componente_recurso(
+            #     componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'], componente['name'],
+            #     componente['image'], componente['previous'], componente['next'], componente['kafkaTopic'], componente['customization'], app['metadata']['name'])
+            if "customization" in componente:
+                componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
+                                                           nombre_corto=componente['name'],
+                                                           imagen=componente['image'],
+                                                           anterior=componente['previous'],
+                                                           siguiente=componente['next'],
+                                                           kafkaTopic=componente['kafkaTopic'],
+                                                           appName=app['metadata']['name'],
+                                                           customization=componente['customization'])
+            else:
+                componente_body = tipos.componente_recurso(
+                    nombre=componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
+                    nombre_corto=componente['name'],
+                    imagen=componente['image'],
+                    anterior=componente['previous'],
+                    siguiente=componente['next'],
+                    kafkaTopic=componente['kafkaTopic'],
+                    appName=app['metadata']['name'])
             cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
 
         # Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.

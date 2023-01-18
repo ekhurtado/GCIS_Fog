@@ -44,40 +44,49 @@ def componente(nombre, imagen, anterior, siguiente, **kwargs):
     }
     return componente
 
-def componente_recurso(nombre, imagen, anterior, siguiente, appName, **kwargs):
-    permanente = kwargs.get('Permanente', None)
-    if permanente == None:
+def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaTopic, appName, **kwargs):
+
+    if 'permanente' not in kwargs:
         componente_recurso = {
             'apiVersion': 'misrecursos.aplicacion/v1alpha1',
             'kind': 'Componente',
             'metadata':{
-                'name': 'componente' + '-' + nombre,
+                'name': nombre,
                 'labels': {
-                    'applicationName': appName
+                    'applicationName': appName,
+                    'shortName': nombre_corto
                 }
             },
             'spec': {
-                'name': nombre.split("-")[0],   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
+                'name': nombre_corto,   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
                 'image': imagen,
                 'previous': anterior,
-                'next': siguiente
+                'next': siguiente,
+                'kafkaTopic': kafkaTopic
             }
         }
+        if 'customization' in kwargs:
+            componente_recurso['spec']['customization']=kwargs.get('customization')
     else:
         componente_recurso = {
             'apiVersion': 'misrecursos.aplicacion/v1alpha1',
             'kind': 'Componente',
             'metadata': {
-                'name': 'componente' + '-' + nombre,
+                'name': nombre,
             },
             'spec': {
+                'name': nombre,
                 'image': imagen,
                 'previous': anterior,
                 'next': siguiente,
-                'permanente' : permanente
+                'permanente': kwargs.get('permanente'),
+                'kafkaTopic': kafkaTopic
             }
         }
+        if 'customization' in kwargs:
+            componente_recurso['spec']['customization']=kwargs.get('customization')
     return componente_recurso
+
 
 def job_plantilla():
     estructura_job={
@@ -183,7 +192,7 @@ def deployment(componente, replicas): # Añadir replicas como input
     }
     return despliegue
 
-def deploymentObject(componente, controllerName, appName, replicas):
+def deploymentObject(componente, controllerName, appName, replicas, componenteName, **kwargs):
     # TODO Existe la posibilidad de crear el objeto utilizando los objetos de la API
     #       https://github.com/kubernetes-client/python/blob/master/examples/deployment_crud.py
     deployObject = {
@@ -193,7 +202,7 @@ def deploymentObject(componente, controllerName, appName, replicas):
             'name': componente['metadata']['name'],
             'labels': {
                 'resource.controller': controllerName,
-                'component.name': componente['metadata']['name'],
+                'component.name': componenteName,
                 'applicationName': appName
             }
         },
@@ -201,13 +210,13 @@ def deploymentObject(componente, controllerName, appName, replicas):
             'replicas': replicas,
             'selector': {
                 'matchLabels': {
-                    'component.name': componente['metadata']['name']
+                    'component.name': componenteName
                 }
             },
             'template': {
                 'metadata': {
                     'labels': {
-                        'component.name': componente['metadata']['name']
+                        'component.name': componenteName
                     }
                 },
                 'spec': {
@@ -216,7 +225,7 @@ def deploymentObject(componente, controllerName, appName, replicas):
                         'name': componente['metadata']['name'],
                         'image': componente['spec']['image'],
                         'env' : [{'name': 'KAFKA_TOPIC',
-                                  'value': 'TOPICO A DEFINIR'},
+                                  'value': componente['spec']['kafkaTopic']},
                                  {'name': 'KAFKA_KEY',
                                   'value': appName}]
                     }]
@@ -224,6 +233,13 @@ def deploymentObject(componente, controllerName, appName, replicas):
             }
         }
     }
+
+    if "customization" in componente['spec']:
+        envVarList = []
+        for envs in componente['spec']['customization']:
+            envVarList.append({'name': envs.split('=')[0], 'value': envs.split('=')[1]})
+        deployObject['spec']['template']['spec'] ['containers'][0]['env']=deployObject['spec']['template']['spec'] ['containers'][0]['env'] + envVarList
+        print("TODO: Añadir las variables de entorno necesarias")
 
     return deployObject
 

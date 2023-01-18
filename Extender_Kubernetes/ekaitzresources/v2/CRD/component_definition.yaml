@@ -24,6 +24,12 @@ spec:
                   type: string
                 next:
                   type: string
+                kafkaTopic:
+                  type: string
+                customization:
+                  type: array
+                  items:
+                    type: string
                 permanente:
                   type: boolean
             status:
@@ -34,36 +40,40 @@ spec:
                 situation:
                   type: string
       additionalPrinterColumns:
-        - jsonPath: .spec.name
-          name: Name
+        - jsonPath: .metadata.labels.shortName
+          name: Shortname
           description: Name of the component
           type: string
           priority: 0
-        - jsonPath: .spec.image
-          name: Image
-          description: Docker image of the component
+        - jsonPath: .status.situation
+          name: Status
           type: string
           priority: 0 # si es prioridad 0 aparece en la vista estandar
         - jsonPath: .metadata.creationTimestamp
           name: Age
           type: date
           priority: 0
-        - jsonPath: .status.situation
-          name: Status
+        - jsonPath: .spec.kafkaTopic
+          name: KafkaTopic
           type: string
-          priority: 0
+          priority: 1 # prioridad 1 solo aparece en la vista ampliada (-o wide)
+        - jsonPath: .spec.image
+          name: Image
+          description: Docker image of the component
+          type: string
+          priority: 1
         - jsonPath: .status.replicas
           name: Replicas
           type: integer
           priority: 1
-        - jsonPath: .spec.previous
-          name: Previous
-          type: string
-          priority: 1 # prioridad 1 solo aparece en la vista ampliada (-o wide)
-        - jsonPath: .spec.next
-          name: Next
-          type: string
-          priority: 1
+#        - jsonPath: .spec.previous
+#          name: Previous
+#          type: string
+#          priority: 1 # prioridad 1 solo aparece en la vista ampliada (-o wide)
+#        - jsonPath: .spec.next
+#          name: Next
+#          type: string
+#          priority: 1
       subresources:
         status: {}
   scope: Namespaced

@@ -24,7 +24,8 @@ plural_aplicaciones = "aplicaciones"
 def controlador():
 
 	path = os.path.abspath(os.path.dirname(__file__))
-	path = path.replace("Extender_Kubernetes\ekaitzresources\v2\scripts_python", "")
+	path = path.replace('Extender_Kubernetes\ekaitzresources', "")
+	path = path.replace('\\v2\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
 	config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
 	# TODO Cambiarlo para el cluster
@@ -113,6 +114,7 @@ def conciliar_spec_status(objeto, cliente):
 
 	# TODO Prueba de captura de nombre de la aplicacion a la que pertenece
 	myAppName = componente_desplegado['metadata']['labels']['applicationName']
+	shortName = componente_desplegado['metadata']['labels']['shortName']	# este incluye el nombre original del componente
 	print("My application is: " + str(myAppName))
 
 	# ESTO ES UNA PRUEBA HASTA QUE PUEDA ACCEDER AL STATUS
@@ -121,8 +123,9 @@ def conciliar_spec_status(objeto, cliente):
 	# cliente_despliegue.create_namespaced_deployment(namespace, deployment_yaml)
 
 	# TODO Añadir los deployments personalizables de las aplicaciones de adquisicion y procesamiento
-	deployment_yaml = tipos.deploymentObject(objeto, "component-controller", myAppName, replicas=1,	# TODO De momento metemos a mano que solo se despliegue una replica
-											 )
+	deployment_yaml = tipos.deploymentObject(objeto, "component-controller", myAppName, 1, # TODO De momento metemos a mano que solo se despliegue una replica
+											 shortName)
+	cliente_despliegue.create_namespaced_deployment(namespace, deployment_yaml)
 
 	#Busco el status del deployment.
 	status_deployment = cliente_despliegue.read_namespaced_deployment_status(deployment_yaml['metadata']['name'], namespace)
