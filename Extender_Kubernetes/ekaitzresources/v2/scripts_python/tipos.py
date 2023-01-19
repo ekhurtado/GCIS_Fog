@@ -46,45 +46,35 @@ def componente(nombre, imagen, anterior, siguiente, **kwargs):
 
 def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaTopic, appName, **kwargs):
 
-    if 'permanente' not in kwargs:
-        componente_recurso = {
-            'apiVersion': 'misrecursos.aplicacion/v1alpha1',
-            'kind': 'Componente',
-            'metadata':{
-                'name': nombre,
-                'labels': {
-                    'applicationName': appName,
-                    'shortName': nombre_corto
-                }
-            },
-            'spec': {
-                'name': nombre_corto,   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
-                'image': imagen,
-                'previous': anterior,
-                'next': siguiente,
-                'kafkaTopic': kafkaTopic
+
+    componente_recurso = {
+        'apiVersion': 'misrecursos.aplicacion/v1alpha1',
+        'kind': 'Componente',
+        'metadata':{
+            'name': nombre,
+            'labels': {
+                'applicationName': appName,
+                'shortName': nombre_corto
             }
+        },
+        'spec': {
+            'name': nombre_corto,   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
+            'image': imagen,
+            'previous': anterior,
+            'next': siguiente,
+            'kafkaTopic': kafkaTopic
         }
-        if 'customization' in kwargs:
-            componente_recurso['spec']['customization']=kwargs.get('customization')
-    else:
-        componente_recurso = {
-            'apiVersion': 'misrecursos.aplicacion/v1alpha1',
-            'kind': 'Componente',
-            'metadata': {
-                'name': nombre,
-            },
-            'spec': {
-                'name': nombre,
-                'image': imagen,
-                'previous': anterior,
-                'next': siguiente,
-                'permanente': kwargs.get('permanente'),
-                'kafkaTopic': kafkaTopic
-            }
-        }
-        if 'customization' in kwargs:
-            componente_recurso['spec']['customization']=kwargs.get('customization')
+    }
+    if 'customization' in kwargs:
+        componente_recurso['spec']['customization']=kwargs.get('customization')
+
+    # Hasta aqui tanto el efímero como los permanentes son iguales
+    if 'permanente' in kwargs:
+        componente_recurso['spec']['permanente']=kwargs.get('permanente')
+        componente_recurso['spec']['configmap']=kwargs.get('configmap')
+        componente_recurso['spec']['volume_name']=kwargs.get('volume_name')
+        componente_recurso['spec']['volume_path']=kwargs.get('volume_path')
+
     return componente_recurso
 
 

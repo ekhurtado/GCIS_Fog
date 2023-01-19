@@ -1,23 +1,25 @@
 apiVersion: misrecursos.aplicacion/v1alpha4
 kind: Aplicacion
 metadata:
-  name: data-acquisition-app-1
+  name: data-acquisition-app-1-model-2
 spec:
   componentes:
-    - name: data-acquisition-source-mqtt-kafka
+    - name: data-acquisition-1-source-mqtt-kafka
       image: ekaitzhara/source-v2:source-mqtt-kafka
-      previous: none
-      next: data-acquisition-sink-exist
-      kafkaTopic: datos-assembly-mqtt
+      flowConfig:
+        previous: none
+        next: data-acquisition-1-sink-exist
+      kafkaTopic: datos-acquisition-1-source-mqtt-kafka
       customization:
         - "MQTT_TOPIC=assembly-station-11"
-        - "MQTT_CLIENT_NAME=acquisition-app-model2-source-mqtt-kafka-1"
+        - "MQTT_CLIENT_NAME=data-acquisition-app-1-model-2-source-mqtt-kafka"
       permanente: False
-    - name: data-acquisition-sink-exist
+    - name: data-acquisition-1-sink-exist
       image: ekaitzhara/sink-v2:sink-exist
-      previous: data-acquisition-source-mqtt-kafka
-      next: none
-      kafkaTopic: datos-assembly-mqtt
+      flowConfig:
+        previous: data-acquisition-1-source-mqtt-kafka
+        next: none
+      kafkaTopic: datos-acquisition-1-source-mqtt-kafka # TODO Tendríamos que diferenciar el tópico a suscribir (componente posterior) o al de publicar (componente anterior) ?
       permanente: False
   replicas: 1
   desplegar: True

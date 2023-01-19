@@ -1,0 +1,42 @@
+apiVersion: misrecursos.aplicacion/v1alpha4
+kind: Aplicacion
+metadata:
+  name: data-processing-app-1-model-2
+spec:
+  componentes:
+    - name: data-processing-1-exist
+      image: ekaitzhara/source-v2:source-exist
+      flowConfig:
+        previous: none
+        next: data-processing-assembystation
+      kafkaTopic: datos-processing-1-assembly-oee
+      customization:
+        - "MACHINE_ID=11"
+      permanente: False
+    - name: data-processing-assembystation
+      image: ekaitzhara/processing-v2:assembly-station
+      flowConfig:
+        previous: data-processing-1-exist
+        next: data-processing-1-influx     # En este next tendría que haber dos: Influx y OEEevents
+      kafkaTopic: datos-processing-1-assembly-oee
+      customization:
+        - "LIMIT=72"
+      permanente: True  # En este caso sí es un componente permanente (siempre lo es? o solo cuando participa en más de una app?)
+      permanenteCM:
+        cmName: cm-data-processing-assembystation
+        volumeName: data-processing-assembystation
+        volumePath: /processing_assembly/config/
+    - name: data-processing-1-influx
+      image: ekaitzhara/sink-v2:sink-influx
+      flowConfig:
+        previous: data-processing-assembystation
+        next: none
+      kafkaTopic: datos-processing-1-assembly-oee-influx
+      permanente: False
+#    - name: data-processing-1-oeeevents
+#      image: gcr.io/clusterekaitz/application-oee:dataprocessing-oeeevents
+#      previous: data-processing-influx
+#      next: none
+#      permanente: False
+  replicas: 1
+  desplegar: True

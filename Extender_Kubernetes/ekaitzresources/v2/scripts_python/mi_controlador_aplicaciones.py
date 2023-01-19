@@ -199,7 +199,7 @@ def conciliar_spec_status(objeto, cliente):
                     if ('componente-' + i['name']) == h['metadata']['name']:
                         encontrado = True
                 if encontrado:
-                    pass
+                    pass    # TODO OJO! Si ha encontrado un permanente, habrá que añadirle la nueva aplicacion a su configuración
                 else:
                     crear_componentes(cliente, i, objeto)
 
@@ -226,12 +226,31 @@ def crear_componentes(cliente, componente, app):
         except KeyError:
             pass
         if permanente == True:  # En este if se repiten muchos comandos (la linea de crear el objeto, actualizar status...), arreglarlo
-            componente_body = tipos.componente_recurso(nombre=componente['name'] + "-" + app['metadata']['name'],
-                                                       nombre_corto=componente['name'],
-                                                       imagen=componente['image'],
-                                                       anterior=componente['previous'],
-                                                       appName=app['metadata']['name'],
-                                                       siguiente=componente['next'], permanente=True)
+
+            if "customization" in componente:
+                componente_body = tipos.componente_recurso(nombre=componente['name'] + "-" + app['metadata']['name'],   # TODO En los permanentes el nombre va ligado a la app? En teoría es único no?
+                                                           nombre_corto=componente['name'],
+                                                           imagen=componente['image'],
+                                                           anterior=componente['flowConfig']['previous'],
+                                                           appName=app['metadata']['name'],
+                                                           siguiente=componente['flowConfig']['next'],
+                                                           permanente=True,
+                                                           configmap=componente['permanenteCM']['cmName'], # TODO CUIDADO, por si al final lo cambiamos,
+                                                           volume_name=componente['permanenteCM']['volumeName'],
+                                                           volume_path=componente['permanenteCM']['volumePath'],
+                                                           customization=componente['customization'])
+            else:
+                componente_body = tipos.componente_recurso(nombre=componente['name'] + "-" + app['metadata']['name'], # TODO En los permanentes el nombre va ligado a la app? En teoría es único no?
+                                                           nombre_corto=componente['name'],
+                                                           imagen=componente['image'],
+                                                           anterior=componente['flowConfig']['previous'],
+                                                           appName=app['metadata']['name'],
+                                                           siguiente=componente['flowConfig']['next'],
+                                                           permanente=True,
+                                                           configmap=componente['permanenteCM']['cmName'], # TODO CUIDADO, por si al final lo cambiamos,
+                                                           volume_name=componente['permanenteCM']['volumeName'],
+                                                           volume_path=componente['permanenteCM']['volumePath'])
+
             cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
 
             break

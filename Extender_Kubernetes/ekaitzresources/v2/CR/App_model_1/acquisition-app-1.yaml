@@ -6,8 +6,9 @@ spec:
   componentes:
     - name: data-acquisition-source-mqtt-kafka
       image: ekaitzhara/source-v2:source-mqtt-kafka
-      previous: none
-      next: data-acquisition-sink-exist
+      flowConfig:
+        previous: none
+        next: data-acquisition-sink-exist
       kafkaTopic: datos-acquisition-1-source-mqtt-kafka
       customization:
         - "MQTT_TOPIC=assembly-station-11"
@@ -15,9 +16,10 @@ spec:
       permanente: False
     - name: data-acquisition-sink-exist
       image: ekaitzhara/sink-v2:sink-exist
-      previous: data-acquisition-source-mqtt-kafka
-      next: none
-      kafkaTopic: datos-acquisition-1-source-mqtt-kafka
+      flowConfig:
+        previous: data-acquisition-source-mqtt-kafka
+        next: none
+      kafkaTopic: datos-acquisition-1-source-mqtt-kafka # TODO Tendríamos que diferenciar el tópico a suscribir (componente posterior) o al de publicar (componente anterior) ?
       permanente: False
   replicas: 1
   desplegar: True

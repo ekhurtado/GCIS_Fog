@@ -103,15 +103,19 @@ spec:
                   type: array
                   items:
                     type: object
+                    required: [ name,image,flowConfig,kafkaTopic ]  # Permanente lo hacemos requerido? O si no aparece es que es False?
                     properties:
                       name:
                         type: string
                       image:
                         type: string
-                      previous:
-                        type: string
-                      next:
-                        type: string
+                      flowConfig:
+                        type: object
+                        properties:
+                          previous:
+                            type: string
+                          next:
+                            type: string
                       kafkaTopic:
                         type: string
                       customization:
@@ -120,6 +124,15 @@ spec:
                           type: string
                       permanente:
                         type: boolean
+                      permanenteCM:
+                        type: object
+                        properties:
+                          cmName: # Nombre del configmap
+                            type: string
+                          volumeName:
+                            type: string
+                          volumePath:
+                            type: string
                 replicas:
                   type: integer
                   minimum: 1
