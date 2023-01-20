@@ -9,7 +9,7 @@ spec:
       flowConfig:
         previous: none
         next: data-processing-assembystation
-      kafkaTopic: datos-processing-1-assembly-oee
+      kafkaTopic: datos-processing-1-assembly-oee # TODO El topico deberia ser el mismo para las dos aplicaciones no?
       customization:
         - "MACHINE_ID=11"
       permanente: False
@@ -18,7 +18,7 @@ spec:
       flowConfig:
         previous: data-processing-1-exist
         next: data-processing-1-influx     # En este next tendría que haber dos: Influx y OEEevents
-      kafkaTopic: datos-processing-1-assembly-oee
+      kafkaTopic: datos-processing-1-assembly-oee  # TODO El topico deberia ser el mismo para esta permanente no?
       customization:
         - "LIMIT=72"
       permanente: True  # En este caso sí es un componente permanente (siempre lo es? o solo cuando participa en más de una app?)
