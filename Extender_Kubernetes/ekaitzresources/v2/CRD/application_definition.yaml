@@ -125,14 +125,7 @@ spec:
                       permanente:
                         type: boolean
                       permanenteCM:
-                        type: object
-                        properties:
-                          cmName: # Nombre del configmap
-                            type: string
-                          volumeName:
-                            type: string
-                          volumePath:
-                            type: string
+                        type: string
                 replicas:
                   type: integer
                   minimum: 1

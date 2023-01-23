@@ -123,8 +123,13 @@ def conciliar_spec_status(objeto, cliente):
 	# cliente_despliegue.create_namespaced_deployment(namespace, deployment_yaml)
 
 	# TODO Añadir los deployments personalizables de las aplicaciones de adquisicion y procesamiento
-	deployment_yaml = tipos.deploymentObject(objeto, "component-controller", myAppName, 1, # TODO De momento metemos a mano que solo se despliegue una replica
-											 shortName)
+	if "permanente" in componente_deseado['spec']:
+		deployment_yaml = tipos.deploymentObject(objeto, "component-controller", myAppName, 1,
+												 # TODO De momento metemos a mano que solo se despliegue una replica
+												 shortName, configMap=componente_deseado['spec']['permanenteCM'])
+	else:
+		deployment_yaml = tipos.deploymentObject(objeto, "component-controller", myAppName, 1, # TODO De momento metemos a mano que solo se despliegue una replica
+												 shortName)
 	cliente_despliegue.create_namespaced_deployment(namespace, deployment_yaml)
 
 	#Busco el status del deployment.

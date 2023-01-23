@@ -32,6 +32,8 @@ spec:
                     type: string
                 permanente:
                   type: boolean
+                permanenteCM:
+                  type: string
             status:
               type: object
               properties:

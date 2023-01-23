@@ -1,0 +1,22 @@
+FROM python:3.10-alpine
+
+RUN pip install kafka-python
+
+RUN pip3 install influxdb-client
+
+RUN pip install kubernetes
+
+COPY pqp.py .
+
+#COPY influxAPI.py .
+
+#ENV FLASK_APP=pqp.py
+
+ENV LIMIT=67
+
+ENV KAFKA_TOPIC=topico-datos-oee-influx
+
+ENV KAFKA_INFLUX_TOPIC=topico-datos-assembly-oee
+
+#CMD flask run --host=0.0.0.0
+CMD python3 pqp.py

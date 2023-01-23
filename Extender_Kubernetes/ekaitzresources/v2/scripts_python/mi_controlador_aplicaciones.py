@@ -183,7 +183,7 @@ def conciliar_spec_status(objeto, cliente):
         eventAPI = client.CoreV1Api()
         eventAPI.create_namespaced_event("default", eventObject)
 
-        listado_componentes_desplegados = cliente.list_namespaced_custom_object(grupo, 'v1alpha1', namespace,
+        listado_componentes_desplegados = cliente.list_namespaced_custom_object(grupo, version, namespace,
                                                                                 'componentes')
         for i in objeto['spec']['componentes']:  # Por cada componente de la aplicacion a desplegar
             permanente = False
@@ -228,28 +228,26 @@ def crear_componentes(cliente, componente, app):
         if permanente == True:  # En este if se repiten muchos comandos (la linea de crear el objeto, actualizar status...), arreglarlo
 
             if "customization" in componente:
-                componente_body = tipos.componente_recurso(nombre=componente['name'] + "-" + app['metadata']['name'],   # TODO En los permanentes el nombre va ligado a la app? En teoría es único no?
+                componente_body = tipos.componente_recurso(nombre=componente['name'],   # TODO En los permanentes el nombre es único
                                                            nombre_corto=componente['name'],
                                                            imagen=componente['image'],
                                                            anterior=componente['flowConfig']['previous'],
                                                            appName=app['metadata']['name'],
                                                            siguiente=componente['flowConfig']['next'],
+                                                           kafkaTopic=componente['kafkaTopic'],
                                                            permanente=True,
-                                                           configmap=componente['permanenteCM']['cmName'], # TODO CUIDADO, por si al final lo cambiamos,
-                                                           volume_name=componente['permanenteCM']['volumeName'],
-                                                           volume_path=componente['permanenteCM']['volumePath'],
+                                                           configmap=componente['permanenteCM'],
                                                            customization=componente['customization'])
             else:
-                componente_body = tipos.componente_recurso(nombre=componente['name'] + "-" + app['metadata']['name'], # TODO En los permanentes el nombre va ligado a la app? En teoría es único no?
+                componente_body = tipos.componente_recurso(nombre=componente['name'], # TODO En los permanentes el nombre es único
                                                            nombre_corto=componente['name'],
                                                            imagen=componente['image'],
                                                            anterior=componente['flowConfig']['previous'],
                                                            appName=app['metadata']['name'],
                                                            siguiente=componente['flowConfig']['next'],
+                                                           kafkaTopic=componente['kafkaTopic'],
                                                            permanente=True,
-                                                           configmap=componente['permanenteCM']['cmName'], # TODO CUIDADO, por si al final lo cambiamos,
-                                                           volume_name=componente['permanenteCM']['volumeName'],
-                                                           volume_path=componente['permanenteCM']['volumePath'])
+                                                           configmap=componente['permanenteCM'])
 
             cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
 
@@ -262,8 +260,8 @@ def crear_componentes(cliente, componente, app):
                 componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
                                                            nombre_corto=componente['name'],
                                                            imagen=componente['image'],
-                                                           anterior=componente['previous'],
-                                                           siguiente=componente['next'],
+                                                           anterior=componente['flowConfig']['previous'],
+                                                           siguiente=componente['flowConfig']['next'],
                                                            kafkaTopic=componente['kafkaTopic'],
                                                            appName=app['metadata']['name'],
                                                            customization=componente['customization'])
@@ -272,8 +270,8 @@ def crear_componentes(cliente, componente, app):
                     nombre=componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
                     nombre_corto=componente['name'],
                     imagen=componente['image'],
-                    anterior=componente['previous'],
-                    siguiente=componente['next'],
+                    anterior=componente['flowConfig']['previous'],
+                    siguiente=componente['flowConfig']['next'],
                     kafkaTopic=componente['kafkaTopic'],
                     appName=app['metadata']['name'])
             cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)

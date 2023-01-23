@@ -71,9 +71,7 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaT
     # Hasta aqui tanto el efímero como los permanentes son iguales
     if 'permanente' in kwargs:
         componente_recurso['spec']['permanente']=kwargs.get('permanente')
-        componente_recurso['spec']['configmap']=kwargs.get('configmap')
-        componente_recurso['spec']['volume_name']=kwargs.get('volume_name')
-        componente_recurso['spec']['volume_path']=kwargs.get('volume_path')
+        componente_recurso['spec']['permanenteCM']=kwargs.get('configmap')
 
     return componente_recurso
 
@@ -228,9 +226,18 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
         envVarList = []
         for envs in componente['spec']['customization']:
             envVarList.append({'name': envs.split('=')[0], 'value': envs.split('=')[1]})
-        deployObject['spec']['template']['spec'] ['containers'][0]['env']=deployObject['spec']['template']['spec'] ['containers'][0]['env'] + envVarList
+        deployObject['spec']['template']['spec']['containers'][0]['env']=deployObject['spec']['template']['spec'] ['containers'][0]['env'] + envVarList
         print("TODO: Añadir las variables de entorno necesarias")
 
+    if len(kwargs) != 0:
+        cmName = kwargs.get("configMap")
+        volumeMounts = [{'name': componente['metadata']['name'] + '-volume',
+                         'mountPath': '/etc/config'}]
+        deployObject['spec']['template']['spec']['containers'][0]['volumeMounts'] = volumeMounts
+        volumes = [{'name': componente['metadata']['name'] + '-volume',
+                    'configMap': {'name': cmName}
+                    }]
+        deployObject['spec']['template']['spec']['volumes'] = volumes
     return deployObject
 
 def customResourceEventObject(action, CR_type, CR_name, CR_UID, message, reason, eventName):

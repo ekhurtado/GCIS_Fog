@@ -8,28 +8,25 @@ spec:
       image: ekaitzhara/source-v2:source-exist
       flowConfig:
         previous: none
-        next: data-processing-assembystation
+        next: data-processing-assemblystation
       kafkaTopic: datos-processing-1-assembly-oee # TODO El topico deberia ser el mismo para las dos aplicaciones no?
       customization:
         - "MACHINE_ID=11"
       permanente: False
-    - name: data-processing-assembystation
-      image: ekaitzhara/processing-v2:assembly-station
+    - name: data-processing-assemblystation
+      image: ekaitzhara/processing-v2:assembly-station-v2.2
       flowConfig:
         previous: data-processing-1-exist
         next: data-processing-1-influx     # En este next tendría que haber dos: Influx y OEEevents
-      kafkaTopic: datos-processing-1-assembly-oee  # TODO El topico deberia ser el mismo para esta permanente no?
+      kafkaTopic: datos-processing-assembly-oee  # TODO El topico deberia ser el mismo para esta permanente no?
       customization:
         - "LIMIT=72"
       permanente: True  # En este caso sí es un componente permanente (siempre lo es? o solo cuando participa en más de una app?)
-      permanenteCM:
-        cmName: cm-data-processing-assembystation
-        volumeName: data-processing-assembystation
-        volumePath: /processing_assembly/config/
+      permanenteCM: cm-data-processing-assemblystation
     - name: data-processing-1-influx
       image: ekaitzhara/sink-v2:sink-influx
       flowConfig:
-        previous: data-processing-assembystation
+        previous: data-processing-assemblystation
         next: none
       kafkaTopic: datos-processing-1-assembly-oee-influx
       permanente: False
