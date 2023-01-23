@@ -17,6 +17,9 @@ version = "v1alpha4"
 namespace = "default"
 plural = "aplicaciones"
 
+componentVersion = "v1alpha1"
+componentPlural = "componentes"
+
 
 # TODO si se quieren saber los atributos de un CRD 	> kubectl explain aplicacion --recursive=true
 
@@ -183,9 +186,11 @@ def conciliar_spec_status(objeto, cliente):
         eventAPI = client.CoreV1Api()
         eventAPI.create_namespaced_event("default", eventObject)
 
-        listado_componentes_desplegados = cliente.list_namespaced_custom_object(grupo, version, namespace,
-                                                                                'componentes')
+        listado_componentes_desplegados = cliente.list_namespaced_custom_object(grupo, componentVersion, namespace,
+                                                                                componentPlural)
+
         for i in objeto['spec']['componentes']:  # Por cada componente de la aplicacion a desplegar
+
             permanente = False
             try:
                 permanente = i['permanente']
@@ -196,10 +201,10 @@ def conciliar_spec_status(objeto, cliente):
             else:
                 encontrado = False
                 for h in listado_componentes_desplegados['items']:  # Por cada componente desplegado en el cluster
-                    if ('componente-' + i['name']) == h['metadata']['name']:
+                    if (i['name']) == h['metadata']['name']:
                         encontrado = True
                 if encontrado:
-                    pass    # TODO OJO! Si ha encontrado un permanente, habrá que añadirle la nueva aplicacion a su configuración
+                    updatePermanent(cliente, i, objeto)    # TODO OJO! Si ha encontrado un permanente, habrá que añadirle la nueva aplicacion a su configuración
                 else:
                     crear_componentes(cliente, i, objeto)
 
@@ -306,6 +311,9 @@ def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
                                                                 i['previous'], i['next'])['metadata']['name'])
     elif aplicacion['spec']['desplegar'] == False:
         pass
+
+def updatePermanent(cliente, componente, app):
+    print("Se va a actualizar el componente permanente ya que ya está desplegado")
 
 
 if __name__ == '__main__':
