@@ -3,6 +3,7 @@ import random
 import string
 import sys
 
+import configparser
 import urllib3.exceptions
 from dateutil import parser
 from kubernetes import client, config, watch
@@ -204,7 +205,7 @@ def conciliar_spec_status(objeto, cliente):
                     if (i['name']) == h['metadata']['name']:
                         encontrado = True
                 if encontrado:
-                    updatePermanent(cliente, i, objeto)    # TODO OJO! Si ha encontrado un permanente, habrá que añadirle la nueva aplicacion a su configuración
+                    updatePermanent(cliente, i, objeto, action="ADD")    # Si ha encontrado un permanente, se le añadirá la nueva aplicacion a su configuración (configmap)
                 else:
                     crear_componentes(cliente, i, objeto)
 
@@ -312,8 +313,77 @@ def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
     elif aplicacion['spec']['desplegar'] == False:
         pass
 
-def updatePermanent(cliente, componente, app):
+def eliminar_componente(cliente, componente, aplicacion):  # Ya no borrará deployments.
+    # TODO Eliminará un componente de una aplicacion
+    print("TODO...")
+
+def updatePermanent(cliente, componente, app, action):
     print("Se va a actualizar el componente permanente ya que ya está desplegado")
+
+    # componentePermanente = cliente.get_namespaced_custom_object_status(grupo, componentVersion, namespace, componentPlural,
+    #                                                                     componente['metadata']['name'])
+
+    # Conseguimos el ConfigMap del componente permanente
+    configMapName = componente['permanenteCM']
+    coreAPI = client.CoreV1Api()
+    configMap = coreAPI.read_namespaced_config_map(namespace=namespace, name=configMapName)
+
+    # Conseguimos la información del archivo properties
+    cmData = configMap.data
+    propertiesFile, propertiesData = list(cmData.items())[0]
+
+    # Parseamos la información para poder trabajar con los datos del archivo properties
+    config = configparser.RawConfigParser()
+    config.read_string(propertiesData)
+
+    match action:
+        case "ADD": # en caso de se haya añadido el elemento permanente a una nueva aplicacion
+            # Actualizamos la información de las aplicaciones añadiendo la nueva
+            lastApp = list(config['InformationSection'].keys())[len(config['InformationSection']) - 1]
+            newIndex = str(int(lastApp.split(".")[1]) + 1)
+            config.set('InformationSection', 'aplicaciones.' + newIndex, app['metadata'['name']])
+
+            # Actualizamos la información del nuevo topico
+
+            config.set('OutTopicSection', app['metadata'['name']] + siguiente_componente, '#TODO') #TODO Pensar como conseguir el topico (de la definicion de la aplicacion conseguir los componentes "next" y sus topicos?)
+
+            # Actualizamos la información del nuevo customization
+            for custom in componente['customization']:
+                config.set('CustomSection', app['metadata'['name']] + '.' + str.lower(custom.split("=")[0]), custom.split("=")[1])
+
+        case "REMOVE":  # en caso de se haya eliminado el elemento permanente de una aplicacion
+            if len(config['InformationSection']) == 1: # En este caso es la última aplicación, por lo que hay que eliminar el componente
+                eliminar_componente(cliente, componente, app)
+            else: # En este caso solo se eliminará la información de la aplicación
+
+                # Eliminamos la aplicacion de la sección de información
+                for key in config['InformationSection'].keys():
+                    if config['InformationSection'][key] == app['metadata']['name']:
+                        print(config['InformationSection'][key])
+                        config.remove_option('InformationSection', key)
+
+                # Eliminamos los tópicos
+                for key in config['OutTopicSection'].keys():
+                    if config['OutTopicSection'][key].split(".")[0] == app['metadata']['name']:
+                        config.remove_option('OutTopicSection', key)
+
+                # Eliminamos los customization
+                for key in config['CustomSection'].keys():
+                    if config['CustomSection'][key].split(".")[0] == app['metadata']['name']:
+                        config.remove_option('CustomSection', key)
+        case _: # default case
+            pass
+
+    # Una vez actualizado los datos del archivo properties, actualizamos el configmap
+
+    # Primero, creamos el string completo
+    stringData = ''
+    for section in config.sections():
+        stringData += '[' + section + ']\n'
+        for key in config[section].keys():
+            stringData += key + ':' + config[section][key] + '\n'
+
+    # TODO MIRAR COMO SE ACTUALIZA EL DATA DE UN CONFIGMAP
 
 
 if __name__ == '__main__':
