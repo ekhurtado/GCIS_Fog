@@ -68,6 +68,10 @@ spec:
           name: Replicas
           type: integer
           priority: 1
+        - jsonPath: .spec.permanente
+          name: Permanente
+          type: boolean
+          priority: 1
 #        - jsonPath: .spec.previous
 #          name: Previous
 #          type: string
