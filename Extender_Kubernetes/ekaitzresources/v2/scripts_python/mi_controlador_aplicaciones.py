@@ -89,7 +89,7 @@ def mi_watcher(cliente):
                 # Logica para analizar que se ha modificado
                 check_modifications(objeto, cliente)
             case "DELETED":
-                eliminar_componentes(objeto)
+                eliminar_componentes(objeto)    # TODO, a parte de eliminar los efimeros tambien hay que actualizar los permanentes que estén en esa aplicacion
                 # Lógica para borrar lo asociado al recurso.
             case _:  # default case
                 # TODO en nuestro caso es tipo ADDED
@@ -197,7 +197,7 @@ def conciliar_spec_status(objeto, cliente):
                 permanente = i['permanente']
             except KeyError:
                 pass
-            if (permanente != True):  # Si el componente de la aplicacion está marcado como permanente y es alguno de los componentes ya desplegados en el cluster y marcado como permanente.
+            if (permanente != True):  # Si el componente de la aplicacion no está marcado como permanente se despliega directamente
                 crear_componentes(cliente, i, objeto)
             else:
                 encontrado = False
@@ -208,6 +208,9 @@ def conciliar_spec_status(objeto, cliente):
                     updatePermanent(cliente, i, objeto, action="ADD")    # Si ha encontrado un permanente, se le añadirá la nueva aplicacion a su configuración (configmap)
                 else:
                     crear_componentes(cliente, i, objeto)
+
+                    # Si es la primera vez que se despliega el componente permanente tambien se crea y se despliega su ConfigMap
+                    crear_permanente_cm(cliente, i, objeto)
 
 
     elif objeto['spec']['desplegar'] == False:
@@ -290,6 +293,18 @@ def crear_componentes(cliente, componente, app):
         cliente.patch_namespaced_custom_object_status(grupo, 'v1alpha1', namespace, 'componentes',
                                                       componente_body['metadata']['name'], status_object)
 
+def crear_permanente_cm(cliente, componente, app):
+
+    # Método para crear el configmap asociado al componente permanente
+    # Este solo se crea la primera vez que aparece el componente permanente
+    print("Creating configmap")
+
+    # Obtenemos la API para gestionar ConfigMaps
+    coreAPI = client.CoreV1Api()
+
+    configMapObject = tipos.configmap(componente, app)
+    coreAPI.create_namespaced_config_map()
+
 
 
 def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
@@ -300,6 +315,8 @@ def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
             permanente = False
             try:
                 permanente = i['permanente']
+                if permanente:
+                    updatePermanent(cliente, i, aplicacion, action="REMOVE")
             except KeyError:
                 pass
             if permanente != True:

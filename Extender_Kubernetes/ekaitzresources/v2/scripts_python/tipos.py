@@ -76,6 +76,21 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaT
     return componente_recurso
 
 
+def configmap(componente, aplicacion):
+
+    configMapObject = {
+        'apiVersion': 'v1',
+        'kind': 'ConfigMap',
+        'metadata': {
+            'name': 'cm-' + componente['metadata']['name']
+        },
+        'data': {
+            componente['metadata']['name'] + '.properties': {
+
+            }
+        }
+    }
+
 def job_plantilla():
     estructura_job={
         'apiVersion' : 'batch/v1',
