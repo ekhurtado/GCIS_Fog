@@ -20,6 +20,15 @@ def CRD_comp():
         CRD_componente = yaml.safe_load(stream)
     return CRD_componente
 
+def findNextComponent(currentComponent, app):
+    """
+    Method to get the next component given an aplication
+    """
+    for comp in app['spec']['componentes']:
+        if comp['name'] == currentComponent['flowConfig']['next']:
+            return comp
+    return None
+
 def aplicacion(N):
     # N identifica el numero de componentes de la aplicacion.
     aplicacion = {
@@ -58,7 +67,7 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaT
             }
         },
         'spec': {
-            'name': nombre_corto,   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
+            'name': nombre,   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
             'image': imagen,
             'previous': anterior,
             'next': siguiente,
@@ -77,19 +86,34 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaT
 
 
 def configmap(componente, aplicacion):
+    """
+    Method to create the configmap object related to the permanent component
+    """
+
+    # Primero
+    nextComp = findNextComponent(componente, aplicacion)
+    # Como es está creando el ConfigMap solo hay una aplicacion
+    cmData = '[InformationSection]\n'\
+             +'aplicaciones.1=' + aplicacion['metadata']['name'] +'\n' \
+             + '[OutTopicSection]\n'+ aplicacion['metadata']['name'] +'.'+ nextComp['name'] +'='+ nextComp['kafkaTopic'] + '\n'
+
+    cmData += '[CustomSection]\n'
+    for custom in componente['customization']:
+        print("")
+        cmData += aplicacion['metadata']['name'] + '.' + str.lower(custom.split("=")[0]) +'='+ custom.split("=")[1] +'\n'
 
     configMapObject = {
         'apiVersion': 'v1',
         'kind': 'ConfigMap',
         'metadata': {
-            'name': 'cm-' + componente['metadata']['name']
+            'name': 'cm-' + componente['name']
         },
         'data': {
-            componente['metadata']['name'] + '.properties': {
-
-            }
+            componente['name'] + '.properties': cmData
         }
     }
+
+    return configMapObject
 
 def job_plantilla():
     estructura_job={
@@ -299,3 +323,5 @@ def customResourceEventObject(action, CR_type, CR_name, CR_UID, message, reason,
             'component': CR_name
         }
     }
+
+

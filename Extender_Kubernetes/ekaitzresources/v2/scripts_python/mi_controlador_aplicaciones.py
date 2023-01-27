@@ -303,7 +303,7 @@ def crear_permanente_cm(cliente, componente, app):
     coreAPI = client.CoreV1Api()
 
     configMapObject = tipos.configmap(componente, app)
-    coreAPI.create_namespaced_config_map()
+    coreAPI.create_namespaced_config_map(namespace=namespace, body=configMapObject)
 
 
 
@@ -321,12 +321,8 @@ def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
                 pass
             if permanente != True:
                 for j in range(aplicacion['spec']['replicas']):
-                    a = i['name'] + '-' + str(j + 1) + '-' + aplicacion['metadata']['name']
-                    cliente.delete_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes',
-                                                            tipos.componente_recurso(
-                                                                i['name'] + '-' + str(j + 1) + '-' +
-                                                                aplicacion['metadata']['name'], i['image'],
-                                                                i['previous'], i['next'])['metadata']['name'])
+                    cliente.delete_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural,
+                                                    i['name'] +'-'+ str(j + 1) +'-'+ aplicacion['metadata']['name'])
     elif aplicacion['spec']['desplegar'] == False:
         pass
 
@@ -334,11 +330,6 @@ def eliminar_componente(cliente, componente, aplicacion):  # Ya no borrará depl
     # TODO Eliminará un componente de una aplicacion
     print("TODO...")
 
-def findNextComponent(currentComponent, app):
-    for comp in app['spec']['componentes']:
-        if comp['name'] == currentComponent['flowConfig']['next']:
-            return comp
-    return None
 
 def updatePermanent(cliente, componente, app, action):
     print("Se va a actualizar el componente permanente ya que ya está desplegado")
@@ -367,7 +358,7 @@ def updatePermanent(cliente, componente, app, action):
             config.set('InformationSection', 'aplicaciones.' + newIndex, app['metadata']['name'])
 
             # Actualizamos la información del nuevo topico
-            nextComp = findNextComponent(componente, app)
+            nextComp = tipos.findNextComponent(componente, app)
             config.set('OutTopicSection', app['metadata']['name'] + '.' + nextComp['name'], nextComp['kafkaTopic']) #TODO Pensar como conseguir el topico (de la definicion de la aplicacion conseguir los componentes "next" y sus topicos?)
 
             # Actualizamos la información del nuevo customization
@@ -378,6 +369,7 @@ def updatePermanent(cliente, componente, app, action):
             # TODO CÓDIGO SIN TESTEAR
             if len(config['InformationSection']) == 1: # En este caso es la última aplicación, por lo que hay que eliminar el componente
                                                             # (suponemos que no hay error y no se esta mandando eliminar ninguna otra app)
+                # TODO
                 # Eliminamos el componente
                 # eliminar_componente(cliente, componente, app)
 

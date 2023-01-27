@@ -22,7 +22,7 @@ spec:
       customization:
         - "LIMIT=74"
       permanente: True
-      permanenteCM: cm-data-processing-assemblystation
+#      permanenteCM: cm-data-processing-assemblystation
     - name: data-processing-2-influx
       image: ekaitzhara/sink-v2:sink-influx
       flowConfig:
