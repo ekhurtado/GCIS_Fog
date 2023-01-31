@@ -1,6 +1,4 @@
 import os
-import random
-import string
 import sys
 
 import configparser
@@ -50,7 +48,7 @@ def controlador():
         print("ERROR DE CONEXION!")
         print("Es posible que la dirección IP del master en el archivo k3s.yaml no sea la correcta")
         controlador()
-    except Exception as e:  # No distingue, pero funciona, como puedo distinguir?
+    except Exception as e:  # No distingue, pero funciona, ¿como puedo distinguir?
         print(str(e))  # Si se quiere mostrar por pantalla el error
 
         if "Reason: Conflict" in str(e):
@@ -96,14 +94,9 @@ def mi_watcher(cliente):
 
                 # TODO Creamos el evento notificando que se ha creado la aplicacion
                 eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
-                                                              CR_name=objeto['metadata']['name'],
-                                                              CR_UID=objeto['metadata']['uid'],
+                                                              CR_object=objeto,
                                                               message='Aplicacion creada correctamente.',
-                                                              reason='Created',
-                                                              eventName=objeto['metadata']['name'] + '-creada-' +
-                                                                        ''.join(random.choices(
-                                                                            string.ascii_lowercase + string.digits,
-                                                                            k=4)))
+                                                              reason='Created')
                 eventAPI = client.CoreV1Api()
                 eventAPI.create_namespaced_event("default", eventObject)
 
@@ -115,11 +108,18 @@ def check_modifications(objeto, cliente):
     print("Algo se ha modificado")
     print(objeto)
 
+    # Objeto para la API de los eventos
+    eventAPI = client.CoreV1Api()
+
     # TODO Analizar quien ha realizado el ultimo cambio (el parametro field_manager del metodo patch)
     lastManager = objeto['metadata']['managedFields'][len(objeto['metadata']['managedFields']) - 1]['manager']
     if "componente" in lastManager:
         # Solo si ha actualizado el status un componente realizamos las comprobaciones
         print("Cambio realizado por un componente")
+
+        # Conseguimos el nombre del componente del string del manager
+        componentName=lastManager.replace('componente-','')
+        componentName=componentName.replace('-' + objeto['metadata']['name'],'')
 
         # TODO IDEA: El atributo READY es un String ("current/desired")-> comprobar los componentes que estan en running e ir actualizando el current
         #  	Kubernetes no tiene un tipo de datos para hacer el ready 1/3, asi que hay que hacerlo con strings
@@ -129,6 +129,15 @@ def check_modifications(objeto, cliente):
             if (objeto['status']['componentes'][i]['status'] == "Running"):  # TODO CUIDADO! Si se añaden replicas habria que comprobar que todas las replicas esten en Running
                 runningCount = runningCount + 1
 
+                if (objeto['status']['componentes'][i]['name'] == componentName):
+                    # Si el componente que ha enviado el mensaje está a Running, creamos el evento notificándolo
+                    eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
+                                                                  CR_object=objeto,
+                                                                  message= componentName + ' componente desplegado correctamente.',
+                                                                  reason='Deploying',)
+                    eventAPI.create_namespaced_event("default", eventObject)
+
+
         # TODO Otra forma de hacerlo que devuelve los elementos que son Running, luego solo habría que analizar su longitud para saber cuantas hay
         # runningComps = [x for x in objeto['status']['componentes'] if x['status'] == "Running"]
 
@@ -137,6 +146,13 @@ def check_modifications(objeto, cliente):
 
             if runningCount == len(objeto['status']['componentes']):  # Significa que todos los componentes están en running
                 objeto['status']['replicas'] = objeto['spec']['replicas']
+
+                # TODO Creamos el evento notificando que se ha creado la aplicacion
+                eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
+                                                              CR_object=objeto,
+                                                              message='Todos los componentes desplegados correctamente.',
+                                                              reason='Running')
+                eventAPI.create_namespaced_event("default", eventObject)
 
             # Finalmente, actualizamos el objeto
             field_manager = objeto['metadata']['name']
@@ -176,14 +192,9 @@ def conciliar_spec_status(objeto, cliente):
 
         # TODO Creamos el evento notificando que se ha creado la aplicacion
         eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
-                                                      CR_name=objeto['metadata']['name'],
-                                                      CR_UID=objeto['metadata']['uid'],
+                                                      CR_object=objeto,
                                                       message='Iniciado despliegue de aplicación.',
-                                                      reason='Deploying',
-                                                      eventName=objeto['metadata']['name'] + '-desplegando-' +
-                                                                ''.join(random.choices(
-                                                                    string.ascii_lowercase + string.digits,
-                                                                    k=4)))
+                                                      reason='Deploying')
         eventAPI = client.CoreV1Api()
         eventAPI.create_namespaced_event("default", eventObject)
 
@@ -353,8 +364,11 @@ def updatePermanent(cliente, componente, app, action):
     match action:
         case "ADD": # en caso de se haya añadido el elemento permanente a una nueva aplicacion
             # Actualizamos la información de las aplicaciones añadiendo la nueva
-            lastApp = list(config['InformationSection'].keys())[len(config['InformationSection']) - 1]
-            newIndex = str(int(lastApp.split(".")[1]) + 1)
+            if len(config['InformationSection']) != 0:  # Existe alguna aplicacion
+                lastApp = list(config['InformationSection'].keys())[len(config['InformationSection']) - 1]
+                newIndex = str(int(lastApp.split(".")[1]) + 1)
+            else:   # El componente permanente estaba sin aplicaciones asociadas
+                newIndex = '1'
             config.set('InformationSection', 'aplicaciones.' + newIndex, app['metadata']['name'])
 
             # Actualizamos la información del nuevo topico
@@ -367,14 +381,16 @@ def updatePermanent(cliente, componente, app, action):
 
         case "REMOVE":  # en caso de se haya eliminado el elemento permanente de una aplicacion
             # TODO CÓDIGO SIN TESTEAR
-            if len(config['InformationSection']) == 1: # En este caso es la última aplicación, por lo que hay que eliminar el componente
-                                                            # (suponemos que no hay error y no se esta mandando eliminar ninguna otra app)
-                # TODO
-                # Eliminamos el componente
-                # eliminar_componente(cliente, componente, app)
+            if len(config['InformationSection']) == 1: # En este caso es la última aplicación, por lo que hay que eliminar la última aplicacion
+                                                            # no se elimina ek componente permanente ni su configmap (queda vacio)
+                # Como solo queda una aplicacion, crearemos el string vacio directamente, ya que la informacion anterior no es válida
+                stringData = ''
+                for section in config.sections():
+                    stringData += '[' + section + ']\n' + '\n'  # El segundo salto de linea es para añadir la aplicacion vacia
 
-                # Eliminamos el configmap
-                # coreAPI.delete_namespaced_config_map(namespace=namespace, name=configMapName)
+                # En este caso actualizamos el objeto configmap entero con la API
+                configMap.data = {propertiesFile: stringData}
+                coreAPI.replace_namespaced_config_map(namespace=namespace, name=configMapName, body=configMap)
 
                 # Salimos del método
                 return
@@ -408,7 +424,7 @@ def updatePermanent(cliente, componente, app, action):
         for key in config[section].keys():
             stringData += key + '=' + config[section][key] + '\n'
 
-    # Segundo, actualizamos el objeto configmap con el API
+    # Segundo, actualizamos el objeto configmap con la API
     configMap.data = {propertiesFile: stringData}
     coreAPI.patch_namespaced_config_map(namespace=namespace, name=configMapName, body=configMap)
     print("ConfiMap updated")

@@ -55,10 +55,10 @@ spec:
           name: Age
           type: date
           priority: 0
-        - jsonPath: .spec.kafkaTopic
-          name: KafkaTopic
-          type: string
-          priority: 1 # prioridad 1 solo aparece en la vista ampliada (-o wide)
+#        - jsonPath: .spec.kafkaTopic # Como el KafkaTopic es algo del funcionamiento interno no le veo mucho sentido
+#          name: KafkaTopic
+#          type: string
+#          priority: 1 # prioridad 1 solo aparece en la vista ampliada (-o wide)
         - jsonPath: .spec.image
           name: Image
           description: Docker image of the component

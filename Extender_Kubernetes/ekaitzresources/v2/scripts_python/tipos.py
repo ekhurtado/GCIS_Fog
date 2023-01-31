@@ -1,4 +1,7 @@
 # Tipos para la definicion de aplicaciones.
+import random
+import string
+
 import pytz
 import yaml
 import os
@@ -67,7 +70,7 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaT
             }
         },
         'spec': {
-            'name': nombre,   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
+            'name': nombre_corto,   # TODO quedar con Julen cual son los nombres de los componentes (los de Kubernetes o los de dentro de la aplicacion)
             'image': imagen,
             'previous': anterior,
             'next': siguiente,
@@ -279,8 +282,14 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
         deployObject['spec']['template']['spec']['volumes'] = volumes
     return deployObject
 
-def customResourceEventObject(action, CR_type, CR_name, CR_UID, message, reason, eventName):
+def customResourceEventObject(action, CR_type, CR_object, message, reason):
     create_time = pytz.utc.localize(datetime.datetime.utcnow())
+
+    # Conseguimos la informacion del objeto
+    CR_name = CR_object['metadata']['name']
+    CR_UID = CR_object['metadata']['uid']
+    eventName = CR_object['metadata']['name'] + '-' +action+ '-' + \
+                ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
 
     apiVersion = None
     kind= None
