@@ -288,8 +288,11 @@ def customResourceEventObject(action, CR_type, CR_object, message, reason):
     # Conseguimos la informacion del objeto
     CR_name = CR_object['metadata']['name']
     CR_UID = CR_object['metadata']['uid']
-    eventName = CR_object['metadata']['name'] + '-' +action+ '-' + \
-                ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
+    # eventName = CR_object['metadata']['name'] + '-' +action+ '-' + \
+    #             ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+    # TODO cortar el string si va a pasar de 63 caracteres
+    eventName = action + '-' + \
+                ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
 
     apiVersion = None
     kind= None
