@@ -165,7 +165,7 @@ def conciliar_spec_status(objeto, cliente):
 												  reason='Running')
     eventAPI.create_namespaced_event("default", eventObject)
 
-    # TODO Intento de actualizar el status del componente
+    # Actualizamos el status del componente
     status_object = {'status': {'replicas': replicas_desplegadas, 'situation': 'Running'}}
     cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural, objeto['metadata']['name'],
                                                   status_object)

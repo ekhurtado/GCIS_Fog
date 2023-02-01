@@ -33,7 +33,7 @@ def findNextComponent(currentComponent, app):
     return None
 
 def aplicacion(N):
-    # N identifica el numero de componentes de la aplicacion.
+    # N identifica el número de componentes de la aplicacion.
     aplicacion = {
         'apiVersion': {},
         'kind': 'Aplicacion',

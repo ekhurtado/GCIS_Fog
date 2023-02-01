@@ -124,6 +124,10 @@ def check_modifications(objeto, cliente):
         # TODO IDEA: El atributo READY es un String ("current/desired")-> comprobar los componentes que estan en running e ir actualizando el current
         #  	Kubernetes no tiene un tipo de datos para hacer el ready 1/3, asi que hay que hacerlo con strings
 
+        # Volvemos a conseguir el objeto de la aplicacion por si se ha modificado
+        objeto = cliente.get_namespaced_custom_object_status(grupo, version, namespace, plural,
+                                                                                        objeto['metadata']['name'])
+
         runningCount = 0
         for i in range(len(objeto['status']['componentes'])):
             if (objeto['status']['componentes'][i]['status'] == "Running"):  # TODO CUIDADO! Si se añaden replicas habria que comprobar que todas las replicas esten en Running
@@ -201,6 +205,18 @@ def conciliar_spec_status(objeto, cliente):
         listado_componentes_desplegados = cliente.list_namespaced_custom_object(grupo, componentVersion, namespace,
                                                                                 componentPlural)
 
+        # TODO Primero añadiremos el status en el CR de aplicacion para notificar que sus componentes se están creando.
+        #       Para ello, tendremos que analizar cuantos componentes tiene la aplicacion para crear el objeto status
+
+        num_componentes = len(objeto['spec']['componentes'])
+        status_object = {'status': {'componentes': [0] * num_componentes, 'replicas': 0,
+                                    'ready': "0/" + str(num_componentes)}}  # las réplicas en este punto están a 0
+        for i in range(int(num_componentes)):
+            status_object['status']['componentes'][i] = {'name': objeto['spec']['componentes'][i]['name'],
+                                                         'status': "Creating"}
+        cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
+                                                      objeto['metadata']['name'], status_object)
+
         for i in objeto['spec']['componentes']:  # Por cada componente de la aplicacion a desplegar
 
             permanente = False
@@ -209,7 +225,7 @@ def conciliar_spec_status(objeto, cliente):
             except KeyError:
                 pass
             if (permanente != True):  # Si el componente de la aplicacion no está marcado como permanente se despliega directamente
-                crear_componentes(cliente, i, objeto)
+                crear_componente(cliente, i, objeto)
             else:
                 encontrado = False
                 for h in listado_componentes_desplegados['items']:  # Por cada componente desplegado en el cluster
@@ -217,94 +233,117 @@ def conciliar_spec_status(objeto, cliente):
                         encontrado = True
                 if encontrado:
                     updatePermanent(cliente, i, objeto, action="ADD")    # Si ha encontrado un permanente, se le añadirá la nueva aplicacion a su configuración (configmap)
+
+                    # Se creará el evento notificando que uno de sus componentes ya está desplegado
+                    eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
+                                                                  CR_object=objeto,
+                                                                  message='El componente permanente ' + i['name'] + '  ya estaba desplegado con anterioridad.',
+                                                                  reason='Running')
+                    eventAPI.create_namespaced_event("default", eventObject)
+
+                    # Volvemos a conseguir la aplicacion para conseguir su status actualizado (puede que otro componente lo haya modificado)
+                    appObject = cliente.get_namespaced_custom_object_status(grupo, version, namespace, plural,
+                                                                                        objeto['metadata']['name'])
+
+                    # También se modificará directamente el status de la aplicacion, para indicar que uno de sus componentes ya está desplegado
+                    newRunningCount = int(appObject['status']['ready'].split("/")[0]) + 1
+                    appObject['status']['ready'] = str(newRunningCount) + "/" + appObject['status']['ready'].split("/")[1]
+
+                    # Buscamos el componente permanente y lo actualizamos a Running
+                    for j in range(len(appObject['status']['componentes'])):
+                        if i['name'] == appObject['status']['componentes'][j]['name']:
+                            appObject['status']['componentes'][j]['status'] = 'Running'
+
+                        # for i in range(len(objeto['status']['componentes'])):
+                        #     if (objeto['status']['componentes'][i]['status'] == "Running"):
+
+                    field_manager = appObject['metadata']['name']
+                    cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
+                                                                  appObject['metadata']['name'],
+                                                                  {'status': appObject['status']},
+                                                                  field_manager=field_manager)
+
+
                 else:
-                    crear_componentes(cliente, i, objeto)
+                    crear_componente(cliente, i, objeto)
 
                     # Si es la primera vez que se despliega el componente permanente tambien se crea y se despliega su ConfigMap
-                    crear_permanente_cm(cliente, i, objeto)
+                    crear_permanente_cm(i, objeto)
 
 
     elif objeto['spec']['desplegar'] == False:
         pass
 
-def crear_componentes(cliente, componente, app):
-    # TODO Primero añadiremos el status en el CR de aplicacion para notificar que sus componentes se están creando.
-    #       Para ello, tendremos que analizar cuantos componentes tiene la aplicacion para crear el objeto status
-    num_componentes = len(app['spec']['componentes'])
-    status_object = {'status': {'componentes': [0] * num_componentes, 'replicas': 0,
-                                'ready': "0/" + str(num_componentes)}}  # las réplicas en este punto están a 0
-    for i in range(int(num_componentes)):
-        status_object['status']['componentes'][i] = {'name': app['spec']['componentes'][i]['name'],
-                                                     'status': "Creating"}
-    cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
-                                                  app['metadata']['name'], status_object)
+def crear_componente(cliente, componente, app):
 
-    for j in range(app['spec']['replicas']):  # No me convence el aplicar así las replicas
-        permanente = False
-        try:
-            permanente = componente['permanente']
-        except KeyError:
-            pass
-        if permanente == True:  # En este if se repiten muchos comandos (la linea de crear el objeto, actualizar status...), arreglarlo
+    # for j in range(app['spec']['replicas']):  # No me convence el aplicar así las replicas
+    permanente = False
+    try:
+        permanente = componente['permanente']
+    except KeyError:
+        pass
+    if permanente == True:  # En este if se repiten muchos comandos (la linea de crear el objeto, actualizar status...), arreglarlo
 
-            if "customization" in componente:
-                componente_body = tipos.componente_recurso(nombre=componente['name'],   # TODO En los permanentes el nombre es único
-                                                           nombre_corto=componente['name'],
-                                                           imagen=componente['image'],
-                                                           anterior=componente['flowConfig']['previous'],
-                                                           appName=app['metadata']['name'],
-                                                           siguiente=componente['flowConfig']['next'],
-                                                           kafkaTopic=componente['kafkaTopic'],
-                                                           permanente=True,
-                                                           configmap=componente['permanenteCM'],
-                                                           customization=componente['customization'])
-            else:
-                componente_body = tipos.componente_recurso(nombre=componente['name'], # TODO En los permanentes el nombre es único
-                                                           nombre_corto=componente['name'],
-                                                           imagen=componente['image'],
-                                                           anterior=componente['flowConfig']['previous'],
-                                                           appName=app['metadata']['name'],
-                                                           siguiente=componente['flowConfig']['next'],
-                                                           kafkaTopic=componente['kafkaTopic'],
-                                                           permanente=True,
-                                                           configmap=componente['permanenteCM'])
-
-            cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
-
-            break
+        if "customization" in componente:
+            componente_body = tipos.componente_recurso(nombre=componente['name'],   # TODO En los permanentes el nombre es único
+                                                       nombre_corto=componente['name'],
+                                                       imagen=componente['image'],
+                                                       anterior=componente['flowConfig']['previous'],
+                                                       appName=app['metadata']['name'],
+                                                       siguiente=componente['flowConfig']['next'],
+                                                       kafkaTopic=componente['kafkaTopic'],
+                                                       permanente=True,
+                                                       configmap=componente['permanenteCM'],
+                                                       customization=componente['customization'])
         else:
-            # componente_body = tipos.componente_recurso(
-            #     componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'], componente['name'],
-            #     componente['image'], componente['previous'], componente['next'], componente['kafkaTopic'], componente['customization'], app['metadata']['name'])
-            if "customization" in componente:
-                componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
-                                                           nombre_corto=componente['name'],
-                                                           imagen=componente['image'],
-                                                           anterior=componente['flowConfig']['previous'],
-                                                           siguiente=componente['flowConfig']['next'],
-                                                           kafkaTopic=componente['kafkaTopic'],
-                                                           appName=app['metadata']['name'],
-                                                           customization=componente['customization'])
-            else:
-                componente_body = tipos.componente_recurso(
-                    nombre=componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
-                    nombre_corto=componente['name'],
-                    imagen=componente['image'],
-                    anterior=componente['flowConfig']['previous'],
-                    siguiente=componente['flowConfig']['next'],
-                    kafkaTopic=componente['kafkaTopic'],
-                    appName=app['metadata']['name'])
-            cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
+            componente_body = tipos.componente_recurso(nombre=componente['name'], # TODO En los permanentes el nombre es único
+                                                       nombre_corto=componente['name'],
+                                                       imagen=componente['image'],
+                                                       anterior=componente['flowConfig']['previous'],
+                                                       appName=app['metadata']['name'],
+                                                       siguiente=componente['flowConfig']['next'],
+                                                       kafkaTopic=componente['kafkaTopic'],
+                                                       permanente=True,
+                                                       configmap=componente['permanenteCM'])
 
-        # Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.
-        # Si no distinguimos los nombres bien surge el problema de que los nombres de los componentes al solicitar dos aplicaciones colisionan.
+        cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
 
-        # TODO Una vez creado el Custom Resource, vamos a añadirle el status de que se están creando los componentes
-        status_object = {'status': {'replicas': 0, 'situation': 'Creating'}}
-        cliente.patch_namespaced_custom_object_status(grupo, 'v1alpha1', namespace, 'componentes',
-                                                      componente_body['metadata']['name'], status_object)
+        # break
+    else:
+        # componente_body = tipos.componente_recurso(
+        #     componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'], componente['name'],
+        #     componente['image'], componente['previous'], componente['next'], componente['kafkaTopic'], componente['customization'], app['metadata']['name'])
+        if "customization" in componente:
+            componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + app['metadata']['name'],
+            # componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
+                                                       nombre_corto=componente['name'],
+                                                       imagen=componente['image'],
+                                                       anterior=componente['flowConfig']['previous'],
+                                                       siguiente=componente['flowConfig']['next'],
+                                                       kafkaTopic=componente['kafkaTopic'],
+                                                       appName=app['metadata']['name'],
+                                                       customization=componente['customization'])
+        else:
+            componente_body = tipos.componente_recurso(
+                nombre=componente['name'] + '-' + app['metadata']['name'],
+                # nombre=componente['name'] + '-' + str(j + 1) + '-' + app['metadata']['name'],
+                nombre_corto=componente['name'],
+                imagen=componente['image'],
+                anterior=componente['flowConfig']['previous'],
+                siguiente=componente['flowConfig']['next'],
+                kafkaTopic=componente['kafkaTopic'],
+                appName=app['metadata']['name'])
+        cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
 
-def crear_permanente_cm(cliente, componente, app):
+    # Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.
+    # Si no distinguimos los nombres bien surge el problema de que los nombres de los componentes al solicitar dos aplicaciones colisionan.
+
+    # TODO Una vez creado el Custom Resource, vamos a añadirle el status de que se están creando los componentes
+    status_object = {'status': {'replicas': 0, 'situation': 'Creating'}}
+    cliente.patch_namespaced_custom_object_status(grupo, 'v1alpha1', namespace, 'componentes',
+                                                  componente_body['metadata']['name'], status_object)
+
+def crear_permanente_cm(componente, app):
 
     # Método para crear el configmap asociado al componente permanente
     # Este solo se crea la primera vez que aparece el componente permanente
@@ -316,6 +355,14 @@ def crear_permanente_cm(cliente, componente, app):
     configMapObject = tipos.configmap(componente, app)
     coreAPI.create_namespaced_config_map(namespace=namespace, body=configMapObject)
 
+    # Se creará el evento notificando que el configmap del
+    #TODO
+    # eventObject = tipos.customResourceEventObject(action='Creado', CR_type="componente",
+    #                                               CR_object=objeto,
+    #                                               message='El componente permanente ' + i[
+    #                                                   'name'] + '  ya estaba desplegado con anterioridad.',
+    #                                               reason='Running')
+    # coreAPI.create_namespaced_event("default", eventObject)
 
 
 def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
@@ -428,6 +475,15 @@ def updatePermanent(cliente, componente, app, action):
     configMap.data = {propertiesFile: stringData}
     coreAPI.patch_namespaced_config_map(namespace=namespace, name=configMapName, body=configMap)
     print("ConfiMap updated")
+
+    # Se creará el evento notificando que se ha añadido la aplicacion al componente permanente
+    eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
+                                                  CR_object=app,
+                                                  message='Se ha actualizado el configMap del componente permanente ' +
+                                                          componente['name'],
+                                                  reason='Modified')
+    eventAPI = client.CoreV1Api()
+    eventAPI.create_namespaced_event("default", eventObject)
 
 
 
