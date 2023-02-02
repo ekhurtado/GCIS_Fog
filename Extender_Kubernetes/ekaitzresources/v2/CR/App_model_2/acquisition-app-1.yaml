@@ -4,8 +4,8 @@ metadata:
   name: data-acquisition-app-1-model-2
 spec:
   componentes:
-    - name: data-acquisition-1-source
-#    - name: data-acquisition-1-source-mqtt-kafka
+#    - name: data-acquisition-1-source
+    - name: data-acquisition-1-source-mqtt-kafka
       image: ekaitzhara/source-v2:source-mqtt-kafka
       flowConfig:
         previous: none

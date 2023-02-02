@@ -225,6 +225,9 @@ def deployment(componente, replicas): # Añadir replicas como input
 def deploymentObject(componente, controllerName, appName, replicas, componenteName, **kwargs):
     # TODO Existe la posibilidad de crear el objeto utilizando los objetos de la API
     #       https://github.com/kubernetes-client/python/blob/master/examples/deployment_crud.py
+
+    compName = componente['metadata']['name'].replace('-' + appName, '')    # nombre del componente solo, sin la aplicacion
+
     deployObject = {
         'apiVersion': 'apps/v1',
         'kind': 'Deployment',
@@ -252,7 +255,7 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
                 'spec': {
                     'containers': [{
                         'imagePullPolicy': 'Always',
-                        'name': componente['metadata']['name'],
+                        'name': compName,
                         'image': componente['spec']['image'],
                         'env' : [{'name': 'KAFKA_TOPIC',
                                   'value': componente['spec']['kafkaTopic']},
@@ -263,6 +266,10 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
             }
         }
     }
+
+    # Si el nombre de componente sobrepasa los 63 caracteres, lo acortamos
+    if len(compName) > 63:
+        deployObject['spec']['template']['spec']['containers'][0]['name'] = compName[0:63]
 
     if "customization" in componente['spec']:
         envVarList = []
@@ -288,11 +295,18 @@ def customResourceEventObject(action, CR_type, CR_object, message, reason):
     # Conseguimos la informacion del objeto
     CR_name = CR_object['metadata']['name']
     CR_UID = CR_object['metadata']['uid']
-    # eventName = CR_object['metadata']['name'] + '-' +action+ '-' + \
-    #             ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
-    # TODO cortar el string si va a pasar de 63 caracteres
-    eventName = action + '-' + \
-                ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+    eventName = CR_object['metadata']['name']
+
+    # Si el nombre de evento va a sobrepasar los 63 caracteres, lo acortamos
+    if len(eventName) > (56 - len(action)):    # De los 63 le quitamos los dos '-' y los 5 del random
+        eventName = eventName[0:56 - len(action)]
+
+    eventName = eventName + '-' +action+ '-' +  \
+                ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+
+    # Si el nombre de CR sobrepasa los 63 caracteres, lo acortamos
+    if len(CR_name) > 63:
+        CR_name = CR_name[0:63]
 
     apiVersion = None
     kind= None

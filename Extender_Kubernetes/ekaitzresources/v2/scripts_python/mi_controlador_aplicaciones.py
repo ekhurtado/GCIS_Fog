@@ -268,7 +268,7 @@ def conciliar_spec_status(objeto, cliente):
                     crear_componente(cliente, i, objeto)
 
                     # Si es la primera vez que se despliega el componente permanente tambien se crea y se despliega su ConfigMap
-                    crear_permanente_cm(i, objeto)
+                    crear_permanente_cm(cliente, i, objeto)
 
 
     elif objeto['spec']['desplegar'] == False:
@@ -343,7 +343,7 @@ def crear_componente(cliente, componente, app):
     cliente.patch_namespaced_custom_object_status(grupo, 'v1alpha1', namespace, 'componentes',
                                                   componente_body['metadata']['name'], status_object)
 
-def crear_permanente_cm(componente, app):
+def crear_permanente_cm(cliente, componente, app):
 
     # Método para crear el configmap asociado al componente permanente
     # Este solo se crea la primera vez que aparece el componente permanente
@@ -355,14 +355,14 @@ def crear_permanente_cm(componente, app):
     configMapObject = tipos.configmap(componente, app)
     coreAPI.create_namespaced_config_map(namespace=namespace, body=configMapObject)
 
-    # Se creará el evento notificando que el configmap del
-    #TODO
-    # eventObject = tipos.customResourceEventObject(action='Creado', CR_type="componente",
-    #                                               CR_object=objeto,
-    #                                               message='El componente permanente ' + i[
-    #                                                   'name'] + '  ya estaba desplegado con anterioridad.',
-    #                                               reason='Running')
-    # coreAPI.create_namespaced_event("default", eventObject)
+    # Se creará el evento notificando que el configmap se ha creado
+    componentObject = cliente.get_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural,
+                                                                                        componente['name'])
+    eventObject = tipos.customResourceEventObject(action='Creado', CR_type="componente",
+                                                  CR_object=componentObject,
+                                                  message='ConfigMap del componente permanente creado. La aplicacion asociada es ' + app['metadata']['name'],
+                                                  reason='Created')
+    coreAPI.create_namespaced_event("default", eventObject)
 
 
 def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
@@ -380,7 +380,7 @@ def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
             if permanente != True:
                 for j in range(aplicacion['spec']['replicas']):
                     cliente.delete_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural,
-                                                    i['name'] +'-'+ str(j + 1) +'-'+ aplicacion['metadata']['name'])
+                                                    i['name'] +'-'+ aplicacion['metadata']['name'])
     elif aplicacion['spec']['desplegar'] == False:
         pass
 
@@ -408,6 +408,10 @@ def updatePermanent(cliente, componente, app, action):
     config = configparser.RawConfigParser()
     config.read_string(propertiesData)
 
+    # Variables para los eventps
+    eventAPI = client.CoreV1Api()
+    eventMessage = ''
+
     match action:
         case "ADD": # en caso de se haya añadido el elemento permanente a una nueva aplicacion
             # Actualizamos la información de las aplicaciones añadiendo la nueva
@@ -426,6 +430,9 @@ def updatePermanent(cliente, componente, app, action):
             for custom in componente['customization']:
                 config.set('CustomSection', app['metadata']['name'] + '.' + str.lower(custom.split("=")[0]), custom.split("=")[1])
 
+            # Creamos el mensaje de los eventos
+            eventMessage = 'Componente permanente añadido a la aplicacion ' + app['metadata']['name']
+
         case "REMOVE":  # en caso de se haya eliminado el elemento permanente de una aplicacion
             # TODO CÓDIGO SIN TESTEAR
             if len(config['InformationSection']) == 1: # En este caso es la última aplicación, por lo que hay que eliminar la última aplicacion
@@ -438,6 +445,19 @@ def updatePermanent(cliente, componente, app, action):
                 # En este caso actualizamos el objeto configmap entero con la API
                 configMap.data = {propertiesFile: stringData}
                 coreAPI.replace_namespaced_config_map(namespace=namespace, name=configMapName, body=configMap)
+
+                # Creamos el mensaje de los eventos
+                eventMessage = 'Componente permanente ya no pertenece a ninguna aplicacion '
+
+                # En este caso, tenemos que enviar el evento porque despues se hace return
+                componentObject = cliente.get_namespaced_custom_object(grupo, componentVersion, namespace,
+                                                                       componentPlural, componente['name'])
+                eventObject = tipos.customResourceEventObject(
+                    action='modificado', CR_type="componente",
+                    CR_object=componentObject,
+                    message=eventMessage,
+                    reason='Modified')
+                eventAPI.create_namespaced_event("default", eventObject)
 
                 # Salimos del método
                 return
@@ -459,6 +479,9 @@ def updatePermanent(cliente, componente, app, action):
                 for key in config['CustomSection'].keys():
                     if key.split(".")[0] == app['metadata']['name']:
                         config.remove_option('CustomSection', key)
+
+                # Creamos el mensaje de los eventos
+                eventMessage = 'Componente permanente eliminado de la aplicacion ' + app['metadata']['name']
         case _: # default case
             pass
 
@@ -476,13 +499,21 @@ def updatePermanent(cliente, componente, app, action):
     coreAPI.patch_namespaced_config_map(namespace=namespace, name=configMapName, body=configMap)
     print("ConfiMap updated")
 
-    # Se creará el evento notificando que se ha añadido la aplicacion al componente permanente
-    eventObject = tipos.customResourceEventObject(action='Creado', CR_type="aplicacion",
+    # Se creará el evento notificando a la aplicacion que se ha modificado el componente permanente
+    eventObject = tipos.customResourceEventObject(action='modificado', CR_type="aplicacion",
                                                   CR_object=app,
                                                   message='Se ha actualizado el configMap del componente permanente ' +
                                                           componente['name'],
                                                   reason='Modified')
-    eventAPI = client.CoreV1Api()
+    eventAPI.create_namespaced_event("default", eventObject)
+
+    # También se creará el evento notificando al componente que su configmap se ha modificado
+    componentObject = cliente.get_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural,
+                                                           componente['name'])
+    eventObject = tipos.customResourceEventObject(action='modificado', CR_type="componente",
+                                                  CR_object=componentObject,
+                                                  message=eventMessage,
+                                                  reason='Modified')
     eventAPI.create_namespaced_event("default", eventObject)
 
 
