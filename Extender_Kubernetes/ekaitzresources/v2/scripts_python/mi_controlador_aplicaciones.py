@@ -345,13 +345,14 @@ def crear_componente(cliente, componente, app):
 
 def crear_permanente_cm(cliente, componente, app):
 
-    # Método para crear el configmap asociado al componente permanente
-    # Este solo se crea la primera vez que aparece el componente permanente
+    '''
+    Método para crear el configmap asociado al componente permanente
+    Este solo se crea la primera vez que aparece el componente permanente
+    '''
     print("Creating configmap")
 
     # Obtenemos la API para gestionar ConfigMaps
     coreAPI = client.CoreV1Api()
-
     configMapObject = tipos.configmap(componente, app)
     coreAPI.create_namespaced_config_map(namespace=namespace, body=configMapObject)
 
