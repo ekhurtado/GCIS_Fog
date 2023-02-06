@@ -293,7 +293,7 @@ def crear_componente(cliente, componente, app):
                                                        siguiente=componente['flowConfig']['next'],
                                                        kafkaTopic=componente['kafkaTopic'],
                                                        permanente=True,
-                                                       configmap=componente['permanenteCM'],
+                                                       configmap='cm-' + componente['name'],
                                                        customization=componente['customization'])
         else:
             componente_body = tipos.componente_recurso(nombre=componente['name'], # TODO En los permanentes el nombre es único
@@ -304,7 +304,7 @@ def crear_componente(cliente, componente, app):
                                                        siguiente=componente['flowConfig']['next'],
                                                        kafkaTopic=componente['kafkaTopic'],
                                                        permanente=True,
-                                                       configmap=componente['permanenteCM'])
+                                                       configmap='cm-' + componente['name'])
 
         cliente.create_namespaced_custom_object(grupo, 'v1alpha1', namespace, 'componentes', componente_body)
 

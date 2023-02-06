@@ -111,18 +111,19 @@ def performance_function_thread():
     # TODO BORRAR: PRUEBA PARA LECTURA DE PROPERTIES
     printFile("-> Prueba lectura archivo properties")
 
-    while True:
-        config.read(volumePath + 'processing-assembly.properties')
-        for section in config.sections():
-            printFile("--> Section: " + section)
-            for key in config[section].keys():
-                printFile(" ----> " + key + ": " + config[section][key])
-            printFile("----\n")
-
-        time.sleep(2)
+    # while True:
+    #     config.read(volumePath + 'data-processing-assemblystation.properties')
+    #     for section in config.sections():
+    #         printFile("--> Section: " + section)
+    #         for key in config[section].keys():
+    #             printFile(" ----> " + key + ": " + config[section][key])
+    #         printFile("----\n")
+    #
+    #     time.sleep(2)
 
 def oee_function_thread():
     printFile("Hilo de ejecución para la función 'Calculate OEE'")
+
 
     # Configuracion Kafka Consumer
     consumidor = kafka.KafkaConsumer(os.environ.get('KAFKA_TOPIC'), bootstrap_servers=[IP_server + ':9092'],
@@ -139,6 +140,9 @@ def oee_function_thread():
         for msg in consumidor:
             print('He recibido algo del consumidor.')
             print(msg)
+
+            # TODO Añadir la comprobacion de que el mensaje es de una de sus aplicaciones: buscar en el properties si la KEY recibida concuerda con alguna aplicacion suya,
+            #  si no está, deja pasar el mensaje y no procesa nada
 
             msgJSONValue = msg.value
 
@@ -213,23 +217,24 @@ def oee_function_thread():
                 calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
                 message = {'machineID': machineID, 'data': calcs}
 
+                # Consigo el topico del archivo properties en el ConfigMap
+                config.read(volumePath + 'data-processing-assemblystation.properties')
+
                 kafka_influx_topics = os.environ.get('KAFKA_INFLUX_TOPIC')
 
-                if "," in kafka_influx_topics:
-                    for topic in kafka_influx_topics.split(","):
-                        # Configuracion Productor Kafka
-                        productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'],
-                                                        client_id='pqp-assembly-oee',
-                                                        value_serializer=lambda x: json.dumps(x).encode('utf-8'),
-                                                        key_serializer=str.encode)
+                for key in config['OutTopicSection'].keys():
 
-                        productor.send(topic, value=message, key=msg.key)
-                else:
+                    # TODO Añadir busqueda del topico por el KEY de la aplicacion recibida (coger el key del mensaje Kafka recibido del source, y buscar el topico influx
+                    #  asociado a esa key)
+
+                    influxTopic = config['OutTopicSection'][key]
                     # Configuracion Productor Kafka
-                    productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'], client_id='pqp-assembly-oee',
-                                                    value_serializer=lambda x: json.dumps(x).encode('utf-8'), key_serializer=str.encode)
+                    productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'],
+                                                    client_id='pqp-assembly-oee',
+                                                    value_serializer=lambda x: json.dumps(x).encode('utf-8'),
+                                                    key_serializer=str.encode)
 
-                    productor.send(os.environ.get('KAFKA_INFLUX_TOPIC'), value=message, key=str(msg.key))
+                    productor.send(influxTopic, value=message, key=str(msg.key))
 
                 # influxAPI.storeData(machineID, calcs)
                 printFile("Calcs stored on InfluxDB")
