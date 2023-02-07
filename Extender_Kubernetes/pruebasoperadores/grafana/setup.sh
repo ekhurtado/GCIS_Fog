@@ -35,6 +35,8 @@ helm install grafana-gcis --set admin.user=admin \
      --set persistence.enabled=true \
      --set dashboardsProvider.enabled=true \
      --set datasources.secretName=oee-secret \
+     --set service.type=NodePort \
+     --set service.nodePorts.grafana=30300 \
      bitnami/grafana --version 8.2.21 -f values.yaml
 
 #kubectl apply -f influx-data-source.yaml
