@@ -278,7 +278,9 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
         deployObject['spec']['template']['spec']['containers'][0]['env']=deployObject['spec']['template']['spec'] ['containers'][0]['env'] + envVarList
         print("TODO: Añadir las variables de entorno necesarias")
 
-    if len(kwargs) != 0:
+    if len(kwargs) != 0:    # en este caso es un componente permanente
+
+        # Conseguimos el configmap y lo añadimos junto a su volumen asociado
         cmName = kwargs.get("configMap")
         volumeMounts = [{'name': componente['metadata']['name'] + '-volume',
                          'mountPath': '/etc/config'}]
@@ -287,6 +289,13 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
                     'configMap': {'name': cmName}
                     }]
         deployObject['spec']['template']['spec']['volumes'] = volumes
+
+        # Añadimos el nombre del componente como variable de entorno para que pueda acceder al archivo properties
+        newEnv = [{'name':'COMPONENT_NAME',
+                    'value': componenteName}]
+        deployObject['spec']['template']['spec']['containers'][0]['env'] = \
+                deployObject['spec']['template']['spec']['containers'][0]['env'] + newEnv
+
     return deployObject
 
 def customResourceEventObject(action, CR_type, CR_object, message, reason):

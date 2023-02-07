@@ -9,6 +9,7 @@ import configparser
 
 limit = os.environ.get('LIMIT')
 function = os.environ.get('FUNCTION')
+componentName = os.environ.get('COMPONENT_NAME')
 
 IP_server = "mi-cluster-mensajeria-kafka-bootstrap.kafka-ns"
 
@@ -20,6 +21,22 @@ def printFile(message):
     f.write(str(message) + "\n")
     f.close()
 
+def isPartOfMyApps(desiredAppID):
+    config.read(volumePath + componentName + '.properties')
+    # Buscamos entre los identificadores de las aplicaciones si está el deseado
+    for applicationID in config['InformationSection'].values():
+        if applicationID == desiredAppID:
+            return True
+    return False
+
+def findOutTopic(appID):
+    config.read(volumePath + componentName + '.properties')
+    # Buscamos el topico de influx asociado a la aplicación deseada
+    for key in config['OutTopicSection'].keys():
+        # Si coincide el ID de la aplicacion, devolvemos el topico de influx situado en el value
+        if key.split('.')[0] == appID:
+            return config['OutTopicSection'][key]
+    return None
 
 def calculateTotalTime(actualTimes, horaInicio, horaFin):
     print("Calculating total time... ")
@@ -138,114 +155,119 @@ def oee_function_thread():
 
         # Se detectará cuando alguien publique un mensaje en el tópico
         for msg in consumidor:
-            print('He recibido algo del consumidor.')
-            print(msg)
+            printFile('He recibido algo del consumidor.')
+            printFile(msg)
 
-            # TODO Añadir la comprobacion de que el mensaje es de una de sus aplicaciones: buscar en el properties si la KEY recibida concuerda con alguna aplicacion suya,
-            #  si no está, deja pasar el mensaje y no procesa nada
+            # Conseguimos el identificador de la aplicacion del key del mensaje de Kafka
+            # Como está en bytes, lo pasamos a string
+            appIDKey = msg.key.decode("utf-8")
 
-            msgJSONValue = msg.value
+            if isPartOfMyApps(appIDKey):
+                # Solo vamos a procesar mensajes de aplicaciones en las que está el componente permanente añadido
 
-            timeRange = msgJSONValue['range']
-            horaInicio = msgJSONValue['start']
-            horaFin = msgJSONValue['finish']
-            machines = msgJSONValue['machines']
+                msgJSONValue = msg.value
 
-            print(msgJSONValue)
-            print(machines)
+                timeRange = msgJSONValue['range']
+                horaInicio = msgJSONValue['start']
+                horaFin = msgJSONValue['finish']
+                machines = msgJSONValue['machines']
 
-            if not machines:    # machines is empty
-                print("  ! El mensaje recibido no es correcto. No contiene datos")
-                printFile("  ! El mensaje recibido no es correcto. No contiene datos")
-                continue
+                print(msgJSONValue)
+                print(machines)
 
-
-            #Como los prints no van bien, guardamos el log en un fichero
-            printFile("timeRange:" + str(timeRange) + "\n")
-            printFile("horaInicio:" + str(horaInicio) + "\n")
-            printFile("horaFin:" + str(horaFin) + "\n")
-            printFile("machines:" + str(machines) + "\n\n")
-
-            if not machines:
-                return 'There are no machine IDs'
-
-            for machine in machines:
-                machineID = machine['machineID']
-                printFile("--> Vamos a calcular el OEE para la maquina " + str(machineID))
-
-                oee = 0.0
-                disponibilidad = 0.0
-                rendimiento = 0.0
-
-                actualTimes = machine['actualTimes']
-                plannedTimes = machine['plannedTimes']
-
-                # totalTime = float(timeRange) * 60.0;    # Range vendrá en minutos, asi que lo pasaremos a segundos
-                totalTime = 60.0
-                totalActualTime = calculateTotalTime(actualTimes, horaInicio, horaFin)
-                rendimiento = calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin)
-
-                disponibilidad = totalActualTime / totalTime
-                oee = disponibilidad * rendimiento
-
-                disponibilidad = round(disponibilidad, 2)
-                rendimiento = round(rendimiento, 2)
-                oee = round(oee, 2)
-
-                printFile("-----> Disponibilidad value: " + str(disponibilidad))
-                printFile("-----> Rendimiento value: " + str(rendimiento))
-                printFile("-----> OEE value: " + str(oee))
-
-                printFile("-----------------------------")
-                printFile("Limit selected: " + str(limit))
-
-                oeeLimit = float(limit) / 100
-                if (oee < oeeLimit):
-                    printFile("OEE below the limit " + limit + ": " + str(oee))
-                    # Primero, crea los nuevos despliegues del cluster
-                    # De momento le paso el nombre con el .yaml, pero igual seria mejor pasarle solo el nombre y que el manager añada el .yaml
-                    printFile("Asking for new event to create new JADE Agent and message printer")
-                    message = "OEE of machine " + str(machineID) + " is below the limit (" + limit + "), " + str(oee)
-
-                    # TODO DE MOMENTO COMENTADO
-                    # sendCreateDeployMessage("cluster-manager", "message-printer", "False", message)
-                    # sendCreateDeployJADE("cluster-manager", "jade-gateway", "False")
+                if not machines:    # machines is empty
+                    print("  ! El mensaje recibido no es correcto. No contiene datos")
+                    printFile("  ! El mensaje recibido no es correcto. No contiene datos")
+                    continue
 
 
-                # Guarda los datos en la BBDD Influx
-                # Para ello, los enviaremos por Kafka para que Sink Influx los recoja
-                calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
-                message = {'machineID': machineID, 'data': calcs}
+                #Como los prints no van bien, guardamos el log en un fichero
+                printFile("timeRange:" + str(timeRange) + "\n")
+                printFile("horaInicio:" + str(horaInicio) + "\n")
+                printFile("horaFin:" + str(horaFin) + "\n")
+                printFile("machines:" + str(machines) + "\n\n")
 
-                # Consigo el topico del archivo properties en el ConfigMap
-                config.read(volumePath + 'data-processing-assemblystation.properties')
+                if not machines:
+                    return 'There are no machine IDs'
 
-                kafka_influx_topics = os.environ.get('KAFKA_INFLUX_TOPIC')
+                for machine in machines:
+                    machineID = machine['machineID']
+                    printFile("--> Vamos a calcular el OEE para la maquina " + str(machineID))
 
-                for key in config['OutTopicSection'].keys():
+                    oee = 0.0
+                    disponibilidad = 0.0
+                    rendimiento = 0.0
+
+                    actualTimes = machine['actualTimes']
+                    plannedTimes = machine['plannedTimes']
+
+                    # totalTime = float(timeRange) * 60.0;    # Range vendrá en minutos, asi que lo pasaremos a segundos
+                    totalTime = 60.0
+                    totalActualTime = calculateTotalTime(actualTimes, horaInicio, horaFin)
+                    rendimiento = calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin)
+
+                    disponibilidad = totalActualTime / totalTime
+                    oee = disponibilidad * rendimiento
+
+                    disponibilidad = round(disponibilidad, 2)
+                    rendimiento = round(rendimiento, 2)
+                    oee = round(oee, 2)
+
+                    printFile("-----> Disponibilidad value: " + str(disponibilidad))
+                    printFile("-----> Rendimiento value: " + str(rendimiento))
+                    printFile("-----> OEE value: " + str(oee))
+
+                    printFile("-----------------------------")
+                    printFile("Limit selected: " + str(limit))
+
+                    oeeLimit = float(limit) / 100
+                    if (oee < oeeLimit):
+                        printFile("OEE below the limit " + limit + ": " + str(oee))
+                        # Primero, crea los nuevos despliegues del cluster
+                        # De momento le paso el nombre con el .yaml, pero igual seria mejor pasarle solo el nombre y que el manager añada el .yaml
+                        printFile("Asking for new event to create new JADE Agent and message printer")
+                        message = "OEE of machine " + str(machineID) + " is below the limit (" + limit + "), " + str(oee)
+
+                        # TODO DE MOMENTO COMENTADO
+                        # sendCreateDeployMessage("cluster-manager", "message-printer", "False", message)
+                        # sendCreateDeployJADE("cluster-manager", "jade-gateway", "False")
+
+
+                    # Guarda los datos en la BBDD Influx
+                    # Para ello, los enviaremos por Kafka para que Sink Influx los recoja
+                    calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
+                    message = {'machineID': machineID, 'data': calcs}
+
+                    # Consigo el topico del archivo properties en el ConfigMap
+                    config.read(volumePath + 'data-processing-assemblystation.properties')
+
 
                     # TODO Añadir busqueda del topico por el KEY de la aplicacion recibida (coger el key del mensaje Kafka recibido del source, y buscar el topico influx
                     #  asociado a esa key)
 
-                    influxTopic = config['OutTopicSection'][key]
+                    influxTopic = findOutTopic(appIDKey)
+                    # influxTopic = config['OutTopicSection'][key]
+                    printFile("Se va a enviar la informacion de la app " + appIDKey + " al topico de influx " + influxTopic)
+
                     # Configuracion Productor Kafka
                     productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'],
                                                     client_id='pqp-assembly-oee',
                                                     value_serializer=lambda x: json.dumps(x).encode('utf-8'),
                                                     key_serializer=str.encode)
 
-                    productor.send(influxTopic, value=message, key=str(msg.key))
+                    productor.send(influxTopic, value=message, key=appIDKey)
 
-                # influxAPI.storeData(machineID, calcs)
-                printFile("Calcs stored on InfluxDB")
+                    # influxAPI.storeData(machineID, calcs)
+                    printFile("Calcs stored on InfluxDB")
 
 
 
-                oee = 0.0
-                disponibilidad = 0.0
-                rendimiento = 0.0
-                totalActualTime = 0.0
-                totalTime = 0.0
+                    oee = 0.0
+                    disponibilidad = 0.0
+                    rendimiento = 0.0
+                    totalActualTime = 0.0
+                    totalTime = 0.0
+
 
 
 
