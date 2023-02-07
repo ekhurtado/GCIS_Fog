@@ -9,7 +9,7 @@ spec:
       flowConfig:
         previous: none
         next: data-processing-assemblystation
-      kafkaTopic: datos-processing-2-assembly-oee
+      kafkaTopic: datos-processing-assembly-oee
       customization:
         - "MACHINE_ID=22"
       permanente: False

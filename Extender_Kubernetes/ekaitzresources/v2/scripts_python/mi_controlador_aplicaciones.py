@@ -397,7 +397,9 @@ def updatePermanent(cliente, componente, app, action):
     #                                                                     componente['metadata']['name'])
 
     # Conseguimos el ConfigMap del componente permanente
-    configMapName = componente['permanenteCM']
+    componentObject = cliente.get_namespaced_custom_object(grupo, componentVersion, namespace,
+                                                           componentPlural, componente['name'])
+    configMapName = componentObject['spec']['permanenteCM']
     coreAPI = client.CoreV1Api()
     configMap = coreAPI.read_namespaced_config_map(namespace=namespace, name=configMapName)
 
@@ -498,7 +500,7 @@ def updatePermanent(cliente, componente, app, action):
     # Segundo, actualizamos el objeto configmap con la API
     configMap.data = {propertiesFile: stringData}
     coreAPI.patch_namespaced_config_map(namespace=namespace, name=configMapName, body=configMap)
-    print("ConfiMap updated")
+    print("ConfigMap updated")
 
     # Se creará el evento notificando a la aplicacion que se ha modificado el componente permanente
     eventObject = tipos.customResourceEventObject(action='modificado', CR_type="aplicacion",
