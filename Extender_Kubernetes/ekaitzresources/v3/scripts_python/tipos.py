@@ -63,7 +63,7 @@ def componente(nombre, imagen, anterior, siguiente, **kwargs):
 
 def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaTopic, appName, **kwargs):
     component_resource = {
-        'apiVersion': 'gcis.resources/v1alpha1',
+        'apiVersion': 'ehu.gcis.org/v1alpha1',
         'kind': 'Component',
         'metadata': {
             'name': nombre,
@@ -335,11 +335,11 @@ def customResourceEventObject(action, CR_type, CR_object, message, reason):
     namespace = None
     match CR_type:
         case "application":
-            apiVersion = 'gcis.resources/v1alpha4'
+            apiVersion = 'ehu.gcis.org/v1alpha4'
             kind = 'Application'
             namespace = 'default'
         case "component":
-            apiVersion = 'gcis.resources/v1alpha1'
+            apiVersion = 'ehu.gcis.org/v1alpha1'
             kind = 'Component'
             namespace = 'default'
 

@@ -46,7 +46,7 @@ spec:
           name: Shortname
           description: Name of the component
           type: string
-          priority: 0
+          priority: 1
         - jsonPath: .status.situation
           name: Status
           type: string
