@@ -103,7 +103,7 @@ spec:
                   type: array
                   items:
                     type: object
-                    required: [ name,image,flowConfig,kafkaTopic ]
+                    required: [ name,image,flowConfig,kafkaTopic, permanent ]
                     properties:
                       name:
                         type: string
