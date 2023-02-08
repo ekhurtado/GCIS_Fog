@@ -33,9 +33,9 @@ def assembly_station_oee_function_thread():
         machineID = msgJSONValue['machineID']
         data = msgJSONValue['data']
 
-        msg_key = msg.key.split("'")[1] # tenemos que hacer esto ya que no se deserializa bien, viene en forma: b'<key>'
+        # msg_key = msg.key.split("'")[1] # tenemos que hacer esto ya que no se deserializa bien, viene en forma: b'<key>'
 
-        if Kafka_key == msg_key:
+        if Kafka_key == msg.key:
 
             influx_API.storeData(machineID, data)
 
