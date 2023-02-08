@@ -8,7 +8,7 @@ from kubernetes import client, config, watch
 import tipos
 
 # Parámetros de la configuración del objeto
-grupo = "gcis.resources"
+grupo = "ehu.gcis.org"
 version = "v1alpha1"
 namespace = "default"
 plural = "components"

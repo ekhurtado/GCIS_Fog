@@ -4,15 +4,15 @@ from kubernetes import client, config, watch
 
 import tipos
 
-grupo = "misrecursos.aplicacion"
+grupo = "ehu.gcis.org"
 version = "v1alpha4"
 namespace = "default"
-plural = "aplicaciones"
+plural = "applications"
 
 def main():
     path = os.path.abspath(os.path.dirname(__file__))
     path = path.replace('Extender_Kubernetes\ekaitzresources', "")
-    path = path.replace('\\v2\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    path = path.replace('\\v3\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
     # path = path.replace("Extender_Kubernetes\ekaitzresources\v2\scripts_python", "")
     config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 

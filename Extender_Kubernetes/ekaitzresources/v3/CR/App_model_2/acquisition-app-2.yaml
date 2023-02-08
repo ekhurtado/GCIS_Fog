@@ -1,4 +1,4 @@
-apiVersion: gcis.resources/v1alpha4
+apiVersion: ehu.gcis.org/v1alpha4
 kind: Aplication
 metadata:
   name: data-acquisition-app-2-model-2

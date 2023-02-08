@@ -13,7 +13,7 @@ import tipos
 
 
 # Parámetros de la configuración del objeto
-grupo = "gcis.resources"
+grupo = "ehu.gcis.org"
 version = "v1alpha4"
 namespace = "default"
 plural = "applications"
@@ -293,7 +293,7 @@ def crear_componente(cliente, componente, app):
                                                        appName=app['metadata']['name'],
                                                        siguiente=componente['flowConfig']['next'],
                                                        kafkaTopic=componente['kafkaTopic'],
-                                                       permanente=True,
+                                                       permanent=True,
                                                        configmap='cm-' + componente['name'],
                                                        customization=componente['customization'])
         else:
@@ -304,7 +304,7 @@ def crear_componente(cliente, componente, app):
                                                        appName=app['metadata']['name'],
                                                        siguiente=componente['flowConfig']['next'],
                                                        kafkaTopic=componente['kafkaTopic'],
-                                                       permanente=True,
+                                                       permanent=True,
                                                        configmap='cm-' + componente['name'])
 
         cliente.create_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural, componente_body)
@@ -356,7 +356,7 @@ def crear_permanente_cm(cliente, componente, app):
                                                                                         componente['name'])
     eventObject = tipos.customResourceEventObject(action='Created', CR_type="component",
       CR_object=componentObject,
-      message='Permanent component\' ConfigMap created. The related application is ' + app['metadata']['name'] + '.',
+      message='Permanent component\'s ConfigMap created. The related application is ' + app['metadata']['name'] + '.',
       reason='Created')
     coreAPI.create_namespaced_event("default", eventObject)
 
