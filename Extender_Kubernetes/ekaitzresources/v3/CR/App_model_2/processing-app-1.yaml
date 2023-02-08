@@ -30,4 +30,4 @@ spec:
       kafkaTopic: datos-processing-1-assembly-oee-influx
       permanent: False  # Hay que meterlo siempre? (deberia ponerse en required del CRD) O si no se mete, el controlador lo pone a False?
   replicas: 1
-  desplegar: True
+  deploy: True
