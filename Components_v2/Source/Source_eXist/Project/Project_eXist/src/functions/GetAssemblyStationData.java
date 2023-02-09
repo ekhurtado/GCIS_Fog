@@ -94,6 +94,10 @@ public class GetAssemblyStationData extends Thread {
 			hourFormat.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
 			String fecha = dateFormat.format(date);
 			
+			// Los datos del PLC vienen en formato 2023/10/1, asi que hay que añadir el mismo formato para la fecha
+			if (fecha.contains("/0"))
+				fecha = fecha.replace("/0", "/");
+			
 			boolean machineWorking = false;
 			
 			// TODO: Borrar ES PARA PRUEBAS!!!
@@ -112,7 +116,7 @@ public class GetAssemblyStationData extends Thread {
 				
 				if (!machineID.equals("NULL")) {
 					
-					getMachineInfo(machineID, horaInicio, horaFin);
+					getMachineInfo(machineID, horaInicio, horaFin, fecha);
 					
 					if (machineInfo == null) {
 						System.out.println("La base de datos no tiene la estructura correcta.");
@@ -282,7 +286,7 @@ public class GetAssemblyStationData extends Thread {
 	 * @param horaFin
 	 * @throws XMLDBException
 	 */
-	private static void getMachineInfo(String machineID, String horaInicio, String horaFin) throws XMLDBException {
+	private static void getMachineInfo(String machineID, String horaInicio, String horaFin, String fecha) throws XMLDBException {
 		
 		machineInfo = new AllInfo(machineID);
 		
@@ -330,19 +334,24 @@ public class GetAssemblyStationData extends Thread {
 		    		            	continue;
 		    		            }
 		    		            
-		    		            if ((plannedStartTime !=null) && (actualStartTime != null)) {
-	
-		    		            	// Solo vamos a guardar si existen los dos datos: planeado y real
-		    		            	if ((hourIsBefore(actualStartTime, horaInicio) && (hourIsBefore(horaInicio, actualFinishTime))))
-		    		            		// Si el actual esta medio-dentro por el principio, es decir, su startTime es antes del inicio y el finishTime despues
-		    		            		machineInfo = addMachineData(machineInfo, machineID, itemID, actionID, actualStartTime, actualFinishTime, plannedStartTime, plannedFinishTime);
-		    		            	else if ((hourIsBefore(horaInicio, actualStartTime)) && (hourIsBefore(actualFinishTime, horaFin)))
-		    		        			// Si el actual esta dentro
-		    		            		machineInfo = addMachineData(machineInfo, machineID, itemID, actionID, actualStartTime, actualFinishTime, plannedStartTime, plannedFinishTime);
-		    		            	else if ((hourIsBefore(actualStartTime, horaFin)) && (hourIsBefore(horaFin, actualFinishTime)))
-		    		        			// Si el actual esta medio-dentro por el final, es decir, su startTime es antes del final y el finishTime despues
-		    		            		machineInfo = addMachineData(machineInfo, machineID, itemID, actionID, actualStartTime, horaFin, null, null);
-		    		            	// Si esta fuera del intervalo, me olvido
+		    		            String actualDate = actionElem.getAttribute("actualStartTime").split(" ")[0];
+		    		            if (actualDate.equals(fecha)) {
+		    		            	// Solo vamos a analizar las acciones realizadas en el mismo dia que se ejecuta la aplicacion
+		    		            
+			    		            if ((plannedStartTime !=null) && (actualStartTime != null)) {
+		
+			    		            	// Solo vamos a guardar si existen los dos datos: planeado y real
+			    		            	if ((hourIsBefore(actualStartTime, horaInicio) && (hourIsBefore(horaInicio, actualFinishTime))))
+			    		            		// Si el actual esta medio-dentro por el principio, es decir, su startTime es antes del inicio y el finishTime despues
+			    		            		machineInfo = addMachineData(machineInfo, machineID, itemID, actionID, actualStartTime, actualFinishTime, plannedStartTime, plannedFinishTime);
+			    		            	else if ((hourIsBefore(horaInicio, actualStartTime)) && (hourIsBefore(actualFinishTime, horaFin)))
+			    		        			// Si el actual esta dentro
+			    		            		machineInfo = addMachineData(machineInfo, machineID, itemID, actionID, actualStartTime, actualFinishTime, plannedStartTime, plannedFinishTime);
+			    		            	else if ((hourIsBefore(actualStartTime, horaFin)) && (hourIsBefore(horaFin, actualFinishTime)))
+			    		        			// Si el actual esta medio-dentro por el final, es decir, su startTime es antes del final y el finishTime despues
+			    		            		machineInfo = addMachineData(machineInfo, machineID, itemID, actionID, actualStartTime, horaFin, null, null);
+			    		            	// Si esta fuera del intervalo, me olvido
+			    		            }
 		    		            }
 	    		            }
 	    		            

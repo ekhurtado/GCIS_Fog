@@ -201,8 +201,8 @@ def oee_function_thread():
                     actualTimes = machine['actualTimes']
                     plannedTimes = machine['plannedTimes']
 
-                    # totalTime = float(timeRange) * 60.0;    # Range vendrá en minutos, asi que lo pasaremos a segundos
-                    totalTime = 60.0
+                    totalTime = float(timeRange) * 60.0    # Range vendrá en minutos, asi que lo pasaremos a segundos
+                    # totalTime = 60.0
                     totalActualTime = calculateTotalTime(actualTimes, horaInicio, horaFin)
                     rendimiento = calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin)
 
