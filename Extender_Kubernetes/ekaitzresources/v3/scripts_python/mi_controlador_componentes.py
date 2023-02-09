@@ -131,7 +131,7 @@ def conciliar_spec_status(objeto, cliente):
     print("My application is: " + str(myAppName))
 
     # TODO Añadir los deployments personalizables de las aplicaciones de adquisicion y procesamiento
-    if "permanent" in componente_deseado['spec']:
+    if componente_deseado['spec']['permanent']:
         deployment_yaml = tipos.deploymentObject(objeto, "component-controller", myAppName, 1,
                                                  # TODO De momento metemos a mano que solo se despliegue una replica
                                                  shortName, configMap=componente_deseado['spec']['permanentCM'])

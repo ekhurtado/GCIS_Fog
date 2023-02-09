@@ -68,7 +68,7 @@ spec:
           name: Replicas
           type: integer
           priority: 1
-        - jsonPath: .spec.permanente
+        - jsonPath: .spec.permanent
           name: Permanente
           type: boolean
           priority: 1
