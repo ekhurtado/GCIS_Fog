@@ -1,5 +1,5 @@
 apiVersion: ehu.gcis.org/v1alpha4
-kind: Aplication
+kind: Application
 metadata:
   name: data-acquisition-app-2-model-2
 spec:
