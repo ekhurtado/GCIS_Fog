@@ -1,3 +1,6 @@
+from datetime import datetime
+
+import pytz
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 
@@ -40,7 +43,21 @@ def storeData(machineID, data):
         printFile(dataType + " - " + dataValue)
         writeMessage = dataType + ",machines="+str(machineID)+" " + dataType + "=" + dataValue
 
+        # data_point = Point(dataType) \
+        #     .tag("machines", str(machineID)) \
+        #     .tag("location", "Europe/Madrid") \
+        #     .field(dataType, float(dataValue))
+        data_point = Point(dataType) \
+            .tag("machines", str(machineID)) \
+            .field(dataType, float(dataValue))
+
         write_api = client.write_api(write_options=SYNCHRONOUS)
-        write_api.write(bucket, org, writeMessage)
+        write_api.write(bucket, org, data_point)
 
         printFile(dataType + " data stored.")
+
+        tz = pytz.timezone('Europe/Madrid')
+        now = datetime.now(tz)
+        current_time = now.strftime("%H:%M:%S")
+        printFile("Tiempo actual: " + current_time)
+
