@@ -206,12 +206,14 @@ def oee_function_thread():
                     totalActualTime = calculateTotalTime(actualTimes, horaInicio, horaFin)
                     rendimiento = calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin)
 
+                    printFile("Totaltime= " + str(totalTime)+", actualTime=" + str(totalActualTime))
+
                     disponibilidad = totalActualTime / totalTime
                     oee = disponibilidad * rendimiento
 
-                    disponibilidad = round(disponibilidad, 2)
-                    rendimiento = round(rendimiento, 2)
-                    oee = round(oee, 2)
+                    disponibilidad = round(disponibilidad, 3)
+                    rendimiento = round(rendimiento, 3)
+                    oee = round(oee, 3)
 
                     printFile("-----> Disponibilidad value: " + str(disponibilidad))
                     printFile("-----> Rendimiento value: " + str(rendimiento))

@@ -12,6 +12,8 @@ token = "hkC8oAkLLa43mp6DJQ2maXPWTL1d=A9Caa!?onlkyrtWel3iD9wtF32CWBs4cdEzElxu"
 org = "EHU"
 bucket = "gcis"
 
+# https://github.com/influxdata/influxdb-client-python
+
 
 def createBucket(name):
     print("Creating bucket")
