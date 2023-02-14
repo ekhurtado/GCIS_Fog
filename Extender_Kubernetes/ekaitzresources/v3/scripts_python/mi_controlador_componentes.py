@@ -1,5 +1,7 @@
 import os
 import datetime
+import time
+
 import pytz
 
 from dateutil import parser
@@ -21,16 +23,17 @@ plural_aplicaciones = "applications"
 # TODO Hay que ver que datos se repiten mucho y crear variables globales (como el nombre del componente (tambien es aplicable a las aplicaciones))
 
 def controlador():
-    path = os.path.abspath(os.path.dirname(__file__))
-    path = path.replace('Extender_Kubernetes\ekaitzresources', "")
-    path = path.replace('\\v3\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
-    config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
+    # TODO Forma para utilizar desde Pycharm
+    # path = os.path.abspath(os.path.dirname(__file__))
+    # path = path.replace('Extender_Kubernetes\ekaitzresources', "")
+    # path = path.replace('\\v3\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    # config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     # TODO Cambiarlo para el cluster
-    # if 'KUBERNETES_PORT' in os.environ:
-    # 	config.load_incluster_config()
-    # else:
-    # 	config.load_kube_config()
+    if 'KUBERNETES_PORT' in os.environ:
+        config.load_incluster_config()
+    else:
+        config.load_kube_config()
 
     cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
     cliente_extension = client.ApiextensionsV1Api()  # Cliente para añadir el CRD.
@@ -38,7 +41,8 @@ def controlador():
     try:
         cliente_extension.create_custom_resource_definition(tipos.CRD_comp())
         print("He pasado la CRD. Compruebalo y pulsa una tecla para continuar.")
-        input()
+        # input()   # TODO cuando se utiliza dentro de un contenedor no es necesario
+        time.sleep(2)   # esperamos 2 segundos a que se cree bien el CRD
     except Exception:  # No distingue, como puedo distinguir?
         print("El CRD ya existe, pasando al watcher.")
 
@@ -92,7 +96,7 @@ def mi_watcher(cliente):
 
 def check_modifications(objeto, cliente):
     print("Algo se ha modificado")
-    print(objeto)
+    # print(objeto)
 
 
 def conciliar_spec_status(objeto, cliente):

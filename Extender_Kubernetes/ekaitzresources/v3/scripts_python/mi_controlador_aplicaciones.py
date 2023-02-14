@@ -1,6 +1,8 @@
 import os
 import sys
 import datetime
+import time
+
 import pytz
 
 import configparser
@@ -25,18 +27,18 @@ componentPlural = "components"
 
 
 def controlador():
-    path = os.path.abspath(os.path.dirname(__file__))
-    path = path.replace('Extender_Kubernetes\ekaitzresources', "")
-    path = path.replace('\\v3\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
-    # path = path.replace("Extender_Kubernetes\ekaitzresources\v2\scripts_python", "")
-    config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
+    # TODO Forma para utilizar desde Pycharm
+    # path = os.path.abspath(os.path.dirname(__file__))
+    # path = path.replace('Extender_Kubernetes\ekaitzresources', "")
+    # path = path.replace('\\v3\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    # # path = path.replace("Extender_Kubernetes\ekaitzresources\v2\scripts_python", "")
+    # config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     # TODO Cambiarlo para el cluster
-    # TODO PARA AÑADIR LA COMPROBACION DE ESTAR EN EL CLUSTER O FUERA DE EL
-    # if 'KUBERNETES_PORT' in os.environ:
-    # 	config.load_incluster_config()
-    # else:
-    # 	config.load_kube_config()
+    if 'KUBERNETES_PORT' in os.environ:
+        config.load_incluster_config()
+    else:
+        config.load_kube_config()
 
     cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
     cliente_extension = client.ApiextensionsV1Api()  # Creamos el cliente que pueda implementar el CRD.
@@ -44,7 +46,8 @@ def controlador():
     try:
         cliente_extension.create_custom_resource_definition(tipos.CRD_app())
         print("Se ha creado la CRD de las aplicaciones. Compruebalo y pulsa una tecla para continuar.")
-        input()
+        # input()   # TODO cuando se utiliza dentro de un contenedor no es necesario
+        time.sleep(2)  # esperamos 2 segundos a que se cree bien el CRD
     except urllib3.exceptions.MaxRetryError as e:
         print("ERROR DE CONEXION!")
         print("Es posible que la dirección IP del master en el archivo k3s.yaml no sea la correcta")
@@ -111,7 +114,7 @@ def mi_watcher(cliente):
 
 def check_modifications(objeto, cliente):
     print("Algo se ha modificado")
-    print(objeto)
+    # print(objeto)
 
     # Objeto para la API de los eventos
     eventAPI = client.CoreV1Api()
