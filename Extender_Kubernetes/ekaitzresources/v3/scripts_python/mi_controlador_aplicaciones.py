@@ -72,6 +72,7 @@ def mi_watcher(cliente):
     startedTime = pytz.utc.localize(
         datetime.datetime.utcnow())  # TODO CUIDADO! En el contenedor habria que instalar pytz
 
+
     for event in watcher.stream(cliente.list_namespaced_custom_object, grupo, version, namespace, plural):
 
         print('He detectado un evento.')
