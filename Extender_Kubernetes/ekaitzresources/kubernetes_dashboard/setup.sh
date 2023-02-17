@@ -9,6 +9,7 @@ sleep 3 # espera 3 segundos a que se despliegue
 sudo k3s kubectl create -f dashboard.admin-user.yml -f dashboard.admin-user-role.yml
 sleep 2
 sudo k3s kubectl -n kubernetes-dashboard create token admin-user > token.txt
+echo '\n' >> token.txt  # Para poder copiar mejor el token
 sleep 1
 kubectl patch svc -n kubernetes-dashboard kubernetes-dashboard --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"}]'
 kubectl patch svc -n kubernetes-dashboard kubernetes-dashboard --type='json' -p '[{"op":"replace","path":"/spec/ports/0/nodePort","value":30443}]'
