@@ -272,7 +272,10 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
                                  'value': componente['spec']['kafkaTopic']},
                                 {'name': 'KAFKA_KEY',
                                  'value': appName}]
-                    }]
+                    }],
+                    'nodeSelector': {
+                        'node-type': 'multipass'
+                    },
                 }
             }
         }

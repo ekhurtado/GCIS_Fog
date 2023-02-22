@@ -28,6 +28,16 @@ spec:
         imagePullPolicy: Always
         name: time-test
         resources: {}
+        securityContext:
+          capabilities:
+            add:
+              - SYS_NICE
+              - SYS_RESOURCE
+              - SYS_TIME
+#        lifecycle:
+#          postStart:
+#            exec:
+#              command: ["ntpdate", "master"]
       restartPolicy: Always
       serviceAccountName: ""
       volumes: null

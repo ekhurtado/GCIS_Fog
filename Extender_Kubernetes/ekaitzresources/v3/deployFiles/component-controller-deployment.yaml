@@ -31,4 +31,6 @@ spec:
       restartPolicy: Always
       serviceAccountName: ""
       volumes: null
+      nodeSelector:
+        node-role.kubernetes.io/master: "true"    # Para desplegarlo en el master
 status: {}
