@@ -1,4 +1,4 @@
-import sys,os,json,subprocess
+import sys, os, json, subprocess
 import time
 from datetime import datetime
 import kafka
@@ -16,10 +16,12 @@ IP_server = "mi-cluster-mensajeria-kafka-bootstrap.kafka-ns"
 config = configparser.RawConfigParser()
 volumePath = "/etc/config/"
 
+
 def printFile(message):
     f = open("pqp.txt", "a")
     f.write(str(message) + "\n")
     f.close()
+
 
 def isPartOfMyApps(desiredAppID):
     config.read(volumePath + componentName + '.properties')
@@ -29,6 +31,7 @@ def isPartOfMyApps(desiredAppID):
             return True
     return False
 
+
 def findOutTopic(appID):
     config.read(volumePath + componentName + '.properties')
     # Buscamos el topico de influx asociado a la aplicación deseada
@@ -37,6 +40,7 @@ def findOutTopic(appID):
         if key.split('.')[0] == appID:
             return config['OutTopicSection'][key]
     return None
+
 
 def calculateTotalTime(actualTimes, horaInicio, horaFin):
     print("Calculating total time... ")
@@ -53,6 +57,7 @@ def calculateTotalTime(actualTimes, horaInicio, horaFin):
         if (horaFin < actualFinish):
             actualFinish = horaFin
         resta = calculateDifferenceHours(actualStart, actualFinish)
+        printFile("!!!!!! -> La resta de tiempos entre " + str(actualStart) + "-" + str(actualFinish) + ": " + str(resta))
         totalTime = totalTime + float(resta)
 
     return totalTime
@@ -138,9 +143,9 @@ def performance_function_thread():
     #
     #     time.sleep(2)
 
+
 def oee_function_thread():
     printFile("Hilo de ejecución para la función 'Calculate OEE'")
-
 
     # Configuracion Kafka Consumer
     consumidor = kafka.KafkaConsumer(os.environ.get('KAFKA_TOPIC'), bootstrap_servers=[IP_server + ':9092'],
@@ -175,13 +180,12 @@ def oee_function_thread():
                 print(msgJSONValue)
                 print(machines)
 
-                if not machines:    # machines is empty
+                if not machines:  # machines is empty
                     print("  ! El mensaje recibido no es correcto. No contiene datos")
                     printFile("  ! El mensaje recibido no es correcto. No contiene datos")
                     continue
 
-
-                #Como los prints no van bien, guardamos el log en un fichero
+                # Como los prints no van bien, guardamos el log en un fichero
                 printFile("timeRange:" + str(timeRange) + "\n")
                 printFile("horaInicio:" + str(horaInicio) + "\n")
                 printFile("horaFin:" + str(horaFin) + "\n")
@@ -201,12 +205,12 @@ def oee_function_thread():
                     actualTimes = machine['actualTimes']
                     plannedTimes = machine['plannedTimes']
 
-                    totalTime = float(timeRange) * 60.0    # Range vendrá en minutos, asi que lo pasaremos a segundos
+                    totalTime = float(timeRange) * 60.0  # Range vendrá en minutos, asi que lo pasaremos a segundos
                     # totalTime = 60.0
                     totalActualTime = calculateTotalTime(actualTimes, horaInicio, horaFin)
                     rendimiento = calculatePerformance(plannedTimes, actualTimes, totalTime, horaFin)
 
-                    printFile("Totaltime= " + str(totalTime)+", actualTime=" + str(totalActualTime))
+                    printFile("Totaltime= " + str(totalTime) + ", actualTime=" + str(totalActualTime))
 
                     disponibilidad = totalActualTime / totalTime
                     oee = disponibilidad * rendimiento
@@ -228,28 +232,29 @@ def oee_function_thread():
                         # Primero, crea los nuevos despliegues del cluster
                         # De momento le paso el nombre con el .yaml, pero igual seria mejor pasarle solo el nombre y que el manager añada el .yaml
                         printFile("Asking for new event to create new JADE Agent and message printer")
-                        message = "OEE of machine " + str(machineID) + " is below the limit (" + limit + "), " + str(oee)
+                        message = "OEE of machine " + str(machineID) + " is below the limit (" + limit + "), " + str(
+                            oee)
 
                         # TODO DE MOMENTO COMENTADO
                         # sendCreateDeployMessage("cluster-manager", "message-printer", "False", message)
                         # sendCreateDeployJADE("cluster-manager", "jade-gateway", "False")
 
-
                     # Guarda los datos en la BBDD Influx
                     # Para ello, los enviaremos por Kafka para que Sink Influx los recoja
-                    calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(rendimiento) + "#oee=" + str(oee)
+                    calcs = "disponibilidad=" + str(disponibilidad) + "#rendimiento=" + str(
+                        rendimiento) + "#oee=" + str(oee)
                     message = {'machineID': machineID, 'data': calcs}
 
                     # Consigo el topico del archivo properties en el ConfigMap
                     config.read(volumePath + 'data-processing-assemblystation.properties')
-
 
                     # TODO Añadir busqueda del topico por el KEY de la aplicacion recibida (coger el key del mensaje Kafka recibido del source, y buscar el topico influx
                     #  asociado a esa key)
 
                     influxTopic = findOutTopic(appIDKey)
                     # influxTopic = config['OutTopicSection'][key]
-                    printFile("Se va a enviar la informacion de la app " + appIDKey + " al topico de influx " + influxTopic)
+                    printFile(
+                        "Se va a enviar la informacion de la app " + appIDKey + " al topico de influx " + influxTopic)
 
                     # Configuracion Productor Kafka
                     productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'],
@@ -262,8 +267,6 @@ def oee_function_thread():
                     # influxAPI.storeData(machineID, calcs)
                     printFile("Calcs stored on InfluxDB")
 
-
-
                     oee = 0.0
                     disponibilidad = 0.0
                     rendimiento = 0.0
@@ -271,19 +274,13 @@ def oee_function_thread():
                     totalTime = 0.0
 
 
-
-
-
 def trend_function_thread():
     printFile("Hilo de ejecución para la función 'Calculate Trend'")
 
 
-
 def main_pqp():
-
     printFile("Comienzo de ejecución del componente Processing Assembly Station")
     printFile("Started\n")
-
 
     # Cada funcion tendrá su hilo de ejecución propio
     thread_func1 = Thread(target=performance_function_thread(), args=())
@@ -295,9 +292,5 @@ def main_pqp():
     thread_func3.start()
 
 
-
 if __name__ == '__main__':
-
     main_pqp()
-
-
