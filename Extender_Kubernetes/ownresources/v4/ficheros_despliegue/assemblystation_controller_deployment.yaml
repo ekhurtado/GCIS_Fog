@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: assemblystation-controller
+  name: assemblystation-controller-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assemblystation-controller
+  template:
+    metadata:
+      labels:
+        app: assemblystation-controller
+    spec:
+      containers:
+      - env:
+        - name: LevelName
+          value: assemblystation
+        - name: LevelNamePlural
+          value: assemblystations
+        - name: NextLevelName
+          value: asset
+        - name: NextLevelNamePlural
+          value: assets
+        image: julencuadra/gcis-fog:generic_app_management_level_controller_image
+        imagePullPolicy: Always
+        name: assemblystation-controller
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        node-role.kubernetes.io/master: 'true'

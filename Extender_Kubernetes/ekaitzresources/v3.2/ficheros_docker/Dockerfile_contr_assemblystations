@@ -1,0 +1,10 @@
+# Este Dockerfile es para la grabación del video del caso de estudio, los niveles superiores seran aplicaciones vacias
+
+FROM python:3.10-alpine
+
+# Los directorios estan situados de acuerdo a la maquina virtual, que es donde se ha creado la imagen
+COPY scripts_aux/infinite_loop.py /
+
+WORKDIR /
+
+CMD python3 infinite_loop.py

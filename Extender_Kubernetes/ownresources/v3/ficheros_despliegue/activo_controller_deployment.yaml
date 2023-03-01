@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: activo-controller
+  name: activo-controller-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activo-controller
+  template:
+    metadata:
+      labels:
+        app: activo-controller
+    spec:
+      containers:
+      - env:
+        - name: LevelName
+          value: activo
+        - name: NextLevelName
+          value: aplicacion
+        image: julencuadra/gcis-fog:generic_app_management_level_controller_image
+        imagePullPolicy: Always
+        name: activo-controller
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        node-role.kubernetes.io/master: 'true'

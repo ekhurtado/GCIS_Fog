@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: asset-controller
+  name: asset-controller-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: asset-controller
+  template:
+    metadata:
+      labels:
+        app: asset-controller
+    spec:
+      containers:
+      - env:
+        - name: LevelName
+          value: asset
+        - name: LevelNamePlural
+          value: assets
+        - name: NextLevelName
+          value: aplicacion
+        - name: NextLevelNamePlural
+          value: aplicaciones
+        image: julencuadra/gcis-fog:generic_app_management_level_controller_image
+        imagePullPolicy: Always
+        name: asset-controller
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        node-role.kubernetes.io/master: 'true'

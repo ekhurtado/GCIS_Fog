@@ -1,0 +1,25 @@
+apiVersion: 'misrecursos.aplicacion/v1alpha1'
+kind: Planta
+metadata:
+  name: planta-bilbo
+spec:
+  desplegar: True
+  name: planta-bilbo # Hay que quitar el nombre de aquí, está duplicado en los metadatos.
+  activos:
+    - name: robot-manipulador-1
+      desplegar: True
+      aplicacions: #Problema con plurales que no sea solo añadir 's'.
+        - name: aplicacion-adqu
+          desplegar: True
+          replicas: 1
+          componentes:
+            - name: componente-a
+              image: imagen-a
+              previous: None
+              next: B
+              permanente: False
+            - name: componente-b
+              image: imagen-b
+              previous: A
+              next: None
+              permanente: False

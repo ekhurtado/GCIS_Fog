@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: asignacion-rol-kafka-test
+subjects:
+- kind: User
+  name: system:serviceaccount:default:default
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: mi-rol-kafka-test
+  apiGroup: rbac.authorization.k8s.io

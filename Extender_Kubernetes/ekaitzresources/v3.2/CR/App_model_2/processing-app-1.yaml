@@ -1,0 +1,33 @@
+apiVersion: ehu.gcis.org/v1alpha4
+kind: Application
+metadata:
+  name: data-processing-app-1-model-2
+spec:
+  components:
+    - name: data-processing-1-exist
+      image: ekaitzhara/source-v2:source-exist
+      flowConfig:
+        previous: none
+        next: data-processing-assemblystation
+      kafkaTopic: datos-processing-assembly-oee
+      customization:
+        - "MACHINE_ID=11"
+      permanent: False
+    - name: data-processing-assemblystation
+      image: ekaitzhara/processing-v2:assembly-station-v2.2
+      flowConfig:
+        previous: data-processing-1-exist
+        next: data-processing-1-influx
+      kafkaTopic: datos-processing-assembly-oee
+      customization:
+        - "LIMIT=72"
+      permanent: True
+    - name: data-processing-1-influx
+      image: ekaitzhara/sink-v2:sink-influx
+      flowConfig:
+        previous: data-processing-assemblystation
+        next: none
+      kafkaTopic: datos-processing-1-assembly-oee-influx
+      permanent: False  # Hay que meterlo siempre? (deberia ponerse en required del CRD) O si no se mete, el controlador lo pone a False?
+  replicas: 1
+  deploy: True

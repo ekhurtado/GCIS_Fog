@@ -1,0 +1,33 @@
+apiVersion: ehu.gcis.org/v1alpha4
+kind: Application
+metadata:
+  name: data-processing-app-2-model-2
+spec:
+  components:
+    - name: data-processing-2-exist
+      image: ekaitzhara/source-v2:source-exist
+      flowConfig:
+        previous: none
+        next: data-processing-assemblystation
+      kafkaTopic: datos-processing-assembly-oee
+      customization:
+        - "MACHINE_ID=22"
+      permanent: False
+    - name: data-processing-assemblystation
+      image: ekaitzhara/processing-v2:assembly-station-v2.2
+      flowConfig:
+        previous: data-processing-2-exist
+        next: data-processing-2-influx
+      kafkaTopic: datos-processing-assembly-oee
+      customization:
+        - "LIMIT=74"
+      permanent: True
+    - name: data-processing-2-influx
+      image: ekaitzhara/sink-v2:sink-influx
+      flowConfig:
+        previous: data-processing-assemblystation
+        next: none
+      kafkaTopic: datos-processing-2-assembly-oee-influx
+      permanent: False
+  replicas: 1
+  deploy: True

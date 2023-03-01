@@ -1,0 +1,14 @@
+FROM python:3.10-alpine
+
+RUN pip install kubernetes
+RUN pip install datetime
+RUN pip install pytz
+
+# Los directorios estan situados de acuerdo a la maquina virtual, que es donde se ha creado la imagen
+COPY CRD/component_definition.yaml /CRD/
+COPY scripts_python/mi_controlador_componentes.py /
+COPY scripts_python/tipos.py /
+
+WORKDIR /
+
+CMD python3 mi_controlador_componentes.py

@@ -1,0 +1,25 @@
+apiVersion: ehu.gcis.org/v1alpha4
+kind: Application
+metadata:
+  name: data-acquisition-app-1-model-2
+spec:
+  components:
+    - name: data-acquisition-1-source-mqtt-kafka
+      image: ekaitzhara/source-v2:source-mqtt-kafka
+      flowConfig:
+        previous: none
+        next: data-acquisition-1-sink-exist
+      kafkaTopic: datos-acquisition-1-source-mqtt-kafka
+      customization:
+        - "MQTT_TOPIC=Asset/assembly-station/11"
+        - "MQTT_CLIENT_NAME=data-acquisition-app-1-model-2-source-mqtt-kafka"
+      permanent: False
+    - name: data-acquisition-1-sink-exist
+      image: ekaitzhara/sink-v2:sink-exist
+      flowConfig:
+        previous: data-acquisition-1-source-mqtt-kafka
+        next: none
+      kafkaTopic: datos-acquisition-1-source-mqtt-kafka
+      permanent: False
+  replicas: 1
+  deploy: True

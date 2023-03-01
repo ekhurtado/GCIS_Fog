@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+
+  assemblystation-controller:
+    build:
+      context: ..
+      dockerfile: ficheros_docker/Dockerfile_contr_assemblystations
+    image: ekaitzhara/gcis-fog:assemblystation-controller
+    container_name: assemblystation-controller
+  asset-controller:
+    build:
+      context: ..
+      dockerfile: ficheros_docker/Dockerfile_contr_assets
+    image: ekaitzhara/gcis-fog:asset-controller
+    container_name: asset-controller
+  app-controller:
+    build:
+      context: ..
+      dockerfile: ficheros_docker/Dockerfile_contr_apps
+    image: ekaitzhara/gcis-fog:app-controller-v3.0
+    container_name: app-controller
+  component-controller:
+    build:
+      context: ..
+      dockerfile: ficheros_docker/Dockerfile_contr_comps
+    image: ekaitzhara/gcis-fog:component-controller-v3.0
+    container_name: component-controller
+

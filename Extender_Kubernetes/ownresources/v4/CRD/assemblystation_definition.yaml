@@ -1,0 +1,90 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: assemblystations.misrecursos.aplicacion
+spec:
+  group: misrecursos.aplicacion
+  names:
+    kind: Assemblystation
+    plural: assemblystations
+    singular: assemblystation
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              assets:
+                items:
+                  properties:
+                    applications:
+                      items:
+                        deploy:
+                          type: boolean
+                        properties:
+                          components:
+                            items:
+                              properties:
+                                customization:
+                                  items:
+                                    type: string
+                                  type: array
+                                flowConfig:
+                                  properties:
+                                    next:
+                                      type: string
+                                    previous:
+                                      type: string
+                                  type: object
+                                image:
+                                  type: string
+                                kafkaTopic:
+                                  type: string
+                                name:
+                                  type: string
+                                permanent:
+                                  type: boolean
+                              required:
+                              - name
+                              - image
+                              - flowConfig
+                              - kafkaTopic
+                              - permanent
+                              type: object
+                            type: array
+                        replicas:
+                          maximum: 10
+                          minimum: 1
+                          type: integer
+                        required:
+                        - components
+                        - replicas
+                        - deploy
+                        type: object
+                      type: array
+                    desplegar:
+                      type: boolean
+                    name:
+                      type: string
+                  type: object
+                type: array
+              desplegar:
+                type: boolean
+              name:
+                type: string
+            type: object
+          status:
+            properties:
+              replicas:
+                type: integer
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      scale:
+        specReplicasPath: .spec.replicas
+        statusReplicasPath: .status.replicas
+      status: {}

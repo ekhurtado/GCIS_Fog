@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: planta-controller
+  name: planta-controller-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: planta-controller
+  template:
+    metadata:
+      labels:
+        app: planta-controller
+    spec:
+      containers:
+      - env:
+        - name: LevelName
+          value: planta
+        - name: NextLevelName
+          value: activo
+        image: julencuadra/gcis-fog:generic_app_management_level_controller_image
+        imagePullPolicy: Always
+        name: planta-controller
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        node-role.kubernetes.io/master: 'true'

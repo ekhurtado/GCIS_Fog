@@ -1,0 +1,5 @@
+Esta carpeta contiene los ficheros de la parte de la tercera versión de los controladores del sistema.  En este caso, en esta versión se han añadido, además de los existentes de Aplicación y Componente, los controladores de los niveles superiores: planta (assembly station) y activo (assets).
+
+Estos controladores serán los presentados en el caso de estudio del artículo, por lo que, están traducidos al inglés. Se han diseñado para que la creación de estos se realice de forma jerárquica, es decir, definiendo y desplegando la planta, los controladores de cada nivel serán capaces de crear los recursos del nivel inferior.
+
+En este caso no se va a añadir todo el código de los controladores de nivel superior, simplemente la definición para desplegar los CRD de acuerdo al caso de estudio del artículo, ya que en este se utilizarán las definiciones de las aplicaciones realizadas en la version 3 (App_model_2).

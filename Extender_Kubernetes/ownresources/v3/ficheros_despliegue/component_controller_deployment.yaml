@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: despliegue-controlador-componentes
+  labels:
+    app: component-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: component-controller
+  template:
+    metadata:
+      labels:
+        app: component-controller
+    spec:
+      containers:
+      - name: component-controller
+        image: julencuadra/gcis-fog:controlador-componentes
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+      nodeSelector:
+        node-role.kubernetes.io/master : "true"     

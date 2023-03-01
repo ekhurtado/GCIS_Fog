@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mi-rol-gestor-eventos
+rules:
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "list", "watch", "post", "put", "patch", "create", "update", "delete"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["post", "put", "patch", "create", "update"]

@@ -1,0 +1,65 @@
+apiVersion: 'misrecursos.aplicacion/v1alpha1'
+kind: Residencia
+metadata:
+  name: residencia-bilbo
+spec:
+  desplegar: True
+  name: residencia-bilbo # Hay que quitar el nombre de aquí, está duplicado en los metadatos.
+  habitacions: #Problema con plurales.
+    - name: habitacion-sur
+      desplegar: True
+      pacients: #Problema plurales.
+        - name: Carlos
+          desplegar: True
+          aplicacions: #Problema con plurales que no sea solo añadir 's'.
+            - name: aplicacion-adqu
+              desplegar: True
+              replicas: 1
+              componentes:
+                - name: componente-a
+                  image: imagen-a
+                  previous: None
+                  next: B
+                  permanente: False
+                - name: componente-b
+                  image: imagen-b
+                  previous: A
+                  next: None
+                  permanente: False
+    - name: habitacion-norte
+      desplegar: True
+      pacients: #Problema plurales.
+        - name: Ana
+          desplegar: True
+          aplicacions: #Problema con plurales que no sea solo añadir 's'.
+            - name: aplicacion-pulso
+              desplegar: True
+              replicas: 1
+              componentes:
+                - name: componente-a
+                  image: imagen-a
+                  previous: None
+                  next: B
+                  permanente: False
+                - name: componente-b
+                  image: imagen-b
+                  previous: A
+                  next: None
+                  permanente: False
+        - name: Laura
+          desplegar: True
+          aplicacions: #Problema con plurales que no sea solo añadir 's'.
+            - name: aplicacion-tension
+              desplegar: True
+              replicas: 1
+              componentes:
+                - name: componente-a
+                  image: imagen-a
+                  previous: None
+                  next: B
+                  permanente: False
+                - name: componente-b
+                  image: imagen-b
+                  previous: A
+                  next: None
+                  permanente: False
