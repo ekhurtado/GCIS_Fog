@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
-    io.kompose.service: assemblystation-controller
-  name: assemblystation-controller
+    io.kompose.service: asset-controller
+  name: asset-controller
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: assemblystation-controller
+      io.kompose.service: asset-controller
   strategy: {}
   template:
     metadata:
@@ -21,12 +21,12 @@ spec:
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
       labels:
-        io.kompose.service: assemblystation-controller
+        io.kompose.service: asset-controller
     spec:
       containers:
-      - image: ekaitzhara/gcis-fog:assemblystation-controller
+      - image: ekaitzhara/gcis-fog:asset-controller
         imagePullPolicy: Always
-        name: assemblystation-controller
+        name: asset-controller
         resources: {}
       restartPolicy: Always
       serviceAccountName: ""

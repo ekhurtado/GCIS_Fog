@@ -3,7 +3,7 @@
 FROM python:3.10-alpine
 
 # Los directorios estan situados de acuerdo a la maquina virtual, que es donde se ha creado la imagen
-COPY scripts_aux/infinite_loop.py /
+COPY ../scripts_aux/infinite_loop.py /
 
 WORKDIR /
 

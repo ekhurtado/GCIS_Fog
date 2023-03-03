@@ -14,16 +14,18 @@ services:
       dockerfile: ficheros_docker/Dockerfile_contr_assets
     image: ekaitzhara/gcis-fog:asset-controller
     container_name: asset-controller
-  app-controller:
-    build:
-      context: ..
-      dockerfile: ficheros_docker/Dockerfile_contr_apps
-    image: ekaitzhara/gcis-fog:app-controller-v3.0
-    container_name: app-controller
-  component-controller:
-    build:
-      context: ..
-      dockerfile: ficheros_docker/Dockerfile_contr_comps
-    image: ekaitzhara/gcis-fog:component-controller-v3.0
-    container_name: component-controller
+
+    # DE MOMENTO LOS CONTROLADORES DE APLICACION Y COMPONENTE SE COMENTAN YA QUE NO SE HNA MODIFICADO DE LA V3.0
+#  app-controller:
+#    build:
+#      context: ..
+#      dockerfile: ficheros_docker/Dockerfile_contr_apps
+#    image: ekaitzhara/gcis-fog:app-controller-v3.0
+#    container_name: app-controller
+#  component-controller:
+#    build:
+#      context: ..
+#      dockerfile: ficheros_docker/Dockerfile_contr_comps
+#    image: ekaitzhara/gcis-fog:component-controller-v3.0
+#    container_name: component-controller
 
