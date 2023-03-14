@@ -24,7 +24,7 @@ spec:
         io.kompose.service: component-controller
     spec:
       containers:
-      - image: ekaitzhara/gcis-fog:component-controller-v3.0
+      - image: ekhurtado/gcis-fog:component-controller-v3.2
         imagePullPolicy: Always
         name: component-controller
         resources: {}

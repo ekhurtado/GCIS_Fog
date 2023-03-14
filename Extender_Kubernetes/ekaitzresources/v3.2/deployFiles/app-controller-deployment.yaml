@@ -24,7 +24,7 @@ spec:
         io.kompose.service: app-controller
     spec:
       containers:
-      - image: ekaitzhara/gcis-fog:app-controller-v3.0
+      - image: ekhurtado/gcis-fog:app-controller-v3.2
         imagePullPolicy: Always
         name: app-controller
         resources: {}

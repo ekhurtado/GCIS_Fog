@@ -30,7 +30,7 @@ def controlador():
     # TODO Forma para utilizar desde Pycharm
     # path = os.path.abspath(os.path.dirname(__file__))
     # path = path.replace('Extender_Kubernetes\ekaitzresources', "")
-    # path = path.replace('\\v3\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    # path = path.replace('\\v3.2\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
     # # path = path.replace("Extender_Kubernetes\ekaitzresources\v2\scripts_python", "")
     # config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
@@ -296,52 +296,32 @@ def crear_componente(cliente, componente, app):
         pass
     if permanente == True:  # En este if se repiten muchos comandos (la linea de crear el objeto, actualizar status...), arreglarlo
 
-        if "customization" in componente:
-            componente_body = tipos.componente_recurso(nombre=componente['name'],
-                                                       # En los permanentes el nombre es único
-                                                       nombre_corto=componente['name'],
-                                                       imagen=componente['image'],
-                                                       anterior=componente['flowConfig']['previous'],
-                                                       appName=app['metadata']['name'],
-                                                       siguiente=componente['flowConfig']['next'],
-                                                       kafkaTopic=componente['kafkaTopic'],
-                                                       permanent=True,
-                                                       configmap='cm-' + componente['name'],
-                                                       customization=componente['customization'])
-        else:
-            componente_body = tipos.componente_recurso(nombre=componente['name'],
-                                                       nombre_corto=componente['name'],
-                                                       imagen=componente['image'],
-                                                       anterior=componente['flowConfig']['previous'],
-                                                       appName=app['metadata']['name'],
-                                                       siguiente=componente['flowConfig']['next'],
-                                                       kafkaTopic=componente['kafkaTopic'],
-                                                       permanent=True,
-                                                       configmap='cm-' + componente['name'])
+        componente_body = tipos.componente_recurso(nombre=componente['name'],
+                                                   # En los permanentes el nombre es único
+                                                   nombre_corto=componente['name'],
+                                                   imagen=componente['image'],
+                                                   anterior=componente['flowConfig']['previous'],
+                                                   appName=app['metadata']['name'],
+                                                   siguiente=componente['flowConfig']['next'],
+                                                   # kafkaTopic=componente['kafkaTopic'],
+                                                   permanent=True,
+                                                   configmap='cm-' + componente['name'],
+                                                   all_data=componente)
 
         cliente.create_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural, componente_body)
 
         # break
     else:
-        if "customization" in componente:
-            componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + app['metadata']['name'],
-                                                       nombre_corto=componente['name'],
-                                                       imagen=componente['image'],
-                                                       anterior=componente['flowConfig']['previous'],
-                                                       siguiente=componente['flowConfig']['next'],
-                                                       kafkaTopic=componente['kafkaTopic'],
-                                                       permanent=False,
-                                                       appName=app['metadata']['name'],
-                                                       customization=componente['customization'])
-        else:
-            componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + app['metadata']['name'],
-                                                       nombre_corto=componente['name'],
-                                                       imagen=componente['image'],
-                                                       anterior=componente['flowConfig']['previous'],
-                                                       siguiente=componente['flowConfig']['next'],
-                                                       kafkaTopic=componente['kafkaTopic'],
-                                                       permanent=False,
-                                                       appName=app['metadata']['name'])
+        componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + app['metadata']['name'],
+                                                   nombre_corto=componente['name'],
+                                                   imagen=componente['image'],
+                                                   anterior=componente['flowConfig']['previous'],
+                                                   siguiente=componente['flowConfig']['next'],
+                                                   # kafkaTopic=componente['kafkaTopic'],
+                                                   permanent=False,
+                                                   appName=app['metadata']['name'],
+                                                   all_data=componente)
+
         cliente.create_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural, componente_body)
 
     # Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.
@@ -439,7 +419,8 @@ def updatePermanent(cliente, componente, app, action):
             # Actualizamos la información del nuevo topico
             nextComp = tipos.findNextComponent(componente, app)
             config.set('OutTopicSection', app['metadata']['name'] + '.' + nextComp['name'], nextComp[
-                'kafkaTopic'])  # TODO Pensar como conseguir el topico (de la definicion de la aplicacion conseguir los componentes "next" y sus topicos?)
+                'inputIFMHtopic'])
+                # 'kafkaTopic'])  # TODO Pensar como conseguir el topico (de la definicion de la aplicacion conseguir los componentes "next" y sus topicos?)
 
             # Actualizamos la información del nuevo customization
             for custom in componente['customization']:

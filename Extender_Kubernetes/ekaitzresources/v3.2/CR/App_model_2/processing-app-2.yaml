@@ -9,7 +9,7 @@ spec:
       flowConfig:
         previous: none
         next: data-processing-assemblystation
-      kafkaTopic: datos-processing-assembly-oee
+      outputIFMHtopic: datos-processing-assembly-oee
       customization:
         - "MACHINE_ID=22"
       permanent: False
@@ -18,7 +18,7 @@ spec:
       flowConfig:
         previous: data-processing-2-exist
         next: data-processing-2-influx
-      kafkaTopic: datos-processing-assembly-oee
+      inputIFMHtopic: datos-processing-assembly-oee
       customization:
         - "LIMIT=74"
       permanent: True
@@ -27,7 +27,7 @@ spec:
       flowConfig:
         previous: data-processing-assemblystation
         next: none
-      kafkaTopic: datos-processing-2-assembly-oee-influx
+      inputIFMHtopic: datos-processing-2-assembly-oee-influx
       permanent: False
   replicas: 1
   deploy: True

@@ -20,7 +20,7 @@ spec:
                   type: array
                   items:
                     type: object
-                    required: [ name,image,flowConfig,kafkaTopic, permanent ]
+                    required: [ name,image,flowConfig ]
                     properties:
                       name:
                         type: string
@@ -33,7 +33,9 @@ spec:
                             type: string
                           next:
                             type: string
-                      kafkaTopic:
+                      inputIFMHtopic:
+                        type: string
+                      outputIFMHtopic:
                         type: string
                       customization: # Parameters to add component customization
                         type: array

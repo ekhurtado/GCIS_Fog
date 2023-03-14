@@ -61,7 +61,7 @@ def componente(nombre, imagen, anterior, siguiente, **kwargs):
     return componente
 
 
-def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaTopic, appName, **kwargs):
+def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, appName, **kwargs):
     component_resource = {
         'apiVersion': 'ehu.gcis.org/v1alpha1',
         'kind': 'Component',
@@ -76,12 +76,19 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, kafkaT
             'name': nombre_corto,
             'image': imagen,
             'previous': anterior,
-            'next': siguiente,
-            'kafkaTopic': kafkaTopic
+            'next': siguiente
+            # 'kafkaTopic': kafkaTopic
         }
     }
-    if 'customization' in kwargs:
-        component_resource['spec']['customization'] = kwargs.get('customization')
+
+    #
+    if 'all_data' in kwargs:
+        if 'customization' in kwargs.get('all_data'):
+            component_resource['spec']['customization'] = kwargs.get('all_data')['customization']
+        if 'inputIFMHtopic' in kwargs.get('all_data'):
+            component_resource['spec']['inputIFMHtopic'] = kwargs.get('all_data')['inputIFMHtopic']
+        if 'outputIFMHtopic' in kwargs.get('all_data'):
+            component_resource['spec']['outputIFMHtopic'] = kwargs.get('all_data')['outputIFMHtopic']
 
     # Hasta aqui tanto el efímero como los permanentes son iguales
     if 'permanent' in kwargs:
@@ -102,7 +109,8 @@ def configmap(componente, aplicacion):
     cmData = '[InformationSection]\n' \
              + 'applications.1=' + aplicacion['metadata']['name'] + '\n' \
              + '[OutTopicSection]\n' + aplicacion['metadata']['name'] + '.' + nextComp['name'] + '=' + nextComp[
-                 'kafkaTopic'] + '\n'
+                 'inputIFMHtopic'] + '\n'
+                 # 'kafkaTopic'] + '\n'
 
     cmData += '[CustomSection]\n'
     for custom in componente['customization']:
@@ -239,6 +247,14 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
     # nombre del componente solo, sin la aplicacion
     compName = componente['metadata']['name'].replace('-' + appName, '')
 
+    # TODO ELIMINAR, esto es para grabar el video del articulo de Julen,
+    #       hay que modificar los componentes para que usen los atributos del articulo
+    kafkaTopic = None
+    if 'inputIFMHtopic' in componente['spec']:
+        kafkaTopic = componente['spec']['inputIFMHtopic']
+    elif 'outputIFMHtopic' in componente['spec']:
+        kafkaTopic = componente['spec']['outputIFMHtopic']
+
     deployObject = {
         'apiVersion': 'apps/v1',
         'kind': 'Deployment',
@@ -269,7 +285,7 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
                         'name': compName,
                         'image': componente['spec']['image'],
                         'env': [{'name': 'KAFKA_TOPIC',
-                                 'value': componente['spec']['kafkaTopic']},
+                                 'value': kafkaTopic},
                                 {'name': 'KAFKA_KEY',
                                  'value': appName}]
                     }],

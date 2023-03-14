@@ -24,7 +24,7 @@ spec:
         io.kompose.service: asset-controller
     spec:
       containers:
-      - image: ekaitzhara/gcis-fog:asset-controller
+      - image: ekhurtado/gcis-fog:asset-controller
         imagePullPolicy: Always
         name: asset-controller
         resources: {}

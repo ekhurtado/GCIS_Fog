@@ -24,7 +24,7 @@ spec:
         io.kompose.service: assemblystation-controller
     spec:
       containers:
-      - image: ekaitzhara/gcis-fog:assemblystation-controller
+      - image: ekhurtado/gcis-fog:assemblystation-controller
         imagePullPolicy: Always
         name: assemblystation-controller
         resources: {}

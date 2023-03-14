@@ -26,7 +26,7 @@ def controlador():
     # TODO Forma para utilizar desde Pycharm
     # path = os.path.abspath(os.path.dirname(__file__))
     # path = path.replace('Extender_Kubernetes\ekaitzresources', "")
-    # path = path.replace('\\v3\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    # path = path.replace('\\v3.2\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
     # config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     # TODO Cambiarlo para el cluster

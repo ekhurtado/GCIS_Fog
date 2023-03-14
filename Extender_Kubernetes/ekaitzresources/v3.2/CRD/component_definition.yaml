@@ -14,7 +14,7 @@ spec:
           properties:
             spec:
               type: object
-              required: [name, image, previous, next, permanent]
+              required: [name, image, previous, next]
               properties:
                 name:
                   type: string
@@ -24,7 +24,9 @@ spec:
                   type: string
                 next:
                   type: string
-                kafkaTopic:
+                inputIFMHtopic:
+                  type: string
+                outputIFMHtopic:
                   type: string
                 customization:
                   type: array

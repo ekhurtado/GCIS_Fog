@@ -9,7 +9,7 @@ spec:
       flowConfig:
         previous: none
         next: data-acquisition-1-sink-exist
-      kafkaTopic: datos-acquisition-1-source-mqtt-kafka
+      outputIFMHtopic: datos-acquisition-1-source-mqtt-kafka
       customization:
         - "MQTT_TOPIC=Asset/assembly-station/11"
         - "MQTT_CLIENT_NAME=data-acquisition-app-1-model-2-source-mqtt-kafka"
@@ -19,7 +19,7 @@ spec:
       flowConfig:
         previous: data-acquisition-1-source-mqtt-kafka
         next: none
-      kafkaTopic: datos-acquisition-1-source-mqtt-kafka
+      inputIFMHtopic: datos-acquisition-1-source-mqtt-kafka
       permanent: False
   replicas: 1
   deploy: True
