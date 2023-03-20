@@ -1,0 +1,73 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: NombreNivel + 's' + '.misrecursos.aplicacion'
+spec:
+  group: misrecursos.aplicacion
+  versions:
+    - name: v1alpha1 #Anadido un parametro para almacenar la aplicacion definida y desplegarla a posteriori.
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                name:
+                  type: string
+                desplegar:
+                  type: boolean
+                applications:
+                  type: array
+                  items:
+                    type: object
+                    required: [ components,replicas,deploy ]
+                    properties:
+                      components:
+                        type: array
+                        items:
+                          type: object
+                          required: [ name,image,flowConfig,kafkaTopic, permanent ]
+                          properties:
+                            name:
+                              type: string
+                            image:
+                              type: string
+                            flowConfig: # Parameters to the configuration of the flow
+                              type: object
+                              properties:
+                                previous:
+                                  type: string
+                                next:
+                                  type: string
+                            kafkaTopic:
+                              type: string
+                            customization: # Parameters to add component customization
+                              type: array
+                              items:
+                                type: string
+                            permanent:
+                              type: boolean
+                    replicas:
+                      type: integer
+                      minimum: 1
+                      maximum: 10
+                    deploy:
+                      type: boolean
+            status:
+              type: object
+              properties:
+                replicas:
+                  type: integer
+      subresources:
+        status: { }
+        scale:
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+  scope: Namespaced
+  names:
+    plural: NombreNivel + 's'
+    singular: NombreNivel
+    kind: NombreNivel

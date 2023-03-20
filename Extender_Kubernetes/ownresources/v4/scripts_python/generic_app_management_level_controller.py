@@ -49,7 +49,7 @@ def conciliar_spec_status(objeto, cliente):
     # Chequea si la aplicacion que ha generado el evento esta al día en .spec y .status
 
     # if objeto['spec']['desplegar'] == True:
-    #     for i in objeto['spec'][Nivel_Siguiente + 's']:  # Por cada recurso de nivel ingerior a desplegar.
+    #     for i in objeto['spec'][Nivel_Siguiente + 's']:  # Por cada recurso de nivel inferior a desplegar.
     #         crear_recursos_nivel_inferior(cliente, i, objeto)
     # elif objeto['spec']['desplegar'] == False:
     #     pass
