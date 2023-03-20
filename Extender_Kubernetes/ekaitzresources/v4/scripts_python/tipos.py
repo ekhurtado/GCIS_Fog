@@ -98,6 +98,20 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, appNam
     return component_resource
 
 
+def recurso(grupo, objeto, nombre_nivel, version):
+
+    recurso = {
+        'apiVersion': grupo + '/' + version,
+        'kind': nombre_nivel.capitalize(),
+        'metadata': {
+            'name': objeto['name']
+        },
+        'spec':
+            objeto
+    }
+    return recurso
+
+
 def configmap(componente, aplicacion):
     '''
     Method to create the configmap object related to the permanent component
@@ -240,14 +254,14 @@ def deployment(componente, replicas):  # Añadir replicas como input
     return despliegue
 
 
-def deploy_app_management_controller(Nivel_Actual, Nivel_Siguiente):
+def deploy_app_management_controller(Nivel_Actual, Nivel_Siguiente, controller_image):
 
     despliegue = {
         'apiVersion': 'apps/v1',
         'kind': 'Deployment',
         'metadata': {
             'name': Nivel_Actual[0] + '-controller-deployment',
-            'labels':{
+            'labels': {
                 'app': Nivel_Actual[0] + '-controller'
             }
         },
@@ -268,26 +282,26 @@ def deploy_app_management_controller(Nivel_Actual, Nivel_Siguiente):
                     'containers': [{
                         'imagePullPolicy': 'Always',
                         'name': Nivel_Actual[0] + '-controller',
-                        'image': 'julencuadra/gcis-fog:generic_app_management_level_controller_image',
+                        'image': controller_image,
                         'ports': [{
                             'containerPort': 80
                         }],
-                        'env' : [{
-                            'name' : 'LevelName',
+                        'env': [{
+                            'name': 'LEVEL_NAME',
                             'value': Nivel_Actual[0],
-                        },{
-                            'name' : 'LevelNamePlural',
+                        }, {
+                            'name': 'LEVEL_NAME_PLURAL',
                             'value': Nivel_Actual[1]
-                        },{
-                            'name' : 'NextLevelName',
+                        }, {
+                            'name': 'NEXT_LEVEL_NAME',
                             'value': Nivel_Siguiente[0],
-                        },{
-                            'name' : 'NextLevelNamePlural',
+                        }, {
+                            'name': 'NEXT_LEVEL_NAME_PLURAL',
                             'value': Nivel_Siguiente[1],
                         }]
-                    },],
+                    }, ],
                     'nodeSelector': {
-                        'node-role.kubernetes.io/master' : 'true'
+                        'node-role.kubernetes.io/master': 'true'
                     },
                 },
             }

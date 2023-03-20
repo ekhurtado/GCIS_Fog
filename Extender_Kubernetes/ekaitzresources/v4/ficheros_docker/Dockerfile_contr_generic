@@ -1,0 +1,13 @@
+# Este Dockerfile es para la grabación del video del caso de estudio, los niveles superiores seran aplicaciones vacias
+
+FROM python:3.10-alpine
+
+# Libreria para pluralizar automaticamente
+RUN pip install pattern
+
+# Los directorios estan situados de acuerdo a la maquina virtual, que es donde se ha creado la imagen
+COPY ../scripts_python/generic_app_management_level_controller.py /
+
+WORKDIR /
+
+CMD python3 generic_app_management_level_controller.py

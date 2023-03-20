@@ -6,9 +6,12 @@ import os
 from pattern.text.es import pluralize as pluralize_es   # Funcion para pluralizar en español
 from pattern.text.en import pluralize as pluralize_en   # Funcion para pluralizar en inglés
 
+# La imagen Docker de los controladores generales
+controller_image = 'julencuadra/gcis-fog:generic_app_management_level_controller_image'
+
 def generador():
     print('¿Cuantos niveles deseas en tu estructura jerárquica de aplicación?')
-    print('Ten en cuenta que hay dos niveles obligatorios, Aplicación y Componente.')
+    print('Ten en cuenta que hay dos niveles obligatorios, Application y Component.')
     N = int(input())
     App_Management_Level_Number = N - 2
     nombres_niveles = []
@@ -25,7 +28,7 @@ def generador():
         if i < App_Management_Level_Number - 1:
             generador_controlador(nombres_niveles[i], nombres_niveles[i + 1])
         if i == App_Management_Level_Number - 1:
-            generador_controlador(nombres_niveles[i], ['aplicacion','aplicaciones'])
+            generador_controlador(nombres_niveles[i], ['application','applications'])
 
     for i in reversed(range(App_Management_Level_Number)):
         if i == App_Management_Level_Number - 1:
@@ -50,12 +53,12 @@ def generador_CRD_tercer_nivel(Nivel_Actual):
     aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['spec'] = {
         'type': 'object',
         'properties': {
-            Nivel_Actual[1]:{
+            Nivel_Actual[1]: {
                 'type': 'array',
                 'items': aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['spec']
                 ,
             },
-            'name':{
+            'name': {
                 'type': 'string',
             },
             'desplegar': {
@@ -70,7 +73,7 @@ def generador_CRD_resto_niveles(Nivel_Actual):
     f = open('../CRD/' + Nivel_Actual[0] + '_definition.yaml', 'w')
     with open('../CRD/' + 'test_aux.yaml', 'r') as stream:
         aux = yaml.safe_load(stream)
-        aux['metadata']['name'] = Nivel_Actual[1] + '.misrecursos.aplicacion'
+        aux['metadata']['name'] = Nivel_Actual[1] + '.ehu.gcis.org'
         aux['spec']['names']['plural'] = Nivel_Actual[1]
         aux['spec']['names']['singular'] = Nivel_Actual[0]
         aux['spec']['names']['kind'] = Nivel_Actual[0].capitalize()
@@ -78,12 +81,12 @@ def generador_CRD_resto_niveles(Nivel_Actual):
     aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['spec'] = {
         'type': 'object',
         'properties': {
-            Nivel_Actual[1]:{
+            Nivel_Actual[1]: {
                 'type': 'array',
                 'items': aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['spec']
                 ,
             },
-            'name':{
+            'name': {
                 'type': 'string',
             },
             'desplegar': {
@@ -93,7 +96,6 @@ def generador_CRD_resto_niveles(Nivel_Actual):
     }
     file = open('../CRD/' + 'test_aux.yaml', 'w')
     yaml.dump(aux, file)
-
 
 
 if __name__ == '__main__':

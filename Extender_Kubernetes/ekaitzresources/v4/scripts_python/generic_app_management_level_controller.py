@@ -2,24 +2,28 @@ from kubernetes import client, config, watch
 import tipos
 import os
 
+# Libreria para pluralizar palabras en diversos idiomas
+from pattern.text.es import pluralize as pluralize_es   # Funcion para pluralizar en español
+from pattern.text.en import pluralize as pluralize_en   # Funcion para pluralizar en inglés
+
 # Obtención de los parámetros de configuración de los niveles actual e inferior.
 # Nivel_Actual = os.environ['LevelName']
 # Nivel_Siguiente = os.environ['NextLevelName']
 
 #Falta implementar los plurales.
 
-Nivel_Actual = 'activo'
-Nivel_Siguiente = 'aplicacion'
+Nivel_Actual = os.environ.get('LEVEL_NAME')
+Nivel_Siguiente = os.environ.get('NEXT_LEVEL_NAME')
 
 # Parámetros de la configuración del objeto
-grupo = "misrecursos.aplicacion"
+grupo = "ehu.gcis.org"
 version = "v1alpha1"
 namespace = "default"
-plural = Nivel_Actual + 's'
+plural = os.environ.get('LEVEL_NAME_PLURAL')
 
 
 def controlador():
-    # config.load_incluster_config()  # Cargamos la configuracion del cluster
+    # config.load_incluster_config() # Cargamos la configuracion del cluster
     config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
     cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
 
@@ -49,7 +53,7 @@ def conciliar_spec_status(objeto, cliente):
     # Chequea si la aplicacion que ha generado el evento esta al día en .spec y .status
 
     # if objeto['spec']['desplegar'] == True:
-    #     for i in objeto['spec'][Nivel_Siguiente + 's']:  # Por cada recurso de nivel ingerior a desplegar.
+    #     for i in objeto['spec'][Nivel_Siguiente + 's']:  # Por cada recurso de nivel inferior a desplegar.
     #         crear_recursos_nivel_inferior(cliente, i, objeto)
     # elif objeto['spec']['desplegar'] == False:
     #     pass
@@ -61,7 +65,7 @@ def conciliar_spec_status(objeto, cliente):
 
 def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
 
-    recurso_inferior['name']= recurso['spec']['name']+'-'+recurso_inferior['name']
+    recurso_inferior['name'] = recurso['spec']['name'] + '-' + recurso_inferior['name']
 
     # for j in range(recurso['spec']['replicas']):  # No me convence el aplicar así las replicas
     #     permanente = False
@@ -84,32 +88,31 @@ def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
     # # Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.
     # # Si no distinguimos los nombres bien surge el problema de que los nombres de los componentes al solicitar dos aplicaciones colisionan.
 
-    if recurso_inferior['desplegar'] == True:
-        if Nivel_Siguiente == 'aplicacion':
+    if recurso_inferior['desplegar']:
+        if Nivel_Siguiente == 'application':
             version_inf = 'v1alpha4'
-            cliente.create_namespaced_custom_object(grupo, version_inf, namespace, Nivel_Siguiente + 'es',
-                                                    tipos.recurso(recurso_inferior, Nivel_Siguiente))
         else:
             version_inf = 'v1alpha1'
-            cliente.create_namespaced_custom_object(grupo, version_inf, namespace, Nivel_Siguiente + 's',
-                                                    tipos.recurso(recurso_inferior, Nivel_Siguiente))
+        cliente.create_namespaced_custom_object(grupo, version_inf, namespace, pluralize_en(Nivel_Siguiente),
+                                                tipos.recurso(grupo, recurso_inferior, Nivel_Siguiente, version_inf))
 
-    elif recurso_inferior['desplegar'] == False:
+    elif not recurso_inferior['desplegar']:
         pass
 
 def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
 
     cliente = client.CustomObjectsApi()
 
-    if recurso['spec']['desplegar'] == True:
+    if recurso['spec']['desplegar']:
         for i in recurso['spec'][Nivel_Siguiente + 's']:
-            i['name']= recurso['spec']['name']+'-'+i['name']
-            a=tipos.recurso(i, Nivel_Siguiente)
-            if Nivel_Siguiente == 'aplicacion':
-                cliente.delete_namespaced_custom_object(grupo, 'v1alpha4', namespace, Nivel_Siguiente + 'es',i['name'])
+            i['name'] = recurso['spec']['name']+'-'+i['name']
+            a = tipos.recurso(grupo, i, Nivel_Siguiente)
+            if Nivel_Siguiente == 'application':
+                version_inf = 'v1alpha4'
             else:
-                cliente.delete_namespaced_custom_object(grupo, 'v1alpha1', namespace, Nivel_Siguiente + 's', i['name'])
-    elif recurso['spec']['desplegar'] == False:
+                version_inf = 'v1alpha1'
+            cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, pluralize_en(Nivel_Siguiente),i['name'])
+    elif not recurso['spec']['desplegar']:
         pass
 
 
