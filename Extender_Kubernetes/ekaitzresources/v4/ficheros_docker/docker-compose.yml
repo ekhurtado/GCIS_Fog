@@ -6,18 +6,18 @@ services:
     build:
       context: ..
       dockerfile: ficheros_docker/Dockerfile_contr_apps
-    image: ekaitzhara/gcis-fog:app-controller-v3.0
+    image: ekhurtado/gcis-fog:app-controller-v4.0
     container_name: app-controller
   component-controller:
     build:
       context: ..
       dockerfile: ficheros_docker/Dockerfile_contr_comps
-    image: ekaitzhara/gcis-fog:component-controller-v3.0
+    image: ekhurtado/gcis-fog:component-controller-v4.0
     container_name: component-controller
   generic-controller:
     build:
       context: ..
       dockerfile: ficheros_docker/Dockerfile_contr_generic
-    image: ekaitzhara/gcis-fog:generic_app_management_level_controller
+    image: ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0
     container_name: generic-controller
 

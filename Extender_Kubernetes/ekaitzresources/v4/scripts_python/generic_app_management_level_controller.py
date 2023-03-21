@@ -3,14 +3,14 @@ import tipos
 import os
 
 # Libreria para pluralizar palabras en diversos idiomas
-from pattern.text.es import pluralize as pluralize_es   # Funcion para pluralizar en español
-from pattern.text.en import pluralize as pluralize_en   # Funcion para pluralizar en inglés
+from pattern.text.es import pluralize as pluralize_es  # Funcion para pluralizar en español
+from pattern.text.en import pluralize as pluralize_en  # Funcion para pluralizar en inglés
 
 # Obtención de los parámetros de configuración de los niveles actual e inferior.
 # Nivel_Actual = os.environ['LevelName']
 # Nivel_Siguiente = os.environ['NextLevelName']
 
-#Falta implementar los plurales.
+# Falta implementar los plurales.
 
 Nivel_Actual = os.environ.get('LEVEL_NAME')
 Nivel_Siguiente = os.environ.get('NEXT_LEVEL_NAME')
@@ -38,12 +38,22 @@ def mi_watcher(cliente):
         objeto = event['object']
         tipo = event['type']
 
-        if tipo != 'DELETED':
-            # Lógica para llevar el recurso al estado deseado.
-            conciliar_spec_status(objeto, cliente)
-        if tipo == 'DELETED':
-            eliminar_recursos_nivel_inferior(objeto)
-            # Lógica para borrar lo asociado al recurso.
+        match tipo:
+            case 'DELETED':
+                eliminar_recursos_nivel_inferior(objeto)
+                # Lógica para borrar lo asociado al recurso.
+            case _:  # default case
+
+                # TODO Creamos el evento notificando que se ha creado el recurso
+                eventObject = tipos.customResourceEventObject(action='Created', CR_type=Nivel_Actual,
+                                                              CR_object=objeto,
+                                                              message=Nivel_Actual + ' successfully created.',
+                                                              reason='Created')
+                eventAPI = client.CoreV1Api()
+                eventAPI.create_namespaced_event("default", eventObject)
+
+                # Lógica para llevar el recurso al estado deseado.
+                conciliar_spec_status(objeto, cliente)
 
 
 def conciliar_spec_status(objeto, cliente):
@@ -58,13 +68,11 @@ def conciliar_spec_status(objeto, cliente):
     # elif objeto['spec']['desplegar'] == False:
     #     pass
 
-
     for i in objeto['spec'][Nivel_Siguiente + 's']:  # Por cada recurso de nivel ingerior a desplegar.
         crear_recursos_nivel_inferior(cliente, i, objeto)
 
 
 def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
-
     recurso_inferior['name'] = recurso['spec']['name'] + '-' + recurso_inferior['name']
 
     # for j in range(recurso['spec']['replicas']):  # No me convence el aplicar así las replicas
@@ -96,8 +104,18 @@ def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
         cliente.create_namespaced_custom_object(grupo, version_inf, namespace, pluralize_en(Nivel_Siguiente),
                                                 tipos.recurso(grupo, recurso_inferior, Nivel_Siguiente, version_inf))
 
+        # TODO Creamos el evento notificando que se ha creado el recurso
+        eventObject = tipos.customResourceEventObject(action='Created', CR_type=Nivel_Actual,
+                                                      CR_object=recurso,
+                                                      message=Nivel_Siguiente + ' successfully created by '
+                                                                                + Nivel_Actual + '.',
+                                                      reason='Created')
+        eventAPI = client.CoreV1Api()
+        eventAPI.create_namespaced_event("default", eventObject)
+
     elif not recurso_inferior['desplegar']:
         pass
+
 
 def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
 
@@ -105,13 +123,14 @@ def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
 
     if recurso['spec']['desplegar']:
         for i in recurso['spec'][Nivel_Siguiente + 's']:
-            i['name'] = recurso['spec']['name']+'-'+i['name']
+            i['name'] = recurso['spec']['name'] + '-' + i['name']
             a = tipos.recurso(grupo, i, Nivel_Siguiente)
             if Nivel_Siguiente == 'application':
                 version_inf = 'v1alpha4'
             else:
                 version_inf = 'v1alpha1'
-            cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, pluralize_en(Nivel_Siguiente),i['name'])
+            cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, pluralize_en(Nivel_Siguiente),
+                                                    i['name'])
     elif not recurso['spec']['desplegar']:
         pass
 
