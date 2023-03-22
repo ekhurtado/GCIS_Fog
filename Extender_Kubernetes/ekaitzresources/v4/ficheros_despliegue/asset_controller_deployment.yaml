@@ -16,15 +16,15 @@ spec:
     spec:
       containers:
       - env:
-        - name: LevelName
+        - name: LEVEL_NAME
           value: asset
-        - name: LevelNamePlural
+        - name: LEVEL_NAME_PLURAL
           value: assets
-        - name: NextLevelName
-          value: aplicacion
-        - name: NextLevelNamePlural
-          value: aplicaciones
-        image: julencuadra/gcis-fog:generic_app_management_level_controller_image
+        - name: NEXT_LEVEL_NAME
+          value: assembly
+        - name: NEXT_LEVEL_NAME_PLURAL
+          value: assemblies
+        image: ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0
         imagePullPolicy: Always
         name: asset-controller
         ports:

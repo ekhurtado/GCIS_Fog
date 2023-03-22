@@ -3,11 +3,10 @@ import yaml
 import os
 
 # Libreria para pluralizar palabras en diversos idiomas
-from pattern.text.es import pluralize as pluralize_es   # Funcion para pluralizar en español
-from pattern.text.en import pluralize as pluralize_en   # Funcion para pluralizar en inglés
+from inflector import Inflector, English, Spanish
 
 # La imagen Docker de los controladores generales
-controller_image = 'julencuadra/gcis-fog:generic_app_management_level_controller_image'
+controller_image = 'ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0'
 
 def generador():
     print('¿Cuantos niveles deseas en tu estructura jerárquica de aplicación?')
@@ -20,8 +19,9 @@ def generador():
         print('¿Cómo quieres llamar al nivel ' + str(j + 1 +2) +'?')
         levelName = input()
         aux.append(levelName)
-        # Ahora, añadimos su plural
-        aux.append(pluralize_en(levelName))
+        # Ahora, añadimos su plural (suponiendo que ha escrito la palabra en ingles, si no, hay software para detectar idiomas)
+        inflector_en = Inflector(English)
+        aux.append(inflector_en.pluralize(levelName))
         nombres_niveles.append(aux)
 
     for i in range(App_Management_Level_Number):
@@ -40,7 +40,7 @@ def generador():
 
 def generador_controlador(Nivel_Actual, Nivel_Siguiente):
     f = open('../ficheros_despliegue/' + Nivel_Actual[0] + '_controller_deployment.yaml', 'w')
-    yaml.dump(tipos.deploy_app_management_controller(Nivel_Actual, Nivel_Siguiente), f)
+    yaml.dump(tipos.deploy_app_management_controller(Nivel_Actual, Nivel_Siguiente, controller_image), f)
 
 
 def generador_CRD_tercer_nivel(Nivel_Actual):

@@ -3,8 +3,7 @@ import tipos
 import os
 
 # Libreria para pluralizar palabras en diversos idiomas
-from pattern.text.es import pluralize as pluralize_es  # Funcion para pluralizar en español
-from pattern.text.en import pluralize as pluralize_en  # Funcion para pluralizar en inglés
+from inflector import Inflector, English, Spanish
 
 # Obtención de los parámetros de configuración de los niveles actual e inferior.
 # Nivel_Actual = os.environ['LevelName']
@@ -101,7 +100,8 @@ def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
             version_inf = 'v1alpha4'
         else:
             version_inf = 'v1alpha1'
-        cliente.create_namespaced_custom_object(grupo, version_inf, namespace, pluralize_en(Nivel_Siguiente),
+        inflector_en = Inflector(English)
+        cliente.create_namespaced_custom_object(grupo, version_inf, namespace, inflector_en.pluralize(Nivel_Siguiente),
                                                 tipos.recurso(grupo, recurso_inferior, Nivel_Siguiente, version_inf))
 
         # TODO Creamos el evento notificando que se ha creado el recurso
@@ -129,7 +129,8 @@ def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
                 version_inf = 'v1alpha4'
             else:
                 version_inf = 'v1alpha1'
-            cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, pluralize_en(Nivel_Siguiente),
+            inflector_en = Inflector(English)
+            cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, inflector_en.pluralize(Nivel_Siguiente),
                                                     i['name'])
     elif not recurso['spec']['desplegar']:
         pass

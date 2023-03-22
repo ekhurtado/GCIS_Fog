@@ -24,6 +24,16 @@ def CRD_comp():
         CRD_componente = yaml.safe_load(stream)
     return CRD_componente
 
+def CRD_app_management_level_i(Nivel_Actual):
+    path = os.path.abspath(os.path.dirname(__file__))
+    rel_path = os.path.join(os.path.abspath(os.path.join(path, os.pardir)), "CRD/app_management_level_i_definition.yaml")
+    with open(rel_path, 'r') as stream:
+        CRD_app_management_level_i = yaml.safe_load(stream)
+        CRD_app_management_level_i['metadata']['name']= Nivel_Actual[1] + '.ehu.gcis.org'
+        CRD_app_management_level_i['spec']['names']['plural'] = Nivel_Actual[1]
+        CRD_app_management_level_i['spec']['names']['singular'] = Nivel_Actual[0]
+        CRD_app_management_level_i['spec']['names']['kind'] = Nivel_Actual[0].capitalize()
+    return CRD_app_management_level_i
 
 def findNextComponent(currentComponent, app):
     '''

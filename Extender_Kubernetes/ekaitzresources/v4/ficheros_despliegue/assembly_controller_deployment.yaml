@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: assembly-controller
+  name: assembly-controller-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assembly-controller
+  template:
+    metadata:
+      labels:
+        app: assembly-controller
+    spec:
+      containers:
+      - env:
+        - name: LEVEL_NAME
+          value: assembly
+        - name: LEVEL_NAME_PLURAL
+          value: assemblies
+        - name: NEXT_LEVEL_NAME
+          value: application
+        - name: NEXT_LEVEL_NAME_PLURAL
+          value: applications
+        image: ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0
+        imagePullPolicy: Always
+        name: assembly-controller
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        node-role.kubernetes.io/master: 'true'
