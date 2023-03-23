@@ -1,13 +1,13 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: assemblies.ehu.gcis.org
+  name: assemblystations.ehu.gcis.org
 spec:
   group: ehu.gcis.org
   names:
-    kind: Assembly
-    plural: assemblies
-    singular: assembly
+    kind: Assemblystation
+    plural: assemblystations
+    singular: assemblystation
   scope: Namespaced
   versions:
   - name: v1alpha1
@@ -61,7 +61,7 @@ spec:
                   - deploy
                   type: object
                 type: array
-              desplegar:
+              deploy:
                 type: boolean
               name:
                 type: string

@@ -2,31 +2,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: assembly-controller
-  name: assembly-controller-deployment
+    app: assemblystation-controller
+  name: assemblystation-controller-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: assembly-controller
+      app: assemblystation-controller
   template:
     metadata:
       labels:
-        app: assembly-controller
+        app: assemblystation-controller
     spec:
       containers:
       - env:
         - name: LEVEL_NAME
-          value: assembly
+          value: assemblystation
         - name: LEVEL_NAME_PLURAL
-          value: assemblies
+          value: assemblystations
         - name: NEXT_LEVEL_NAME
           value: application
         - name: NEXT_LEVEL_NAME_PLURAL
           value: applications
         image: ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0
         imagePullPolicy: Always
-        name: assembly-controller
+        name: assemblystation-controller
         ports:
         - containerPort: 80
       nodeSelector:

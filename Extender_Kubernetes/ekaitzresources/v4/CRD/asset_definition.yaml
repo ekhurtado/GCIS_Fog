@@ -16,7 +16,7 @@ spec:
         properties:
           spec:
             properties:
-              assemblies:
+              assemblystations:
                 items:
                   properties:
                     applications:
@@ -64,20 +64,20 @@ spec:
                         - deploy
                         type: object
                       type: array
-                    desplegar:
+                    deploy:
                       type: boolean
                     name:
                       type: string
                   type: object
                 type: array
-              desplegar:
+              deploy:
                 type: boolean
               name:
                 type: string
             type: object
           status:
             properties:
-              assemblies:
+              assemblystations:
                 items:
                   properties:
                     name:

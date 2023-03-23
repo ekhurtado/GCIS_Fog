@@ -21,9 +21,9 @@ spec:
         - name: LEVEL_NAME_PLURAL
           value: assets
         - name: NEXT_LEVEL_NAME
-          value: assembly
+          value: assemblystation
         - name: NEXT_LEVEL_NAME_PLURAL
-          value: assemblies
+          value: assemblystations
         image: ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0
         imagePullPolicy: Always
         name: asset-controller

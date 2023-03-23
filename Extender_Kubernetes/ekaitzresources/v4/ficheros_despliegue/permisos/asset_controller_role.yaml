@@ -18,8 +18,8 @@ rules:
 - apiGroups:
   - ehu.gcis.org
   resources:
-  - assembly
-  - assembly/status
+  - assemblystation
+  - assemblystation/status
   verbs:
   - post
   - put

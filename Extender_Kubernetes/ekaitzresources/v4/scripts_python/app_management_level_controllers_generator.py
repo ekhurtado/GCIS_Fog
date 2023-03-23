@@ -75,7 +75,7 @@ def generador_CRD_tercer_nivel(Nivel_Actual):
             'name': {
                 'type': 'string',
             },
-            'desplegar': {
+            'deploy': {
                 'type': 'boolean'
             },
         },
@@ -110,7 +110,7 @@ def generador_CRD_resto_niveles(Nivel_Actual):
             'name': {
                 'type': 'string',
             },
-            'desplegar': {
+            'deploy': {
                 'type': 'boolean'
             },
         },

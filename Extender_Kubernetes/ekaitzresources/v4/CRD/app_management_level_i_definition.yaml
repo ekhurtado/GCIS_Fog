@@ -17,7 +17,7 @@ spec:
               properties:
                 name:
                   type: string
-                desplegar:
+                deploy:
                   type: boolean
                 applications:
                   type: array
@@ -56,6 +56,8 @@ spec:
                       type: integer
                       minimum: 1
                       maximum: 10
+                    name:
+                      type: string
                     deploy:
                       type: boolean
             status:
