@@ -35,6 +35,99 @@ def CRD_app_management_level_i(Nivel_Actual):
         CRD_app_management_level_i['spec']['names']['kind'] = Nivel_Actual[0].capitalize()
     return CRD_app_management_level_i
 
+
+def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural):
+    # TODO, de momento solo se le ha dado permiso para modificar sus componentes y crear los de nivel inferior, ademas
+    #       de crear eventos y gestionar CRDs, mas adelante tambien habra que añadir la posibilidad de relizar acciones
+    #       "patch" en los niveles superiores
+    role_object = {
+        'apiVersion': 'rbac.authorization.k8s.io/v1',
+        'kind': 'ClusterRole',
+        'metadata': {
+            'name': 'role-controller-' + currentLevelName
+        },
+        'rules': [{
+            'apiGroups': ["ehu.gcis.org"],
+            'resources': [currentLevelPlural, currentLevelPlural + "/status"],
+            'verbs': ["get", "list", "watch", "patch", "create", "delete"]
+            },
+            {'apiGroups': ["ehu.gcis.org"],
+            'resources': [lowerLevelPlural, lowerLevelPlural + "/status"],
+            'verbs': ["post", "put", "patch", "create", "update", "delete"]
+             },
+            {'apiGroups': ["apiextensions.k8s.io"],
+            'resources': ["customresourcedefinitions"],
+            'verbs': ["post", "put", "patch", "create", "update"]
+             },
+            {'apiGroups': [""],
+            'resources': ["events"],
+            'verbs': ["watch", "create", "update", "get"]
+             }
+        ]
+    }
+
+    return role_object
+
+def level_i_role_binding_object(currentLevelName):
+
+    role_binding_object = {
+        'apiVersion': 'rbac.authorization.k8s.io/v1',
+        'kind': 'ClusterRoleBinding',
+        'metadata': {
+            'name': 'role-binding-controller-' + currentLevelName
+        },
+        'subjects': [{
+            'kind': 'User',
+            'name': 'system:serviceaccount:default:default',
+            'apiGroup': 'rbac.authorization.k8s.io'
+        }],
+        'roleRef': {
+            'kind': 'ClusterRole',
+            'name': 'role-controller-' + currentLevelName,
+            'apiGroup': 'rbac.authorization.k8s.io'
+        }
+    }
+
+    return role_binding_object
+
+
+def last_level_role_object(currentLevelName, currentLevelPlural):
+    # Al ser el ultimo nivel, deberá tener permisos para gestionar recursos de su nivel, y, además de poder gestionar
+    #   recursos propios de Kubernetes como Deployments
+    # TODO, habria que añadir la posibilidad de poder hacer "patch" al status del nivel superior
+    role_object = {
+        'apiVersion': 'rbac.authorization.k8s.io/v1',
+        'kind': 'ClusterRole',
+        'metadata': {
+            'name': 'role-controller-' + currentLevelName
+        },
+        'rules': [{
+            'apiGroups': ["ehu.gcis.org"],
+            'resources': [currentLevelPlural, currentLevelPlural + "/status"],
+            'verbs': ["get", "list", "watch", "patch", "create", "delete"]
+        },
+            {'apiGroups': ["apps"],
+             'resources': ["deployments"],
+             'verbs': ["post", "put", "patch", "create", "update", "delete"]
+             },
+            {'apiGroups': ["apps"],
+             'resources': ["deployments/status"],
+             'verbs': ["get", "list", "watch"]
+             },
+            {'apiGroups': ["apiextensions.k8s.io"],
+             'resources': ["customresourcedefinitions"],
+             'verbs': ["post", "put", "patch", "create", "update"]
+             },
+            {'apiGroups': [""],
+             'resources': ["events"],
+             'verbs': ["watch", "create", "update", "get"]
+             }
+        ]
+    }
+
+    return role_object
+
+
 def findNextComponent(currentComponent, app):
     '''
     Method to get the next component given an aplication

@@ -3,6 +3,10 @@
 #FROM python:3.10-slim
 FROM python:3.10-alpine
 
+RUN pip install kubernetes
+#RUN pip install datetime
+RUN pip install pytz
+
 # Libreria para pluralizar automaticamente
 
 #RUN apt-get update && apt-get upgrade
@@ -17,6 +21,7 @@ RUN pip install Inflector
 
 # Los directorios estan situados de acuerdo a la maquina virtual, que es donde se ha creado la imagen
 COPY scripts_python/generic_app_management_level_controller.py /
+COPY scripts_python/tipos.py /
 
 WORKDIR /
 

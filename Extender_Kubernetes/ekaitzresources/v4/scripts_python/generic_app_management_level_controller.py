@@ -23,7 +23,14 @@ plural = os.environ.get('LEVEL_NAME_PLURAL')
 
 def controlador():
     # config.load_incluster_config() # Cargamos la configuracion del cluster
-    config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+    # config.load_kube_config("/etc/rancher/k3s/k3s.yaml")
+
+    # TODO Cambiarlo para el cluster
+    if 'KUBERNETES_PORT' in os.environ:
+        config.load_incluster_config()
+    else:
+        config.load_kube_config()
+
     cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
 
     mi_watcher(cliente)  # Activo el watcher de recursos de este nivel.
