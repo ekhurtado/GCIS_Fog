@@ -77,8 +77,17 @@ spec:
             type: object
           status:
             properties:
-              replicas:
-                type: integer
+              assemblies:
+                items:
+                  properties:
+                    name:
+                      type: string
+                    status:
+                      type: string
+                  type: object
+                type: array
+              ready:
+                type: string
             type: object
         type: object
     served: true

@@ -80,7 +80,14 @@ def generador_CRD_tercer_nivel(Nivel_Actual):
             },
         },
     }
+
+    # En cuanto al status, todos los niveles tendran una lista para conocer el estado de todos sus recursos inferiores
+    #   y el parametro "ready" para conocer cuantos de ellos estan en ejecucion
+    aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['status'] = tipos.status_object_for_CRDs(Nivel_Actual[1])
     yaml.dump(aux, file)
+
+    f.close()
+    file.close()
 
 def generador_CRD_resto_niveles(Nivel_Actual):
 
@@ -108,6 +115,11 @@ def generador_CRD_resto_niveles(Nivel_Actual):
             },
         },
     }
+
+    # En cuanto al status, todos los niveles tendran una lista para conocer el estado de todos sus recursos inferiores
+    #   y el parametro "ready" para conocer cuantos de ellos estan en ejecucion
+    aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['status'] = tipos.status_object_for_CRDs(Nivel_Actual[1])
+
     file = open('../CRD/' + 'test_aux.yaml', 'w')
     yaml.dump(aux, file)
 

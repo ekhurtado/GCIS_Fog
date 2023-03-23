@@ -68,6 +68,17 @@ spec:
             type: object
           status:
             properties:
+              applications:
+                items:
+                  properties:
+                    name:
+                      type: string
+                    status:
+                      type: string
+                  type: object
+                type: array
+              ready:
+                type: string
               replicas:
                 type: integer
             type: object

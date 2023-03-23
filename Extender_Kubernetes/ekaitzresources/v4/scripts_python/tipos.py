@@ -36,6 +36,24 @@ def CRD_app_management_level_i(Nivel_Actual):
     return CRD_app_management_level_i
 
 
+def status_object_for_CRDs(levelPlural):
+    return {
+        'type': 'object',
+        'properties': {
+            levelPlural: {
+                'type': 'array',
+                'items': {
+                    'type': 'object',
+                    'properties': {
+                        'name': {'type': 'string'},
+                        'status': {'type': 'string'}
+                    }
+                }
+            },
+            'ready': {'type': 'string'}
+        }
+    }
+
 def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural):
     # TODO, de momento solo se le ha dado permiso para modificar sus componentes y crear los de nivel inferior, ademas
     #       de crear eventos y gestionar CRDs, mas adelante tambien habra que añadir la posibilidad de relizar acciones
