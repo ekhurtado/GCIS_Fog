@@ -16,7 +16,6 @@ Nivel_Inferior_plural = os.environ.get('LOWER_LEVEL_NAME_PLURAL')
 Nivel_Superior = os.environ.get('HIGHER_LEVEL_NAME')
 Nivel_Superior_plural = os.environ.get('HIGHER_LEVEL_NAME_PLURAL')
 
-
 # Parámetros de la configuración del objeto
 grupo = "ehu.gcis.org"
 version = "v1alpha1"
@@ -53,13 +52,11 @@ def mi_watcher(cliente):
                 # Lógica para borrar lo asociado al recurso.
             case _:  # default case
 
-                # TODO Creamos el evento notificando que se ha creado el recurso
-                eventObject = tipos.customResourceEventObject(action='Created', CR_type=Nivel_Actual,
-                                                              CR_object=objeto,
-                                                              message=Nivel_Actual + ' successfully created.',
-                                                              reason='Created')
-                eventAPI = client.CoreV1Api()
-                eventAPI.create_namespaced_event("default", eventObject)
+                # Creamos el evento asociado a la creacion del recurso
+                createCreationRelatedEvent(objeto)
+
+                # Actualizamos la informacion en el recurso de nivel superior, indicando el estado del propio recurso
+                patchCreationStatusToParent(objeto, cliente)
 
                 # Lógica para llevar el recurso al estado deseado.
                 conciliar_spec_status(objeto, cliente)
@@ -111,8 +108,12 @@ def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
         else:
             version_inf = 'v1alpha1'
 
+        # Añadimos en el recurso inferior el nombre del recurso que lo ha creado
+        recursoID = ['metadata']['name']
+
         cliente.create_namespaced_custom_object(grupo, version_inf, namespace, Nivel_Inferior_plural,
-                                                tipos.recurso(grupo, recurso_inferior, Nivel_Inferior, version_inf))
+                                                tipos.recurso(grupo, recurso_inferior, Nivel_Inferior, version_inf,
+                                                              recursoID))
 
         # TODO Creamos el evento notificando que se ha creado el recurso
         eventObject = tipos.customResourceEventObject(action='Created', CR_type=Nivel_Actual,
@@ -144,6 +145,41 @@ def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
                                                     i['name'])
     elif not recurso['spec']['deploy']:
         pass
+
+
+def createCreationRelatedEvent(objeto):
+    # TODO Creamos el evento notificando que se ha creado el recurso
+    eventObject = tipos.customResourceEventObject(action='Created', CR_type=Nivel_Actual,
+                                                  CR_object=objeto,
+                                                  message=Nivel_Actual + ' successfully created.',
+                                                  reason='Created')
+    eventAPI = client.CoreV1Api()
+    eventAPI.create_namespaced_event("default", eventObject)
+
+
+def patchCreationStatusToParent(objeto, cliente):
+    # Tambien avisamos al nivel superior de que el recurso se ha creado, añadiendolo en el status del
+    #       recurso superior. En el nivel mas superior, como su padre es el sistema, no realiza esta acción
+
+    if Nivel_Superior != 'system':
+        # Primero, conseguimos el ID del recurso de nivel superior
+        higher_level_resourceID = objeto['metadata']['labels']['parentID']
+
+        parent_resource = cliente.get_namespaced_custom_object_status(grupo, version, namespace,
+                                                                             Nivel_Superior_plural,
+                                                                             higher_level_resourceID)
+        field_manager = Nivel_Actual + '-' + objeto['metadata']['name'] + '-' + higher_level_resourceID
+        for i in range(len(parent_resource['status'][Nivel_Actual_plural])):
+            # buscamos entre los recursos el propio
+            if parent_resource['status'][Nivel_Actual_plural][i]['name'] == objeto['spec']['name']:
+                parent_resource['status'][Nivel_Actual_plural][i]['status'] = "Created"
+                # Una vez localizado el recurso, actualizamos el status del recurso de nivel superior
+                cliente.patch_namespaced_custom_object_status(grupo, version, namespace,
+                                                              Nivel_Superior_plural, higher_level_resourceID,
+                                                              {'status': parent_resource['status']},
+                                                              field_manager=field_manager)
+
+
 
 
 if __name__ == '__main__':
