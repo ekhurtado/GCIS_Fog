@@ -2,24 +2,26 @@ from kubernetes import client, config, watch
 import tipos
 import os
 
-# Libreria para pluralizar palabras en diversos idiomas
-from inflector import Inflector, English, Spanish
+# Libreria para pluralizar palabras en diversos idiomas (DE MOMENTO NO HACE FALTA)
+# from inflector import Inflector, English, Spanish
 
-# Obtención de los parámetros de configuración de los niveles actual e inferior.
-# Nivel_Actual = os.environ['LevelName']
-# Nivel_Siguiente = os.environ['NextLevelName']
-
-# Falta implementar los plurales.
+# Obtención de los parámetros de configuración de los niveles actual, superior e inferior.
 
 Nivel_Actual = os.environ.get('LEVEL_NAME')
-Nivel_Siguiente = os.environ.get('NEXT_LEVEL_NAME')
+Nivel_Actual_plural = os.environ.get('LEVEL_NAME_PLURAL')
+
+Nivel_Inferior = os.environ.get('LOWER_LEVEL_NAME')
+Nivel_Inferior_plural = os.environ.get('LOWER_LEVEL_NAME_PLURAL')
+
+Nivel_Superior = os.environ.get('HIGHER_LEVEL_NAME')
+Nivel_Superior_plural = os.environ.get('HIGHER_LEVEL_NAME_PLURAL')
 
 
 # Parámetros de la configuración del objeto
 grupo = "ehu.gcis.org"
 version = "v1alpha1"
 namespace = "default"
-plural = os.environ.get('LEVEL_NAME_PLURAL')
+plural = Nivel_Actual_plural
 
 
 def controlador():
@@ -75,7 +77,7 @@ def conciliar_spec_status(objeto, cliente):
     # elif objeto['spec']['desplegar'] == False:
     #     pass
 
-    for i in objeto['spec'][Nivel_Siguiente + 's']:  # Por cada recurso de nivel ingerior a desplegar.
+    for i in objeto['spec'][Nivel_Inferior + 's']:  # Por cada recurso de nivel ingerior a desplegar.
         crear_recursos_nivel_inferior(cliente, i, objeto)
 
 
@@ -104,19 +106,19 @@ def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
     # # Si no distinguimos los nombres bien surge el problema de que los nombres de los componentes al solicitar dos aplicaciones colisionan.
 
     if recurso_inferior['deploy']:
-        if Nivel_Siguiente == 'application':
+        if Nivel_Inferior == 'application':
             version_inf = 'v1alpha4'
         else:
             version_inf = 'v1alpha1'
-        inflector_en = Inflector(English)
-        cliente.create_namespaced_custom_object(grupo, version_inf, namespace, inflector_en.pluralize(Nivel_Siguiente),
-                                                tipos.recurso(grupo, recurso_inferior, Nivel_Siguiente, version_inf))
+
+        cliente.create_namespaced_custom_object(grupo, version_inf, namespace, Nivel_Inferior_plural,
+                                                tipos.recurso(grupo, recurso_inferior, Nivel_Inferior, version_inf))
 
         # TODO Creamos el evento notificando que se ha creado el recurso
         eventObject = tipos.customResourceEventObject(action='Created', CR_type=Nivel_Actual,
                                                       CR_object=recurso,
-                                                      message=Nivel_Siguiente + ' successfully created by '
-                                                                                + Nivel_Actual + '.',
+                                                      message=Nivel_Inferior + ' successfully created by '
+                                                              + Nivel_Actual + '.',
                                                       reason='Created')
         eventAPI = client.CoreV1Api()
         eventAPI.create_namespaced_event("default", eventObject)
@@ -130,15 +132,15 @@ def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
     cliente = client.CustomObjectsApi()
 
     if recurso['spec']['deploy']:
-        for i in recurso['spec'][Nivel_Siguiente + 's']:
+        for i in recurso['spec'][Nivel_Inferior + 's']:
             i['name'] = recurso['spec']['name'] + '-' + i['name']
-            a = tipos.recurso(grupo, i, Nivel_Siguiente)
-            if Nivel_Siguiente == 'application':
+            a = tipos.recurso(grupo, i, Nivel_Inferior)
+            if Nivel_Inferior == 'application':
                 version_inf = 'v1alpha4'
             else:
                 version_inf = 'v1alpha1'
-            inflector_en = Inflector(English)
-            cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, inflector_en.pluralize(Nivel_Siguiente),
+
+            cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, Nivel_Inferior_plural,
                                                     i['name'])
     elif not recurso['spec']['deploy']:
         pass

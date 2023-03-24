@@ -16,8 +16,8 @@ RUN pip install pytz
 #	&& apt-get remove -y python3-dev default-libmysqlclient-dev build-essential
 #RUN apt-get update && apt-get upgrade
 
-RUN pip install Inflector
-#RUN git clone -b development https://github.com/clips/pattern
+# Los plurales se pasan con variables de entorno, de momento no hace falta
+#RUN pip install Inflector
 
 # Los directorios estan situados de acuerdo a la maquina virtual, que es donde se ha creado la imagen
 COPY scripts_python/generic_app_management_level_controller.py /

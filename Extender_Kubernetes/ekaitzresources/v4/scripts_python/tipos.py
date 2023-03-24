@@ -375,7 +375,7 @@ def deployment(componente, replicas):  # Añadir replicas como input
     return despliegue
 
 
-def deploy_app_management_controller(Nivel_Actual, Nivel_Siguiente, controller_image):
+def deploy_app_management_controller(Nivel_Actual, Nivel_Inferior, Nivel_Superior, controller_image):
 
     despliegue = {
         'apiVersion': 'apps/v1',
@@ -414,11 +414,17 @@ def deploy_app_management_controller(Nivel_Actual, Nivel_Siguiente, controller_i
                             'name': 'LEVEL_NAME_PLURAL',
                             'value': Nivel_Actual[1]
                         }, {
-                            'name': 'NEXT_LEVEL_NAME',
-                            'value': Nivel_Siguiente[0],
+                            'name': 'LOWER_LEVEL_NAME',
+                            'value': Nivel_Inferior[0],
                         }, {
-                            'name': 'NEXT_LEVEL_NAME_PLURAL',
-                            'value': Nivel_Siguiente[1],
+                            'name': 'LOWER_LEVEL_NAME_PLURAL',
+                            'value': Nivel_Inferior[1],
+                        }, {
+                            'name': 'HIGHER_LEVEL_NAME',
+                            'value': Nivel_Superior[0],
+                        }, {
+                            'name': 'HIGHER_LEVEL_NAME_PLURAL',
+                            'value': Nivel_Superior[1],
                         }]
                     }, ],
                     'nodeSelector': {

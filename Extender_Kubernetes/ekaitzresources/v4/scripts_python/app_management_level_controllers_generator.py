@@ -29,10 +29,12 @@ def generador():
 
     # Creamos el YAML para el despliegue de cada controlador
     for i in range(App_Management_Level_Number):
-        if i < App_Management_Level_Number - 1:
-            generador_controlador(nombres_niveles[i], nombres_niveles[i + 1])
+        if i == 0:  # si es el nivel mas superior
+            generador_controlador(nombres_niveles[i], nombres_niveles[i + 1], ['system', 'systems'])
+        if App_Management_Level_Number - 1 > i > 0:
+            generador_controlador(nombres_niveles[i], nombres_niveles[i + 1], nombres_niveles[i-1])
         if i == App_Management_Level_Number - 1:
-            generador_controlador(nombres_niveles[i], ['application', 'applications'])
+            generador_controlador(nombres_niveles[i], ['application', 'applications'], nombres_niveles[i-1])
 
     # Generamos los archivos YAML con todos los CRDs
     for i in reversed(range(App_Management_Level_Number)):
@@ -52,9 +54,9 @@ def generador():
 
     os.remove('../CRD/' + 'test_aux.yaml')
 
-def generador_controlador(Nivel_Actual, Nivel_Siguiente):
+def generador_controlador(Nivel_Actual, Nivel_Inferior, Nivel_Superior):
     f = open('../ficheros_despliegue/' + Nivel_Actual[0] + '_controller_deployment.yaml', 'w')
-    yaml.dump(tipos.deploy_app_management_controller(Nivel_Actual, Nivel_Siguiente, controller_image), f)
+    yaml.dump(tipos.deploy_app_management_controller(Nivel_Actual, Nivel_Inferior, Nivel_Superior, controller_image), f)
 
 
 def generador_CRD_tercer_nivel(Nivel_Actual):

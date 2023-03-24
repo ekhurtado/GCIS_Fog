@@ -20,10 +20,14 @@ spec:
           value: assemblystation
         - name: LEVEL_NAME_PLURAL
           value: assemblystations
-        - name: NEXT_LEVEL_NAME
+        - name: LOWER_LEVEL_NAME
           value: application
-        - name: NEXT_LEVEL_NAME_PLURAL
+        - name: LOWER_LEVEL_NAME_PLURAL
           value: applications
+        - name: HIGHER_LEVEL_NAME
+          value: asset
+        - name: HIGHER_LEVEL_NAME_PLURAL
+          value: assets
         image: ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0
         imagePullPolicy: Always
         name: assemblystation-controller
