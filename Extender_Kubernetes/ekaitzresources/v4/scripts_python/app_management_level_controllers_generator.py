@@ -127,7 +127,7 @@ def generador_permisos(Nivel_Actual, Nivel_Siguiente):
     f1 = open('../ficheros_despliegue/permisos/' + Nivel_Actual[0] + '_controller_role.yaml', 'w')
     f2 = open('../ficheros_despliegue/permisos/' + Nivel_Actual[0] + '_controller_rolebinding.yaml', 'w')
 
-    yaml.dump(tipos.level_i_role_object(Nivel_Actual[0], Nivel_Actual[1], Nivel_Siguiente[0]), f1)
+    yaml.dump(tipos.level_i_role_object(Nivel_Actual[0], Nivel_Actual[1], Nivel_Siguiente[1]), f1)
     yaml.dump(tipos.level_i_role_binding_object(Nivel_Actual[0]), f2)
 
 def generador_permisos_ultimo_nivel(Nivel_Actual):

@@ -1,0 +1,48 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: role-controller-asset
+rules:
+- apiGroups:
+  - ehu.gcis.org
+  resources:
+  - assets
+  - assets/status
+  verbs:
+  - get
+  - list
+  - watch
+  - patch
+  - create
+  - delete
+- apiGroups:
+  - ehu.gcis.org
+  resources:
+  - assemblystations
+  - assemblystations/status
+  verbs:
+  - post
+  - put
+  - patch
+  - create
+  - update
+  - delete
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - post
+  - put
+  - patch
+  - create
+  - update
+- apiGroups:
+  - ''
+  resources:
+  - events
+  verbs:
+  - watch
+  - create
+  - update
+  - get

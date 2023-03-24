@@ -14,6 +14,7 @@ from inflector import Inflector, English, Spanish
 Nivel_Actual = os.environ.get('LEVEL_NAME')
 Nivel_Siguiente = os.environ.get('NEXT_LEVEL_NAME')
 
+
 # Parámetros de la configuración del objeto
 grupo = "ehu.gcis.org"
 version = "v1alpha1"
@@ -102,7 +103,7 @@ def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
     # # Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.
     # # Si no distinguimos los nombres bien surge el problema de que los nombres de los componentes al solicitar dos aplicaciones colisionan.
 
-    if recurso_inferior['desplegar']:
+    if recurso_inferior['deploy']:
         if Nivel_Siguiente == 'application':
             version_inf = 'v1alpha4'
         else:
@@ -128,7 +129,7 @@ def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
 
     cliente = client.CustomObjectsApi()
 
-    if recurso['spec']['desplegar']:
+    if recurso['spec']['deploy']:
         for i in recurso['spec'][Nivel_Siguiente + 's']:
             i['name'] = recurso['spec']['name'] + '-' + i['name']
             a = tipos.recurso(grupo, i, Nivel_Siguiente)
@@ -139,7 +140,7 @@ def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
             inflector_en = Inflector(English)
             cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, inflector_en.pluralize(Nivel_Siguiente),
                                                     i['name'])
-    elif not recurso['spec']['desplegar']:
+    elif not recurso['spec']['deploy']:
         pass
 
 

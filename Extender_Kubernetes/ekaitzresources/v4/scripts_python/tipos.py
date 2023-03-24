@@ -541,16 +541,19 @@ def customResourceEventObject(action, CR_type, CR_object, message, reason):
 
     apiVersion = None
     kind = None
-    namespace = None
+    namespace = 'default'   # De momento todos los recursos se despliegan en el default
     match CR_type:
         case "application":
             apiVersion = 'ehu.gcis.org/v1alpha4'
             kind = 'Application'
-            namespace = 'default'
+            # namespace = 'default'
         case "component":
             apiVersion = 'ehu.gcis.org/v1alpha1'
             kind = 'Component'
-            namespace = 'default'
+            # namespace = 'default'
+        case _:  # en este caso es el nivel generico
+            apiVersion = 'ehu.gcis.org/v1alpha1'
+            kind = str(CR_type).capitalize()
 
     return {
         'api_Version': 'v1',

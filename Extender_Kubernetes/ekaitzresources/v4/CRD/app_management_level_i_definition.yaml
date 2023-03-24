@@ -52,14 +52,14 @@ spec:
                                 type: string
                             permanent:
                               type: boolean
-                    replicas:
-                      type: integer
-                      minimum: 1
-                      maximum: 10
-                    name:
-                      type: string
-                    deploy:
-                      type: boolean
+                      replicas:
+                        type: integer
+                        minimum: 1
+                        maximum: 10
+                      name:
+                        type: string
+                      deploy:
+                        type: boolean
             status:
               type: object
               properties:
