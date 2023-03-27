@@ -544,9 +544,11 @@ def customResourceEventObject(action, CR_type, CR_object, message, reason):
     eventName = eventName + '-' + action + '-' + \
                 ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
 
+
     # Si el nombre de CR sobrepasa los 63 caracteres, lo acortamos
     if len(CR_name) > 63:
-        CR_name = CR_name[0:63]
+        CR_name = CR_name[0:62] + ''.join(random.choices(string.ascii_lowercase + string.digits, k=1))  # tiene que
+        # empezar y finalizar con un caracter alfanumerico
 
     apiVersion = None
     kind = None
