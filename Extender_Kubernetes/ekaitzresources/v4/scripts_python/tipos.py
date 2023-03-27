@@ -219,13 +219,13 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, appNam
     return component_resource
 
 
-def recurso(grupo, objeto, nombre_nivel, version, parentResourceID):
+def recurso(grupo, objeto, nombre_nivel, version, parentResourceID, lowerResourceID):
 
     recurso = {
         'apiVersion': grupo + '/' + version,
         'kind': nombre_nivel.capitalize(),
         'metadata': {
-            'name': objeto['name'],
+            'name': lowerResourceID,
             'labels': {
                 'parentID': parentResourceID
             }

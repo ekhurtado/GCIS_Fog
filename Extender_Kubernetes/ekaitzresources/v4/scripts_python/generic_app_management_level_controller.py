@@ -47,6 +47,9 @@ def mi_watcher(cliente):
         tipo = event['type']
 
         match tipo:
+            case"MODIFIED":
+                # Logica para analizar que se ha modificado
+                check_modifications(objeto, cliente)
             case 'DELETED':
                 eliminar_recursos_nivel_inferior(objeto)
                 # Lógica para borrar lo asociado al recurso.
@@ -55,11 +58,18 @@ def mi_watcher(cliente):
                 # Creamos el evento asociado a la creacion del recurso
                 createCreationRelatedEvent(objeto)
 
+                # Generamos el objeto status en el recurso recien creado
+                createStatus(objeto, cliente)
+
                 # Actualizamos la informacion en el recurso de nivel superior, indicando el estado del propio recurso
                 patchCreationStatusToParent(objeto, cliente)
 
                 # Lógica para llevar el recurso al estado deseado.
                 conciliar_spec_status(objeto, cliente)
+
+
+def check_modifications(objeto, cliente):
+    print("El recurso " + objeto['metadata']['name'] + " se ha modificado")
 
 
 def conciliar_spec_status(objeto, cliente):
@@ -79,28 +89,8 @@ def conciliar_spec_status(objeto, cliente):
 
 
 def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
-    recurso_inferior['name'] = recurso['spec']['name'] + '-' + recurso_inferior['name']
 
-    # for j in range(recurso['spec']['replicas']):  # No me convence el aplicar así las replicas
-    #     permanente = False
-    #     try:
-    #         permanente = recurso_inferior['permanente']
-    #     except KeyError:
-    #         pass
-    #     if permanente == True:
-    #         Recurso_Nivel_Siguiente = tipos.Nivel_Siguiente(recurso_inferior['name'],
-    #                                                    recurso_inferior['image'],
-    #                                                    recurso_inferior['previous'],
-    #                                                    recurso_inferior['next'], Permanente=True)
-    #         cliente.create_namespaced_custom_object(grupo, version, namespace, Nivel_Siguiente + 's', Recurso_Nivel_Siguiente)
-    #         break
-    #     else:
-    #         Recurso_Nivel_Siguiente = tipos.Nivel_Siguiente(
-    #             recurso_inferior['name'] + '-' + str(j + 1) + '-' + recurso['metadata']['name'], recurso_inferior['image'],
-    #             recurso_inferior['previous'], recurso_inferior['next'])
-    #         cliente.create_namespaced_custom_object(grupo, version, namespace, Nivel_Siguiente + 's', Recurso_Nivel_Siguiente)
-    # # Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.
-    # # Si no distinguimos los nombres bien surge el problema de que los nombres de los componentes al solicitar dos aplicaciones colisionan.
+
 
     if recurso_inferior['deploy']:
         if Nivel_Inferior == 'application':
@@ -108,12 +98,15 @@ def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
         else:
             version_inf = 'v1alpha1'
 
+        # Generamos el ID del recurso inferior a partir de los niveles anteriores y el suyo
+        recurso_inferior_ID = recurso['spec']['name'] + '-' + recurso_inferior['name']
+
         # Añadimos en el recurso inferior el nombre del recurso que lo ha creado
-        recursoID = ['metadata']['name']
+        recursoID = recurso['metadata']['name']
 
         cliente.create_namespaced_custom_object(grupo, version_inf, namespace, Nivel_Inferior_plural,
                                                 tipos.recurso(grupo, recurso_inferior, Nivel_Inferior, version_inf,
-                                                              recursoID))
+                                                              recursoID, recurso_inferior_ID))
 
         # TODO Creamos el evento notificando que se ha creado el recurso
         eventObject = tipos.customResourceEventObject(action='Created', CR_type=Nivel_Actual,
@@ -157,6 +150,19 @@ def createCreationRelatedEvent(objeto):
     eventAPI.create_namespaced_event("default", eventObject)
 
 
+def createStatus(objeto, cliente):
+    # Primero añadiremos el status en el CR del recurso para notificar que sus recursos inferiores se están creando.
+    #       Para ello, tendremos que analizar cuantos recursos inferiores tiene para crear el objeto status
+    num_recursos_inferiores = len(objeto['spec'][Nivel_Inferior_plural])
+    status_object = {'status': {Nivel_Inferior_plural: [0] * num_recursos_inferiores,
+                                'ready': "0/" + str(num_recursos_inferiores)}}
+    for i in range(int(num_recursos_inferiores)):
+        status_object['status'][Nivel_Inferior_plural][i] = {'name': objeto['spec'][Nivel_Inferior_plural][i]['name'],
+                                                             'status': "Creating"}
+    cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
+                                                  objeto['metadata']['name'], status_object)
+
+
 def patchCreationStatusToParent(objeto, cliente):
     # Tambien avisamos al nivel superior de que el recurso se ha creado, añadiendolo en el status del
     #       recurso superior. En el nivel mas superior, como su padre es el sistema, no realiza esta acción
@@ -166,8 +172,8 @@ def patchCreationStatusToParent(objeto, cliente):
         higher_level_resourceID = objeto['metadata']['labels']['parentID']
 
         parent_resource = cliente.get_namespaced_custom_object_status(grupo, version, namespace,
-                                                                             Nivel_Superior_plural,
-                                                                             higher_level_resourceID)
+                                                                      Nivel_Superior_plural,
+                                                                      higher_level_resourceID)
         field_manager = Nivel_Actual + '-' + objeto['metadata']['name'] + '-' + higher_level_resourceID
         for i in range(len(parent_resource['status'][Nivel_Actual_plural])):
             # buscamos entre los recursos el propio
@@ -178,8 +184,6 @@ def patchCreationStatusToParent(objeto, cliente):
                                                               Nivel_Superior_plural, higher_level_resourceID,
                                                               {'status': parent_resource['status']},
                                                               field_manager=field_manager)
-
-
 
 
 if __name__ == '__main__':
