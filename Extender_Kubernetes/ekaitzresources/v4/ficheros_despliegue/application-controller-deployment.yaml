@@ -24,13 +24,16 @@ spec:
         io.kompose.service: app-controller
     spec:
       containers:
-      - image: ekhurtado/gcis-fog:app-controller-v4.0
+      - env:
+        - name: HIGHER_LEVEL_NAME
+          value: system
+        image: ekhurtado/gcis-fog:app-controller-v4.0
         imagePullPolicy: Always
         name: app-controller
         resources: {}
-      restartPolicy: Always
-      serviceAccountName: ""
-      volumes: null
       nodeSelector:
-        node-role.kubernetes.io/master: "true"    # Para desplegarlo en el master
+        node-role.kubernetes.io/master: 'true'
+      restartPolicy: Always
+      serviceAccountName: ''
+      volumes: null
 status: {}

@@ -47,7 +47,7 @@ def mi_watcher(cliente):
         tipo = event['type']
 
         match tipo:
-            case"MODIFIED":
+            case "MODIFIED":
                 # Logica para analizar que se ha modificado
                 check_modifications(objeto, cliente)
             case 'DELETED':
@@ -89,9 +89,6 @@ def conciliar_spec_status(objeto, cliente):
 
 
 def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
-
-
-
     if recurso_inferior['deploy']:
         if Nivel_Inferior == 'application':
             version_inf = 'v1alpha4'

@@ -22,6 +22,8 @@ plural = "applications"
 componentVersion = "v1alpha1"
 componentPlural = "components"
 
+Nivel_Superior = os.environ.get('HIGHER_LEVEL_NAME')
+
 
 # TODO si se quieren saber los atributos de un CRD 	> kubectl explain aplicacion --recursive=true
 
@@ -167,6 +169,10 @@ def check_modifications(objeto, cliente):
                                                               message='All components successfully deployed.',
                                                               reason='Running')
                 eventAPI.create_namespaced_event("default", eventObject)
+
+                # Como todos los componentes están en Running, aviso al primer nivel generico de controladores
+                #   que ya se ha generado la aplicacion
+                patchCreationStatusToParent(objeto, cliente)
 
             # Finalmente, actualizamos el objeto
             field_manager = objeto['metadata']['name']
@@ -514,6 +520,27 @@ def updatePermanent(cliente, componente, app, action):
                                                   reason='Modified')
     eventAPI.create_namespaced_event("default", eventObject)
 
+
+def patchCreationStatusToParent(objeto, cliente):
+    # Tambien avisamos al nivel superior de que el recurso se ha creado, añadiendolo en el status del
+    #       recurso superior. En el nivel mas superior, como su padre es el sistema, no realiza esta acción
+
+    # Primero, conseguimos el ID del recurso de nivel superior
+    higher_level_resourceID = objeto['metadata']['labels']['parentID']
+
+    parent_resource = cliente.get_namespaced_custom_object_status(grupo, version, namespace,
+                                                                  Nivel_Superior_plural,
+                                                                  higher_level_resourceID)
+    field_manager = 'application' + '-' + objeto['metadata']['name'] + '-' + higher_level_resourceID
+    for i in range(len(parent_resource['status'][plural])):
+        # buscamos entre los recursos el propio
+        if parent_resource['status'][plural][i]['name'] == objeto['spec']['name']:
+            parent_resource['status'][plural][i]['status'] = "Created"
+            # Una vez localizado el recurso, actualizamos el status del recurso de nivel superior
+            cliente.patch_namespaced_custom_object_status(grupo, version, namespace,
+                                                          Nivel_Superior_plural, higher_level_resourceID,
+                                                          {'status': parent_resource['status']},
+                                                          field_manager=field_manager)
 
 if __name__ == '__main__':
     controlador()

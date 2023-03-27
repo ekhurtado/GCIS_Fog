@@ -9,17 +9,23 @@ from inflector import Inflector, English, Spanish
 controller_image = 'ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0'
 
 
-
 def generador():
-    print('¿Cuantos niveles deseas en tu estructura jerárquica de aplicación?')
+    print('¿Cuantos niveles deseas en tu estructura jerárquica de aplicación en total?')
     print('Ten en cuenta que hay dos niveles obligatorios, Application y Component.')
     N = int(input())
     App_Management_Level_Number = N - 2
     nombres_niveles = []
+
+    if App_Management_Level_Number == 0:
+        # En este caso no se quieren niveles genericos, generaremos el YAML de aplicacion con la informacion
+        #   por defecto, es decir, siendo su nivel superior 'system'
+        addHigherLevelToApplication(None, False)
+        return  # Finalizamos la ejecucion ya que no se requieren niveles genericos en este caso
+
     # Primero, conseguimos la informacion de personalizacion del usuario para los niveles genericos
     for j in reversed(range(App_Management_Level_Number)):
-        aux=[]
-        print('¿Cómo quieres llamar al nivel ' + str(j + 1 +2) +'?')
+        aux = []
+        print('¿Cómo quieres llamar al nivel ' + str(j + 1 + 2) + '?')
         levelName = input()
         aux.append(levelName)
         # Ahora, añadimos su plural (suponiendo que ha escrito la palabra en ingles, si no, hay software para detectar idiomas)
@@ -32,9 +38,12 @@ def generador():
         if i == 0:  # si es el nivel mas superior
             generador_controlador(nombres_niveles[i], nombres_niveles[i + 1], ['system', 'systems'])
         if App_Management_Level_Number - 1 > i > 0:
-            generador_controlador(nombres_niveles[i], nombres_niveles[i + 1], nombres_niveles[i-1])
+            generador_controlador(nombres_niveles[i], nombres_niveles[i + 1], nombres_niveles[i - 1])
         if i == App_Management_Level_Number - 1:
-            generador_controlador(nombres_niveles[i], ['application', 'applications'], nombres_niveles[i-1])
+            generador_controlador(nombres_niveles[i], ['application', 'applications'], nombres_niveles[i - 1])
+
+            # Si existen niveles genericos, le añadiremos el nivel superior en el deployment del nivel application
+            addHigherLevelToApplication(nombres_niveles[i], True)
 
     # Generamos los archivos YAML con todos los CRDs
     for i in reversed(range(App_Management_Level_Number)):
@@ -46,7 +55,7 @@ def generador():
     # Por ultimo, generamos los permisos para cada nivel
     for i in range(App_Management_Level_Number):
         if i < App_Management_Level_Number - 1:
-            generador_permisos(nombres_niveles[i], nombres_niveles[i+1])
+            generador_permisos(nombres_niveles[i], nombres_niveles[i + 1])
         if i == App_Management_Level_Number - 1:
             generador_permisos(nombres_niveles[i], ['application', 'applications'])
     # El nivel de componente es diferente, por lo que se creará a parte
@@ -54,13 +63,30 @@ def generador():
 
     os.remove('../CRD/' + 'test_aux.yaml')
 
+
 def generador_controlador(Nivel_Actual, Nivel_Inferior, Nivel_Superior):
     f = open('../ficheros_despliegue/' + Nivel_Actual[0] + '_controller_deployment.yaml', 'w')
     yaml.dump(tipos.deploy_app_management_controller(Nivel_Actual, Nivel_Inferior, Nivel_Superior, controller_image), f)
 
 
-def generador_CRD_tercer_nivel(Nivel_Actual):
+def addHigherLevelToApplication(Nivel_Superior, genericLevelsRequired):
+    f_default = open('../ficheros_despliegue/default-app-controller-deployment.yaml', 'r')
+    app_controller_deployment = yaml.safe_load(f_default)
 
+    if genericLevelsRequired:  # Solo se modifica el deployment si han seleccionado niveles genericos
+        app_controller_deployment['spec']['template']['spec']['containers'][0]['env'][0]['value'] = \
+            Nivel_Superior[0]
+        app_controller_deployment['spec']['template']['spec']['containers'][0]['env'].append(
+            {'name': 'HIGHER_LEVEL_NAME_PLURAL', 'value': Nivel_Superior[1]})
+
+    f = open('../ficheros_despliegue/application-controller-deployment.yaml', 'w')
+    yaml.dump(app_controller_deployment, f)
+
+    f_default.close()
+    f.close()
+
+
+def generador_CRD_tercer_nivel(Nivel_Actual):
     f = open('../CRD/' + Nivel_Actual[0] + '_definition.yaml', 'w')
     aux = tipos.CRD_app_management_level_i(Nivel_Actual)
     yaml.dump(aux, f)
@@ -85,14 +111,15 @@ def generador_CRD_tercer_nivel(Nivel_Actual):
 
     # En cuanto al status, todos los niveles tendran una lista para conocer el estado de todos sus recursos inferiores
     #   y el parametro "ready" para conocer cuantos de ellos estan en ejecucion
-    aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['status'] = tipos.status_object_for_CRDs(Nivel_Actual[1])
+    aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['status'] = tipos.status_object_for_CRDs(
+        Nivel_Actual[1])
     yaml.dump(aux, file)
 
     f.close()
     file.close()
 
-def generador_CRD_resto_niveles(Nivel_Actual):
 
+def generador_CRD_resto_niveles(Nivel_Actual):
     f = open('../CRD/' + Nivel_Actual[0] + '_definition.yaml', 'w')
     with open('../CRD/' + 'test_aux.yaml', 'r') as stream:
         aux = yaml.safe_load(stream)
@@ -100,7 +127,7 @@ def generador_CRD_resto_niveles(Nivel_Actual):
         aux['spec']['names']['plural'] = Nivel_Actual[1]
         aux['spec']['names']['singular'] = Nivel_Actual[0]
         aux['spec']['names']['kind'] = Nivel_Actual[0].capitalize()
-    yaml.dump(aux,f)
+    yaml.dump(aux, f)
     aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['spec'] = {
         'type': 'object',
         'properties': {
@@ -120,10 +147,12 @@ def generador_CRD_resto_niveles(Nivel_Actual):
 
     # En cuanto al status, todos los niveles tendran una lista para conocer el estado de todos sus recursos inferiores
     #   y el parametro "ready" para conocer cuantos de ellos estan en ejecucion
-    aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['status'] = tipos.status_object_for_CRDs(Nivel_Actual[1])
+    aux['spec']['versions'][0]['schema']['openAPIV3Schema']['properties']['status'] = tipos.status_object_for_CRDs(
+        Nivel_Actual[1])
 
     file = open('../CRD/' + 'test_aux.yaml', 'w')
     yaml.dump(aux, file)
+
 
 def generador_permisos(Nivel_Actual, Nivel_Siguiente):
     f1 = open('../ficheros_despliegue/permisos/' + Nivel_Actual[0] + '_controller_role.yaml', 'w')
@@ -131,6 +160,7 @@ def generador_permisos(Nivel_Actual, Nivel_Siguiente):
 
     yaml.dump(tipos.level_i_role_object(Nivel_Actual[0], Nivel_Actual[1], Nivel_Siguiente[1]), f1)
     yaml.dump(tipos.level_i_role_binding_object(Nivel_Actual[0]), f2)
+
 
 def generador_permisos_ultimo_nivel(Nivel_Actual):
     # Como el nivel de componente es el ultimo, es diferente a los demas, ya que necesita permisos para gestionar
@@ -141,6 +171,7 @@ def generador_permisos_ultimo_nivel(Nivel_Actual):
     yaml.dump(tipos.last_level_role_object(Nivel_Actual[0], Nivel_Actual[1]), f1)
     # En el caso del RoleBinding si es igual al resto de niveles
     yaml.dump(tipos.level_i_role_binding_object(Nivel_Actual[0]), f2)
+
 
 if __name__ == '__main__':
     generador()
