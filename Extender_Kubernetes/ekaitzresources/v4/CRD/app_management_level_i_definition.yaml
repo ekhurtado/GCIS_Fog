@@ -76,6 +76,16 @@ spec:
                         type: string
                 ready:
                   type: string
+      additionalPrinterColumns:
+        - jsonPath: .status.ready
+          name: Ready
+          type: string
+          description: Readiness of the created resource
+          priority: 0
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+          priority: 0
       subresources:
         status: { }
         scale:

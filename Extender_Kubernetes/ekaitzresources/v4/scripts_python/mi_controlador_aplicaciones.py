@@ -32,17 +32,16 @@ genericVersion = "v1alpha1"
 
 def controlador():
     # TODO Forma para utilizar desde Pycharm
-    path = os.path.abspath(os.path.dirname(__file__))
-    path = path.replace('Extender_Kubernetes\ekaitzresources', "")
-    path = path.replace('\\v4\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
-    # path = path.replace("Extender_Kubernetes\ekaitzresources\v2\scripts_python", "")
-    config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
+    # path = os.path.abspath(os.path.dirname(__file__))
+    # path = path.replace('Extender_Kubernetes\ekaitzresources', "")
+    # path = path.replace('\\v4\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    # config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     # TODO Cambiarlo para el cluster
-    # if 'KUBERNETES_PORT' in os.environ:
-    #     config.load_incluster_config()
-    # else:
-    #     config.load_kube_config()
+    if 'KUBERNETES_PORT' in os.environ:
+        config.load_incluster_config()
+    else:
+        config.load_kube_config()
 
     cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
     cliente_extension = client.ApiextensionsV1Api()  # Creamos el cliente que pueda implementar el CRD.
@@ -324,7 +323,6 @@ def crear_componente(cliente, componente, app):
                                                    imagen=componente['image'],
                                                    anterior=componente['flowConfig']['previous'],
                                                    siguiente=componente['flowConfig']['next'],
-                                                   # kafkaTopic=componente['kafkaTopic'],
                                                    permanent=False,
                                                    appName=app['metadata']['name'],
                                                    all_data=componente)
@@ -526,10 +524,6 @@ def patchCreationStatusToParent(objeto, cliente):
     # También avisamos al nivel superior de que el recurso se ha creado, añadiéndolo en el status del
     #       recurso superior. En el nivel mas superior, como su padre es el sistema, no realiza esta acción
 
-    # TODO BORRAR
-    Nivel_Superior = 'assemblystation'
-    Nivel_Superior_plural = 'assemblystations'
-
     if Nivel_Superior != 'system':  # Solo actualizaremos el status del nivel superior si no es el ultimo nivel
         # Primero, conseguimos el ID del recurso de nivel superior
         higher_level_resourceID = objeto['metadata']['labels']['parentID']
@@ -543,7 +537,7 @@ def patchCreationStatusToParent(objeto, cliente):
             if parent_resource['status'][plural][i]['name'] == objeto['spec']['name']:
                 parent_resource['status'][plural][i]['status'] = "Running"
                 # Una vez localizado el recurso, actualizamos el status del recurso de nivel superior
-                cliente.patch_namespaced_custom_object_status(grupo, version, namespace,
+                cliente.patch_namespaced_custom_object_status(grupo, genericVersion, namespace,
                                                               Nivel_Superior_plural, higher_level_resourceID,
                                                               {'status': parent_resource['status']},
                                                               field_manager=field_manager)

@@ -26,7 +26,9 @@ spec:
       containers:
       - env:
         - name: HIGHER_LEVEL_NAME
-          value: system
+          value: assemblystation
+        - name: HIGHER_LEVEL_NAME_PLURAL
+          value: assemblystations
         image: ekhurtado/gcis-fog:app-controller-v4.0
         imagePullPolicy: Always
         name: app-controller

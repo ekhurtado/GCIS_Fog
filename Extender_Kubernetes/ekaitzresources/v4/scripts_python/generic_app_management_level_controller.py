@@ -61,15 +61,69 @@ def mi_watcher(cliente):
                 # Generamos el objeto status en el recurso recien creado
                 createStatus(objeto, cliente)
 
-                # Actualizamos la informacion en el recurso de nivel superior, indicando el estado del propio recurso
-                patchCreationStatusToParent(objeto, cliente)
-
                 # Lógica para llevar el recurso al estado deseado.
                 conciliar_spec_status(objeto, cliente)
 
 
 def check_modifications(objeto, cliente):
     print("El recurso " + objeto['metadata']['name'] + " se ha modificado")
+
+    # Objeto para la API de los eventos
+    eventAPI = client.CoreV1Api()
+
+    # Primero analizamos quien ha realizado el ultimo cambio (el parametro field_manager del metodo patch)
+    lastManager = objeto['metadata']['managedFields'][len(objeto['metadata']['managedFields']) - 1]['manager']
+    if Nivel_Inferior in lastManager:
+        # Solo si ha actualizado el status un recurso de nivel inferior realizamos las comprobaciones de posible cambio
+        #   en el estado de los recursos inferiores
+
+        # Conseguimos el nombre del componente del string del manager
+        lowerResourceName = lastManager.replace(Nivel_Inferior + '-', '')  # le quitamos el tipo de recurso inferior
+        lowerResourceName = lowerResourceName.replace('-' + objeto['metadata']['name'], '')  # le quitamos el ID
+                                                                                             #   del recurso propio
+        print("Cambio realizado por el recurso inferior: " + lowerResourceName)
+
+        # Volvemos a conseguir el objeto del recurso propio por si se ha modificado
+        updatedObject = cliente.get_namespaced_custom_object_status(grupo, version, namespace, plural,
+                                                                    objeto['metadata']['name'])
+
+        runningCount = 0
+        for i in range(len(objeto['status'][Nivel_Inferior_plural])):
+            # Recorremos el estado de todos los recursos inferiores analizando cuales estan desplegados
+            if objeto['status'][Nivel_Inferior_plural][i]['status'] == "Running":
+                runningCount = runningCount + 1
+
+                if objeto['status'][Nivel_Inferior_plural][i]['name'] == lowerResourceName:
+                    # Si el componente que ha enviado el mensaje es el que se ha pasasdo a estado Running,
+                    # creamos el evento notificándolo tambien en este nivel
+                    eventObject = tipos.customResourceEventObject(action='Deploying', CR_type=Nivel_Actual,
+                                                      CR_object=objeto,
+                                                      message=lowerResourceName + ' resource successfully deployed.',
+                                                      reason='Deployed', )
+                    eventAPI.create_namespaced_event("default", eventObject)
+
+        if runningCount != 0:  # Si despues de analizar todos hay algún recurso que está en Running
+            objeto['status']['ready'] = str(runningCount) + "/" + objeto['status']['ready'].split("/")[1]
+
+            if runningCount == len(objeto['status'][Nivel_Inferior_plural]):
+                # En este caso, significa que todos los recursos inferiores están en running
+                # Creamos el evento notificandolo
+                eventObject = tipos.customResourceEventObject(action='Running', CR_type=Nivel_Actual,
+                                                              CR_object=objeto,
+                                                              message='All lower resources successfully deployed.',
+                                                              reason='Running')
+                eventAPI.create_namespaced_event("default", eventObject)
+                # También avisaremos al nivel superior de que este recurso ya está desplegado
+                # Actualizamos la informacion en el recurso de nivel superior, indicando el estado del propio recurso
+                patchCreationStatusToParent(objeto, cliente)
+
+            # Finalmente, actualizamos el objeto con el nuevo status
+            field_manager = objeto['metadata']['name']
+            cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
+                                                          objeto['metadata']['name'], {'status': objeto['status']},
+                                                          field_manager=field_manager)
+    else:
+        print("Cambio realizado por otro recurso")
 
 
 def conciliar_spec_status(objeto, cliente):
@@ -155,7 +209,7 @@ def createStatus(objeto, cliente):
                                 'ready': "0/" + str(num_recursos_inferiores)}}
     for i in range(int(num_recursos_inferiores)):
         status_object['status'][Nivel_Inferior_plural][i] = {'name': objeto['spec'][Nivel_Inferior_plural][i]['name'],
-                                                             'status': "Creating"}
+                                                             'status': "Deploying"}
     cliente.patch_namespaced_custom_object_status(grupo, version, namespace, plural,
                                                   objeto['metadata']['name'], status_object)
 
@@ -175,7 +229,7 @@ def patchCreationStatusToParent(objeto, cliente):
         for i in range(len(parent_resource['status'][Nivel_Actual_plural])):
             # buscamos entre los recursos el propio
             if parent_resource['status'][Nivel_Actual_plural][i]['name'] == objeto['spec']['name']:
-                parent_resource['status'][Nivel_Actual_plural][i]['status'] = "Created"
+                parent_resource['status'][Nivel_Actual_plural][i]['status'] = "Running"
                 # Una vez localizado el recurso, actualizamos el status del recurso de nivel superior
                 cliente.patch_namespaced_custom_object_status(grupo, version, namespace,
                                                               Nivel_Superior_plural, higher_level_resourceID,

@@ -10,7 +10,17 @@ spec:
     singular: assemblystation
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - description: Readiness of the created resource
+      jsonPath: .status.ready
+      name: Ready
+      priority: 0
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      priority: 0
+      type: date
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         properties:

@@ -16,6 +16,8 @@ spec:
               type: object
               required: [ components,replicas,deploy ]
               properties:
+                name:
+                  type: string
                 components:
                   type: array
                   items:
@@ -33,6 +35,24 @@ spec:
                             type: string
                           next:
                             type: string
+                      # FLOWCONFIG 2.0 (para creacion de aplicaciones complejas -> DAGs)
+#                      flowConfig:
+#                        type: object
+#                        properties:
+#                          previous:
+#                            type: object
+#                            properties:
+#                              name:
+#                                type: string
+#                              IFMHTopic:
+#                                type: string
+#                          next:
+#                            type: object
+#                            properties:
+#                              name:
+#                                type: string
+#                              IFMHTopic:
+#                                type: string
                       inputIFMHtopic:
                         type: string
                       outputIFMHtopic:

@@ -56,7 +56,7 @@ def status_object_for_CRDs(levelPlural):
 
 def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural):
     # TODO, de momento solo se le ha dado permiso para modificar sus componentes y crear los de nivel inferior, ademas
-    #       de crear eventos y gestionar CRDs, mas adelante tambien habra que añadir la posibilidad de relizar acciones
+    #       de crear eventos y gestionar CRDs, mas adelante tambien habra que añadir la posibilidad de realizar acciones
     #       "patch" en los niveles superiores
     role_object = {
         'apiVersion': 'rbac.authorization.k8s.io/v1',
@@ -183,6 +183,25 @@ def componente(nombre, imagen, anterior, siguiente, **kwargs):
 
 
 def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, appName, **kwargs):
+
+    # TODO Posible modificacion: los parametros del flowconfig pasarian a ser arrays (para habilitar la creacion de
+    #  aplicaciones mas complejas). Otra modificación sería añadir los topicos de Kafka dentro del flowConfig.
+    #  Así, se evitaría tenerlos como atributo general del componente. Cada previous y next tendría
+    #  dos atributos (name y IFMHTopic). Así, para cada "entrada" y "salida" del componente tendriamos situado cual
+    #  es el topico asociado (en el caso de los previous serian topico output y en los next serian el input del
+    #  siguiente). Ejemplo:
+    #  flowConfig:
+    #     previous:
+    #         - name: prev1
+    #           IFMHTopic: topico-prev1 (el viejo outputIFHMTopic del prev1)
+    #         - name: prev2
+    #           IFMHTopic: topico-prev2
+    #     next:
+    #         - name: next1
+    #           IFMHTopic: topico-next1 (el viejo inputIFHMTopic del next1)
+    #         - name: next2
+    #           IFMHTopic: topico-next2
+
     component_resource = {
         'apiVersion': 'ehu.gcis.org/v1alpha1',
         'kind': 'Component',
@@ -198,7 +217,6 @@ def componente_recurso(nombre, nombre_corto, imagen, anterior, siguiente, appNam
             'image': imagen,
             'previous': anterior,
             'next': siguiente
-            # 'kafkaTopic': kafkaTopic
         }
     }
 
