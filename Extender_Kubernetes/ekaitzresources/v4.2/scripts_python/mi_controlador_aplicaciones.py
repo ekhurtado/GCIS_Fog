@@ -34,7 +34,8 @@ def controlador():
     # TODO Forma para utilizar desde Pycharm
     # path = os.path.abspath(os.path.dirname(__file__))
     # path = path.replace('Extender_Kubernetes\ekaitzresources', "")
-    # path = path.replace('\\v4\scripts_python', "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    # path = path.replace('\\v4.2\scripts_python',
+    #                     "")  # Se ha tenido que realizar de este modo ya que con la v daba error
     # config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     # TODO Cambiarlo para el cluster
@@ -294,40 +295,11 @@ def conciliar_spec_status(objeto, cliente):
 
 
 def crear_componente(cliente, componente, app):
-    # for j in range(app['spec']['replicas']):  # No me convence el aplicar así las replicas
-    permanente = False
-    try:
-        permanente = componente['permanent']
-    except KeyError:
-        pass
-    if permanente == True:  # En este if se repiten muchos comandos (la linea de crear el objeto, actualizar status...), arreglarlo
+    # Primero, se crea el recurso componente
+    componente_body = tipos.componente_recurso(componenteInfo=componente,
+                                               appName=app['metadata']['name'])
 
-        componente_body = tipos.componente_recurso(nombre=componente['name'],
-                                                   # En los permanentes el nombre es único
-                                                   nombre_corto=componente['name'],
-                                                   imagen=componente['image'],
-                                                   flowConfig=componente['flowConfig'],
-                                                   appName=app['metadata']['name'],
-                                                   permanent=True,
-                                                   configmap='cm-' + componente['name'],
-                                                   all_data=componente)
-
-        cliente.create_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural, componente_body)
-
-        # break
-    else:
-        componente_body = tipos.componente_recurso(nombre=componente['name'] + '-' + app['metadata']['name'],
-                                                   nombre_corto=componente['name'],
-                                                   imagen=componente['image'],
-                                                   flowConfig=componente['flowConfig'],
-                                                   permanent=False,
-                                                   appName=app['metadata']['name'],
-                                                   all_data=componente)
-
-        cliente.create_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural, componente_body)
-
-    # Creo que es mejor aplicar algún label a los componentes en función de que aplicación formen.
-    # Si no distinguimos los nombres bien surge el problema de que los nombres de los componentes al solicitar dos aplicaciones colisionan.
+    cliente.create_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural, componente_body)
 
     # Una vez creado el Custom Resource, vamos a añadirle el status de que se están creando los componentes
     status_object = {'status': {'replicas': 0, 'situation': 'Creating'}}

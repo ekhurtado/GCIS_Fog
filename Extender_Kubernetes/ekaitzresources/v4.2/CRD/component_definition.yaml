@@ -14,7 +14,7 @@ spec:
           properties:
             spec:
               type: object
-              required: [name, image, previous, next]
+              required: [name, image, flowConfig]
               properties:
                 name:
                   type: string

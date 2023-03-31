@@ -29,7 +29,7 @@ spec:
           value:
             system  # Por defecto, el nivel superior de application es system, a no ser que al generar los niveles se
                     #   determinen niveles genericos
-        image: ekhurtado/gcis-fog:app-controller-v4.0
+        image: ekhurtado/gcis-fog:app-controller-v4.2
         imagePullPolicy: Always
         name: app-controller
         resources: {}

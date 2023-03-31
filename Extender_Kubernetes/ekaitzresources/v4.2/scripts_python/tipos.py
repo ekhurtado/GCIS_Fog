@@ -24,12 +24,14 @@ def CRD_comp():
         CRD_componente = yaml.safe_load(stream)
     return CRD_componente
 
+
 def CRD_app_management_level_i(Nivel_Actual):
     path = os.path.abspath(os.path.dirname(__file__))
-    rel_path = os.path.join(os.path.abspath(os.path.join(path, os.pardir)), "CRD/app_management_level_i_definition.yaml")
+    rel_path = os.path.join(os.path.abspath(os.path.join(path, os.pardir)),
+                            "CRD/app_management_level_i_definition.yaml")
     with open(rel_path, 'r') as stream:
         CRD_app_management_level_i = yaml.safe_load(stream)
-        CRD_app_management_level_i['metadata']['name']= Nivel_Actual[1] + '.ehu.gcis.org'
+        CRD_app_management_level_i['metadata']['name'] = Nivel_Actual[1] + '.ehu.gcis.org'
         CRD_app_management_level_i['spec']['names']['plural'] = Nivel_Actual[1]
         CRD_app_management_level_i['spec']['names']['singular'] = Nivel_Actual[0]
         CRD_app_management_level_i['spec']['names']['kind'] = Nivel_Actual[0].capitalize()
@@ -54,6 +56,7 @@ def status_object_for_CRDs(levelPlural):
         }
     }
 
+
 def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural):
     # TODO, de momento solo se le ha dado permiso para modificar sus componentes y crear los de nivel inferior, ademas
     #       de crear eventos y gestionar CRDs, mas adelante tambien habra que añadir la posibilidad de realizar acciones
@@ -68,26 +71,26 @@ def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural):
             'apiGroups': ["ehu.gcis.org"],
             'resources': [currentLevelPlural, currentLevelPlural + "/status"],
             'verbs': ["get", "list", "watch", "patch", "create", "delete"]
-            },
+        },
             {'apiGroups': ["ehu.gcis.org"],
-            'resources': [lowerLevelPlural, lowerLevelPlural + "/status"],
-            'verbs': ["post", "put", "patch", "create", "update", "delete"]
+             'resources': [lowerLevelPlural, lowerLevelPlural + "/status"],
+             'verbs': ["post", "put", "patch", "create", "update", "delete"]
              },
             {'apiGroups': ["apiextensions.k8s.io"],
-            'resources': ["customresourcedefinitions"],
-            'verbs': ["post", "put", "patch", "create", "update"]
+             'resources': ["customresourcedefinitions"],
+             'verbs': ["post", "put", "patch", "create", "update"]
              },
             {'apiGroups': [""],
-            'resources': ["events"],
-            'verbs': ["watch", "create", "update", "get"]
+             'resources': ["events"],
+             'verbs': ["watch", "create", "update", "get"]
              }
         ]
     }
 
     return role_object
 
-def level_i_role_binding_object(currentLevelName):
 
+def level_i_role_binding_object(currentLevelName):
     role_binding_object = {
         'apiVersion': 'rbac.authorization.k8s.io/v1',
         'kind': 'ClusterRoleBinding',
@@ -146,16 +149,6 @@ def last_level_role_object(currentLevelName, currentLevelPlural):
     return role_object
 
 
-def findNextComponent(currentComponent, app):
-    '''
-    Method to get the next component given an aplication
-    '''
-    for comp in app['spec']['components']:
-        if comp['name'] == currentComponent['flowConfig']['next']:
-            return comp
-    return None
-
-
 def aplicacion(N):
     # N identifica el número de componentes de la aplicacion.
     aplicacion = {
@@ -182,26 +175,9 @@ def componente(nombre, imagen, anterior, siguiente, **kwargs):
     return componente
 
 
-def componente_recurso(nombre, nombre_corto, imagen, flowConfig, appName, **kwargs):
+def componente_recurso(componenteInfo, appName):
 
-    # TODO Posible modificacion: los parametros del flowconfig pasarian a ser arrays (para habilitar la creacion de
-    #  aplicaciones mas complejas). Otra modificación sería añadir los topicos de Kafka dentro del flowConfig.
-    #  Así, se evitaría tenerlos como atributo general del componente. Cada previous y next tendría
-    #  dos atributos (name y IFMHTopic). Así, para cada "entrada" y "salida" del componente tendriamos situado cual
-    #  es el topico asociado (en el caso de los previous serian topico output y en los next serian el input del
-    #  siguiente). Ejemplo:
-    #  flowConfig:
-    #     previous:
-    #         - name: prev1
-    #           IFMHTopic: topico-prev1 (el viejo outputIFHMTopic del prev1)
-    #         - name: prev2
-    #           IFMHTopic: topico-prev2
-    #     next:
-    #         - name: next1
-    #           IFMHTopic: topico-next1 (el viejo inputIFHMTopic del next1)
-    #         - name: next2
-    #           IFMHTopic: topico-next2
-
+    nombre = componenteInfo['name']
     component_resource = {
         'apiVersion': 'ehu.gcis.org/v1alpha1',
         'kind': 'Component',
@@ -209,31 +185,36 @@ def componente_recurso(nombre, nombre_corto, imagen, flowConfig, appName, **kwar
             'name': nombre,
             'labels': {
                 'applicationName': appName,
-                'shortName': nombre_corto
+                'shortName': nombre
             }
         },
         'spec': {
-            'name': nombre_corto,
-            'image': imagen,
-            'flowConfig': flowConfig
+            'name': nombre,
+            'image': componenteInfo['image'],
+            'flowConfig': componenteInfo['flowConfig']
         }
     }
 
-    # All data tendrá todos los atributos del componente, si se añaden nuevos, se pueden recoger aqui
-    if 'all_data' in kwargs:
-        if 'customization' in kwargs.get('all_data'):
-            component_resource['spec']['customization'] = kwargs.get('all_data')['customization']
+    # Algunos parametros no son obligatorios, asi que solo los añadiremos si se han definido por el usuario
+    if 'customization' in componenteInfo:
+        component_resource['spec']['customization'] = componenteInfo['customization']
+    if 'permanent' in componenteInfo:
+        component_resource['spec']['permanent'] = componenteInfo['permanent']
+    elif 'permanent' not in componenteInfo:
+        component_resource['spec']['permanent'] = False
 
     # Hasta aqui tanto el efímero como los permanentes son iguales
-    if 'permanent' in kwargs:
-        component_resource['spec']['permanent'] = kwargs.get('permanent')
-        component_resource['spec']['permanentCM'] = kwargs.get('configmap')
+    if component_resource['spec']['permanent']:
+        # Si 'permanent' es True, creamos su configmap
+        component_resource['spec']['permanentCM'] = 'cm-' + nombre
+    else:
+        # Si no es permanente (es efímero) debemos cambiar su nombre, añadiéndole el de la aplicación
+        component_resource['metadata']['name'] = nombre + '-' + appName
 
     return component_resource
 
 
 def recurso(grupo, objeto, nombre_nivel, version, parentResourceID, lowerResourceID):
-
     recurso = {
         'apiVersion': grupo + '/' + version,
         'kind': nombre_nivel.capitalize(),
@@ -254,14 +235,14 @@ def configmap(componente, aplicacion):
     Method to create the configmap object related to the permanent component
     '''
 
-    # Primero
-    nextComp = findNextComponent(componente, aplicacion)
-    # Como es está creando el ConfigMap solo hay una aplicacion
+    # Como se está creando el ConfigMap solo hay una aplicacion
     cmData = '[InformationSection]\n' \
              + 'applications.1=' + aplicacion['metadata']['name'] + '\n' \
-             + '[OutTopicSection]\n' + aplicacion['metadata']['name'] + '.' + nextComp['name'] + '=' + nextComp[
-                 'inputIFMHtopic'] + '\n'
-                 # 'kafkaTopic'] + '\n'
+             + '[OutTopicSection]\n'
+
+    # En este caso podemos tener mas de un componente posterior
+    for allNextComp in componente['flowConfig']['next']:
+        cmData += aplicacion['metadata']['name'] + '.' + allNextComp['name'] + '=' + allNextComp['IFMHtopic'] + '\n'
 
     cmData += '[CustomSection]\n'
     for custom in componente['customization']:
@@ -392,7 +373,6 @@ def deployment(componente, replicas):  # Añadir replicas como input
 
 
 def deploy_app_management_controller(Nivel_Actual, Nivel_Inferior, Nivel_Superior, controller_image):
-
     despliegue = {
         'apiVersion': 'apps/v1',
         'kind': 'Deployment',
@@ -452,6 +432,7 @@ def deploy_app_management_controller(Nivel_Actual, Nivel_Inferior, Nivel_Superio
     }
     return despliegue
 
+
 def deploymentObject(componente, controllerName, appName, replicas, componenteName, **kwargs):
     # TODO Existe la posibilidad de crear el objeto utilizando los objetos de la API
     #       https://github.com/kubernetes-client/python/blob/master/examples/deployment_crud.py
@@ -459,13 +440,15 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
     # nombre del componente solo, sin la aplicacion
     compName = componente['metadata']['name'].replace('-' + appName, '')
 
-    # TODO ELIMINAR, esto es para grabar el video del articulo de Julen,
-    #       hay que modificar los componentes para que usen los atributos del articulo
+    # TODO modificar: en este caso como solo hemos diseñado aplicaciones sencillas (1 input t 1 output) el topico de
+    #  kafka podra ser el mismo y dentro del componente, dependiendo del tipo que sea, lo utilizara para enviar o
+    #  recibir. Habria que modificarlo parara que los componentes sean capaces de escuchar por enviar por mas de un
+    #  topico y saber diferenciar quien les envia el mensaje o a quien se lo tienen que enviar
     kafkaTopic = None
-    if 'inputIFMHtopic' in componente['spec']:
-        kafkaTopic = componente['spec']['inputIFMHtopic']
-    elif 'outputIFMHtopic' in componente['spec']:
-        kafkaTopic = componente['spec']['outputIFMHtopic']
+    if 'previous' in componente['spec']['flowConfig']:
+        kafkaTopic = componente['spec']['flowConfig']['previous'][0]['IFMHtopic']
+    elif 'next' in componente['spec']['flowConfig']:
+        kafkaTopic = componente['spec']['flowConfig']['next'][0]['IFMHtopic']
 
     deployObject = {
         'apiVersion': 'apps/v1',
@@ -521,8 +504,8 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
             deployObject['spec']['template']['spec']['containers'][0]['env'] + envVarList
         print("TODO: Añadir las variables de entorno necesarias")
 
-    if len(kwargs) != 0:  # en este caso es un componente permanente
 
+    if len(kwargs) != 0:  # en este caso es un componente permanente
         # Conseguimos el configmap y lo añadimos junto a su volumen asociado
         cmName = kwargs.get("configMap")
         volumeMounts = [{'name': componente['metadata']['name'] + '-volume',
@@ -557,7 +540,6 @@ def customResourceEventObject(action, CR_type, CR_object, message, reason):
     eventName = eventName + '-' + action + '-' + \
                 ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
 
-
     # Si el nombre de CR sobrepasa los 63 caracteres, lo acortamos
     if len(CR_name) > 63:
         CR_name = CR_name[0:62] + ''.join(random.choices(string.ascii_lowercase + string.digits, k=1))  # tiene que
@@ -565,7 +547,7 @@ def customResourceEventObject(action, CR_type, CR_object, message, reason):
 
     apiVersion = None
     kind = None
-    namespace = 'default'   # De momento todos los recursos se despliegan en el default
+    namespace = 'default'  # De momento todos los recursos se despliegan en el default
     match CR_type:
         case "application":
             apiVersion = 'ehu.gcis.org/v1alpha4'

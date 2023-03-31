@@ -29,7 +29,7 @@ spec:
           value: assemblystation
         - name: HIGHER_LEVEL_NAME_PLURAL
           value: assemblystations
-        image: ekhurtado/gcis-fog:app-controller-v4.0
+        image: ekhurtado/gcis-fog:app-controller-v4.2
         imagePullPolicy: Always
         name: app-controller
         resources: {}
