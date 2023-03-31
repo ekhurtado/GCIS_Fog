@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+
+  app-controller:
+    build:
+      context: ..
+      dockerfile: ficheros_docker/Dockerfile_contr_apps
+    image: ekhurtado/gcis-fog:app-controller-v4.0
+    container_name: app-controller
+  component-controller:
+    build:
+      context: ..
+      dockerfile: ficheros_docker/Dockerfile_contr_comps
+    image: ekhurtado/gcis-fog:component-controller-v4.0
+    container_name: component-controller
+  generic-controller:
+    build:
+      context: ..
+      dockerfile: ficheros_docker/Dockerfile_contr_generic
+    image: ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0
+    container_name: generic-controller
+

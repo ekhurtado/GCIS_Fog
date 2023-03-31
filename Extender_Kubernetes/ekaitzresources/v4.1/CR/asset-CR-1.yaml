@@ -17,11 +17,8 @@ spec:
               image: ekaitzhara/source-v2:source-exist
               flowConfig:
                 previous: none
-                next:
-                - name: data-processing-assemblystation
-                  IFMHTopic: datos-processing-assembly-oee
-              outputIFMHtopic:
-                - "data-processing-assemblystation=datos-processing-assembly-oee"
+                next: data-processing-assemblystation
+              outputIFMHtopic: datos-processing-assembly-oee
               customization:
                 - "MACHINE_ID=11"
               permanent: False

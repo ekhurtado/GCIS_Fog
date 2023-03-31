@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app-controller
+  name: app-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: app-controller
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app-controller
+    spec:
+      containers:
+      - env:
+        - name: HIGHER_LEVEL_NAME
+          value:
+            system  # Por defecto, el nivel superior de application es system, a no ser que al generar los niveles se
+                    #   determinen niveles genericos
+        image: ekhurtado/gcis-fog:app-controller-v4.0
+        imagePullPolicy: Always
+        name: app-controller
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+      nodeSelector:
+        node-role.kubernetes.io/master: "true"    # Para desplegarlo en el master
+status: {}

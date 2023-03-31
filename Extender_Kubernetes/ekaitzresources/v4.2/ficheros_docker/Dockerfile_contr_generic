@@ -1,0 +1,28 @@
+# Este Dockerfile es para la grabación del video del caso de estudio, los niveles superiores seran aplicaciones vacias
+
+#FROM python:3.10-slim
+FROM python:3.10-alpine
+
+RUN pip install kubernetes
+#RUN pip install datetime
+RUN pip install pytz
+
+# Libreria para pluralizar automaticamente
+
+#RUN apt-get update && apt-get upgrade
+#RUN apt-get install -y python3-dev default-libmysqlclient-dev build-essential \
+#	&& pip install mysqlclient \
+#	&& pip install --no-cache-dir pattern \
+#	&& apt-get remove -y python3-dev default-libmysqlclient-dev build-essential
+#RUN apt-get update && apt-get upgrade
+
+# Los plurales se pasan con variables de entorno, de momento no hace falta
+#RUN pip install Inflector
+
+# Los directorios estan situados de acuerdo a la maquina virtual, que es donde se ha creado la imagen
+COPY scripts_python/generic_app_management_level_controller.py /
+COPY scripts_python/tipos.py /
+
+WORKDIR /
+
+CMD python3 -u generic_app_management_level_controller.py

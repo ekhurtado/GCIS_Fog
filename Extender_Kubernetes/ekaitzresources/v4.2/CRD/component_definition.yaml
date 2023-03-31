@@ -1,0 +1,98 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: components.ehu.gcis.org
+spec:
+  group: ehu.gcis.org
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required: [name, image, previous, next]
+              properties:
+                name:
+                  type: string
+                image:
+                  type: string
+                flowConfig:
+                  type: object
+                  properties:
+                    previous:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          IFMHtopic:
+                            type: string
+                    next:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          IFMHtopic:
+                            type: string
+                customization:
+                  type: array
+                  items:
+                    type: string
+                permanent:
+                  type: boolean
+                permanentCM:
+                  type: string
+            status:
+              type: object
+              properties:
+                replicas:
+                  type: integer
+                situation:  # CAMBIAR ESTE NOMBRE?
+                  type: string
+      additionalPrinterColumns:
+        - jsonPath: .metadata.labels.shortName
+          name: Shortname
+          description: Name of the component
+          type: string
+          priority: 1
+        - jsonPath: .status.situation
+          name: Status
+          type: string
+          priority: 0 # si es prioridad 0 aparece en la vista estandar
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+          priority: 0
+#        - jsonPath: .spec.kafkaTopic # Como el KafkaTopic es algo del funcionamiento interno no le veo mucho sentido
+#          name: KafkaTopic
+#          type: string
+#          priority: 1 # prioridad 1 solo aparece en la vista ampliada (-o wide)
+        - jsonPath: .spec.image
+          name: Image
+          description: Docker image of the component
+          type: string
+          priority: 1
+        - jsonPath: .status.replicas
+          name: Replicas
+          type: integer
+          priority: 1
+        - jsonPath: .spec.permanent
+          name: Permanente
+          type: boolean
+          priority: 1
+      subresources:
+        status: {}
+  scope: Namespaced
+  names:
+    plural: components
+    singular: component
+    kind: Component
+    shortNames:
+      - comp

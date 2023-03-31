@@ -1,0 +1,109 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: NombreNivel + 's' + '.ehu.gcis.org'
+spec:
+  group: ehu.gcis.org
+  versions:
+    - name: v1alpha1 #Anadido un parametro para almacenar la aplicacion definida y desplegarla a posteriori.
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                name:
+                  type: string
+                deploy:
+                  type: boolean
+                applications:
+                  type: array
+                  items:
+                    type: object
+                    required: [ components,replicas,deploy ]
+                    properties:
+                      components:
+                        type: array
+                        items:
+                          type: object
+                          required: [ name,image,flowConfig ]
+                          properties:
+                            name:
+                              type: string
+                            image:
+                              type: string
+                            # FLOWCONFIG 2.0 (para creacion de aplicaciones complejas -> DAGs)
+                            flowConfig:
+                              type: object
+                              properties:
+                                previous:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      name:
+                                        type: string
+                                      IFMHtopic:
+                                        type: string
+                                next:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      name:
+                                        type: string
+                                      IFMHtopic:
+                                        type: string
+                            customization: # Parameters to add component customization
+                              type: array
+                              items:
+                                type: string
+                            permanent:
+                              type: boolean
+                      replicas:
+                        type: integer
+                        minimum: 1
+                        maximum: 10
+                      name:
+                        type: string
+                      deploy:
+                        type: boolean
+            status:
+              type: object
+              properties:
+                replicas:
+                  type: integer
+                applications:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      status:
+                        type: string
+                ready:
+                  type: string
+      additionalPrinterColumns:
+        - jsonPath: .status.ready
+          name: Ready
+          type: string
+          description: Readiness of the created resource
+          priority: 0
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+          priority: 0
+      subresources:
+        status: { }
+        scale:
+          specReplicasPath: .spec.replicas
+          statusReplicasPath: .status.replicas
+  scope: Namespaced
+  names:
+    plural: NombreNivel + 's'
+    singular: NombreNivel
+    kind: NombreNivel
