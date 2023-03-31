@@ -35,3 +35,4 @@ spec:
         - containerPort: 80
       nodeSelector:
         node-role.kubernetes.io/master: 'true'
+      serviceAccountName: service-account-controller-asset

@@ -2,37 +2,37 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: assemblystation-controller
-  name: assemblystation-controller-deployment
+    app: asset-controller
+  name: asset-controller-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: assemblystation-controller
+      app: asset-controller
   template:
     metadata:
       labels:
-        app: assemblystation-controller
+        app: asset-controller
     spec:
+      serviceAccountName: service-account-controller-asset
       containers:
       - env:
         - name: LEVEL_NAME
-          value: assemblystation
-        - name: LEVEL_NAME_PLURAL
-          value: assemblystations
-        - name: LOWER_LEVEL_NAME
-          value: application
-        - name: LOWER_LEVEL_NAME_PLURAL
-          value: applications
-        - name: HIGHER_LEVEL_NAME
           value: asset
-        - name: HIGHER_LEVEL_NAME_PLURAL
+        - name: LEVEL_NAME_PLURAL
           value: assets
+        - name: LOWER_LEVEL_NAME
+          value: assemblystation
+        - name: LOWER_LEVEL_NAME_PLURAL
+          value: assemblystations
+        - name: HIGHER_LEVEL_NAME
+          value: system
+        - name: HIGHER_LEVEL_NAME_PLURAL
+          value: systems
         image: ekhurtado/gcis-fog:generic_app_management_level_controller-v4.0
         imagePullPolicy: Always
-        name: assemblystation-controller
+        name: asset-controller
         ports:
         - containerPort: 80
       nodeSelector:
         node-role.kubernetes.io/master: 'true'
-      serviceAccountName: service-account-controller-assemblystation

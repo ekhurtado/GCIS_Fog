@@ -47,7 +47,7 @@ rules:
 - apiGroups:
   - ''
   resources:
-  - events
+  - events, configmaps
   verbs:
   - watch
   - create

@@ -54,13 +54,17 @@ def generador():
 
     # Por ultimo, generamos los permisos para cada nivel
     for i in range(App_Management_Level_Number):
+        if i == 0:  # si es el nivel mas superior
+            generador_permisos(nombres_niveles[i], nombres_niveles[i + 1], ['system', 'systems'])
         if i < App_Management_Level_Number - 1:
-            generador_permisos(nombres_niveles[i], nombres_niveles[i + 1])
+            generador_permisos(nombres_niveles[i], nombres_niveles[i + 1], nombres_niveles[i - 1])
         if i == App_Management_Level_Number - 1:
-            generador_permisos(nombres_niveles[i], ['application', 'applications'])
-    # El nivel de componente es diferente, por lo que se creará a parte
-    generador_permisos_ultimo_nivel(['component', 'components'])
+            generador_permisos(nombres_niveles[i], ['application', 'applications'], nombres_niveles[i - 1])
 
+    # Los niveles de componente y aplicacion son diferentes, por lo que se crearán a parte
+    generador_permisos(['application', 'applications'], ['component', 'components'],
+                       nombres_niveles[App_Management_Level_Number - 1])
+    generador_permisos_ultimo_nivel()
     os.remove('../CRD/' + 'test_aux.yaml')
 
 
@@ -154,23 +158,28 @@ def generador_CRD_resto_niveles(Nivel_Actual):
     yaml.dump(aux, file)
 
 
-def generador_permisos(Nivel_Actual, Nivel_Siguiente):
+def generador_permisos(Nivel_Actual, Nivel_Inferior, Nivel_Superior):
     f1 = open('../ficheros_despliegue/permisos/' + Nivel_Actual[0] + '_controller_role.yaml', 'w')
     f2 = open('../ficheros_despliegue/permisos/' + Nivel_Actual[0] + '_controller_rolebinding.yaml', 'w')
+    f3 = open('../ficheros_despliegue/permisos/' + Nivel_Actual[0] + '_controller_serviceaccount.yaml', 'w')
 
-    yaml.dump(tipos.level_i_role_object(Nivel_Actual[0], Nivel_Actual[1], Nivel_Siguiente[1]), f1)
+    yaml.dump(tipos.level_i_role_object(Nivel_Actual[0], Nivel_Actual[1], Nivel_Inferior[1], Nivel_Superior[1]), f1)
     yaml.dump(tipos.level_i_role_binding_object(Nivel_Actual[0]), f2)
+    yaml.dump(tipos.level_i_service_account_object(Nivel_Actual[0]), f3)
 
 
-def generador_permisos_ultimo_nivel(Nivel_Actual):
+def generador_permisos_ultimo_nivel():
+
     # Como el nivel de componente es el ultimo, es diferente a los demas, ya que necesita permisos para gestionar
     #   elementos externos a nuestro modelo, propios de Kubernetes como los Deployments
-    f1 = open('../ficheros_despliegue/permisos/' + Nivel_Actual[0] + '_controller_role.yaml', 'w')
-    f2 = open('../ficheros_despliegue/permisos/' + Nivel_Actual[0] + '_controller_rolebinding.yaml', 'w')
+    f_comp1 = open('../ficheros_despliegue/permisos/component_controller_role.yaml', 'w')
+    f_comp2 = open('../ficheros_despliegue/permisos/component_controller_rolebinding.yaml', 'w')
+    f_comp3 = open('../ficheros_despliegue/permisos/component_controller_serviceaccount.yaml', 'w')
 
-    yaml.dump(tipos.last_level_role_object(Nivel_Actual[0], Nivel_Actual[1]), f1)
-    # En el caso del RoleBinding si es igual al resto de niveles
-    yaml.dump(tipos.level_i_role_binding_object(Nivel_Actual[0]), f2)
+    yaml.dump(tipos.last_level_role_object('component', 'components'), f_comp1)
+    # En el caso del RoleBinding y ServiceAccount si es igual al resto de niveles
+    yaml.dump(tipos.level_i_role_binding_object('component'), f_comp2)
+    yaml.dump(tipos.level_i_service_account_object('component'), f_comp3)
 
 
 if __name__ == '__main__':

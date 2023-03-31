@@ -23,6 +23,7 @@ spec:
       labels:
         io.kompose.service: app-controller
     spec:
+      serviceAccountName: service-account-controller-application
       containers:
       - env:
         - name: HIGHER_LEVEL_NAME
@@ -34,7 +35,6 @@ spec:
         name: app-controller
         resources: {}
       restartPolicy: Always
-      serviceAccountName: ""
       volumes: null
       nodeSelector:
         node-role.kubernetes.io/master: "true"    # Para desplegarlo en el master

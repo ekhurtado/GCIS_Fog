@@ -36,6 +36,6 @@ spec:
       nodeSelector:
         node-role.kubernetes.io/master: 'true'
       restartPolicy: Always
-      serviceAccountName: ''
+      serviceAccountName: service-account-controller-application
       volumes: null
 status: {}

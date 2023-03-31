@@ -1,13 +1,13 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: role-controller-asset
+  name: role-controller-assemblystation
 rules:
 - apiGroups:
   - ehu.gcis.org
   resources:
-  - assets
-  - assets/status
+  - assemblystations
+  - assemblystations/status
   verbs:
   - get
   - list
@@ -18,8 +18,8 @@ rules:
 - apiGroups:
   - ehu.gcis.org
   resources:
-  - assemblystations
-  - assemblystations/status
+  - applications
+  - applications/status
   verbs:
   - post
   - put
@@ -27,14 +27,6 @@ rules:
   - create
   - update
   - delete
-- apiGroups:
-  - ehu.gcis.org
-  resources:
-  - assemblystations
-  - assemblystations/status
-  verbs:
-  - get
-  - patch
 - apiGroups:
   - apiextensions.k8s.io
   resources:

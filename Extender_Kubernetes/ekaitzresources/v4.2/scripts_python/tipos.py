@@ -57,7 +57,7 @@ def status_object_for_CRDs(levelPlural):
     }
 
 
-def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural):
+def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural, higherLevelPlural):
     # TODO, de momento solo se le ha dado permiso para modificar sus componentes y crear los de nivel inferior, ademas
     #       de crear eventos y gestionar CRDs, mas adelante tambien habra que añadir la posibilidad de realizar acciones
     #       "patch" en los niveles superiores
@@ -71,10 +71,14 @@ def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural):
             'apiGroups': ["ehu.gcis.org"],
             'resources': [currentLevelPlural, currentLevelPlural + "/status"],
             'verbs': ["get", "list", "watch", "patch", "create", "delete"]
-        },
+            },
             {'apiGroups': ["ehu.gcis.org"],
              'resources': [lowerLevelPlural, lowerLevelPlural + "/status"],
              'verbs': ["post", "put", "patch", "create", "update", "delete"]
+             },
+            {'apiGroups': ["ehu.gcis.org"],
+             'resources': [higherLevelPlural, higherLevelPlural + "/status"],
+             'verbs': ["get", "patch"]
              },
             {'apiGroups': ["apiextensions.k8s.io"],
              'resources': ["customresourcedefinitions"],
@@ -86,6 +90,10 @@ def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural):
              }
         ]
     }
+
+    if currentLevelName == 'application':
+        role_object['rules'][-1]['resources'].append('configmaps')  # en el nivel de aplicacion tambien hay que añadir
+        # permisos para modificar configmaps, ya que trabaja con componentes permanentes
 
     return role_object
 
@@ -99,7 +107,7 @@ def level_i_role_binding_object(currentLevelName):
         },
         'subjects': [{
             'kind': 'User',
-            'name': 'system:serviceaccount:default:default',
+            'name': 'system:serviceaccount:default:service-account-controller-' + currentLevelName,
             'apiGroup': 'rbac.authorization.k8s.io'
         }],
         'roleRef': {
@@ -110,6 +118,17 @@ def level_i_role_binding_object(currentLevelName):
     }
 
     return role_binding_object
+
+
+def level_i_service_account_object(currentLevelName):
+    return {
+        'apiVersion': 'v1',
+        'kind': 'ServiceAccount',
+        'metadata': {
+            'name': 'service-account-controller-' + currentLevelName,
+            'namespace': 'default'  # De momento estamos trabajando en el namespace por defecto
+        }
+    }
 
 
 def last_level_role_object(currentLevelName, currentLevelPlural):
@@ -140,7 +159,7 @@ def last_level_role_object(currentLevelName, currentLevelPlural):
              'verbs': ["post", "put", "patch", "create", "update"]
              },
             {'apiGroups': [""],
-             'resources': ["events"],
+             'resources': ["events, configmaps"],
              'verbs': ["watch", "create", "update", "get"]
              }
         ]
@@ -176,7 +195,6 @@ def componente(nombre, imagen, anterior, siguiente, **kwargs):
 
 
 def componente_recurso(componenteInfo, appName):
-
     nombre = componenteInfo['name']
     component_resource = {
         'apiVersion': 'ehu.gcis.org/v1alpha1',
@@ -396,6 +414,7 @@ def deploy_app_management_controller(Nivel_Actual, Nivel_Inferior, Nivel_Superio
                     }
                 },
                 'spec': {
+                    'serviceAccountName': 'service-account-controller-' + Nivel_Actual[0],
                     'containers': [{
                         'imagePullPolicy': 'Always',
                         'name': Nivel_Actual[0] + '-controller',
@@ -503,7 +522,6 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
         deployObject['spec']['template']['spec']['containers'][0]['env'] = \
             deployObject['spec']['template']['spec']['containers'][0]['env'] + envVarList
         print("TODO: Añadir las variables de entorno necesarias")
-
 
     if len(kwargs) != 0:  # en este caso es un componente permanente
         # Conseguimos el configmap y lo añadimos junto a su volumen asociado

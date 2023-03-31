@@ -28,6 +28,14 @@ rules:
   - update
   - delete
 - apiGroups:
+  - ehu.gcis.org
+  resources:
+  - assets
+  - assets/status
+  verbs:
+  - get
+  - patch
+- apiGroups:
   - apiextensions.k8s.io
   resources:
   - customresourcedefinitions

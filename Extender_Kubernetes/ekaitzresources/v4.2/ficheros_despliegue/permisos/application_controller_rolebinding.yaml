@@ -1,12 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: asignacion-rol-controlador-aplicaciones
-subjects:
-- kind: User
-  name: system:serviceaccount:default:default
-  apiGroup: rbac.authorization.k8s.io
+  name: role-binding-controller-application
 roleRef:
-  kind: ClusterRole
-  name: mi-rol-controlador-aplicaciones
   apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: role-controller-application
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:serviceaccount:default:service-account-controller-application
