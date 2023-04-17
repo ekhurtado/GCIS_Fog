@@ -1,0 +1,11 @@
+FROM openjdk:8-jre-alpine
+
+COPY Sink_eXist_lib /Sink_eXist_lib
+
+COPY Sink_eXist.jar /
+
+ENV KAFKA_TOPIC=topico-datos-assembly-mqtt
+
+WORKDIR /
+
+CMD ["java", "-jar", "Sink_eXist.jar"]

@@ -1,0 +1,10 @@
+version: "2"
+
+services:
+
+  source-mqtt-kafka:
+    build:
+      context: ..
+      dockerfile: Dockerfile_mqtt_kafka
+    image: ekaitzhara/source-v2:source-mqtt-kafka-v2.2
+    container_name: source-mqtt-kafka

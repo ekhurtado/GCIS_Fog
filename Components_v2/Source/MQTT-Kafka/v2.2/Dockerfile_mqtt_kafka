@@ -1,0 +1,9 @@
+FROM python:3.10-alpine
+
+COPY mqtt2kafka.py /
+COPY subscriber.py /
+
+RUN pip install kafka-python
+RUN pip install paho-mqtt
+
+CMD python3 subscriber.py

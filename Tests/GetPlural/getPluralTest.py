@@ -1,3 +1,4 @@
+import os
 
 # Este paquete es el mas potente, pero es muy pesado (600 MB~)
 from pattern.text.es import pluralize as pluralize_es

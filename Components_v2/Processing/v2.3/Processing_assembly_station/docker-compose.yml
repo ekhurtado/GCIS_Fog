@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+
+  processing-assembly-station:
+    build:
+      context: .
+      dockerfile: Dockerfile_PQP
+    image: ekaitzhara/processing-v2:assembly-station-v2.3
+    container_name: processing-assembly-station
+

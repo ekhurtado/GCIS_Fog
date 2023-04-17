@@ -71,7 +71,7 @@ def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural, 
             'apiGroups': ["ehu.gcis.org"],
             'resources': [currentLevelPlural, currentLevelPlural + "/status"],
             'verbs': ["get", "list", "watch", "patch", "create", "delete"]
-            },
+        },
             {'apiGroups': ["ehu.gcis.org"],
              'resources': [lowerLevelPlural, lowerLevelPlural + "/status"],
              'verbs': ["list", "get", "put", "patch", "create", "update", "delete"]
@@ -459,16 +459,6 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
     # nombre del componente solo, sin la aplicacion
     compName = componente['metadata']['name'].replace('-' + appName, '')
 
-    # TODO modificar: en este caso como solo hemos diseñado aplicaciones sencillas (1 input t 1 output) el topico de
-    #  kafka podra ser el mismo y dentro del componente, dependiendo del tipo que sea, lo utilizara para enviar o
-    #  recibir. Habria que modificarlo parara que los componentes sean capaces de escuchar por enviar por mas de un
-    #  topico y saber diferenciar quien les envia el mensaje o a quien se lo tienen que enviar
-    kafkaTopic = None
-    if 'previous' in componente['spec']['flowConfig']:
-        kafkaTopic = componente['spec']['flowConfig']['previous'][0]['IFMHtopic']
-    elif 'next' in componente['spec']['flowConfig']:
-        kafkaTopic = componente['spec']['flowConfig']['next'][0]['IFMHtopic']
-
     deployObject = {
         'apiVersion': 'apps/v1',
         'kind': 'Deployment',
@@ -498,9 +488,7 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
                         'imagePullPolicy': 'Always',
                         'name': compName,
                         'image': componente['spec']['image'],
-                        'env': [{'name': 'KAFKA_TOPIC',
-                                 'value': kafkaTopic},
-                                {'name': 'KAFKA_KEY',
+                        'env': [{'name': 'KAFKA_KEY',
                                  'value': appName}]
                     }],
                     'nodeSelector': {
@@ -515,10 +503,37 @@ def deploymentObject(componente, controllerName, appName, replicas, componenteNa
     if len(compName) > 63:
         deployObject['spec']['template']['spec']['containers'][0]['name'] = compName[0:63]
 
+    # TODO modificar: en este caso como solo hemos diseñado aplicaciones sencillas (1 input t 1 output) el topico de
+    #  kafka podra ser el mismo y dentro del componente, dependiendo del tipo que sea, lo utilizara para enviar o
+    #  recibir. Habria que modificarlo parara que los componentes sean capaces de escuchar por enviar por mas de un
+    #  topico y saber diferenciar quien les envia el mensaje o a quien se lo tienen que enviar
+
+    if 'previous' in componente['spec']['flowConfig']:
+        # Todos los topicos de entrada serán los mismos, ya que todos los componentes apuntan al topico de entrada del
+        # componente, el cual es unico, por eso, solo necesitaremos coger uno de ellos
+        deployObject['spec']['template']['spec']['containers'][0]['env'] = \
+            deployObject['spec']['template']['spec']['containers'][0]['env'] + [{'name': 'KAFKA_TOPIC',
+                                                'value': componente['spec']['flowConfig']['previous'][0]['IFMHtopic']}]
+
+    if 'next' in componente['spec']['flowConfig']:
+        # En este caso, habrá que añadir los componentes siguientes con sus topicos asociados. Esto solo se hará en el
+        # caso de componentes efimeros ya que en los permanentes está informacion está almacenada en los ConfigMap
+        if not componente['spec']['permanent']:
+            envVarList = []
+            for i in range(len(componente['spec']['flowConfig']['next'])):
+                # Por cada siguiente componente añadimos una variable de entorno con toda la informacion (nombre y
+                # topico asociado). Despues en el codigo se analizarán todas las variables OUTPUT_IFMH_TOPIC_x
+                envVarList.append({'name': 'OUTPUT_IFMH_TOPIC_' + str(i+1), # i+1 ya que comienza en 0
+                                   'value': componente['spec']['flowConfig']['next'][i]['name'] +
+                                            ';' + componente['spec']['flowConfig']['next'][i]['IFMHtopic']})
+            deployObject['spec']['template']['spec']['containers'][0]['env'] = \
+                deployObject['spec']['template']['spec']['containers'][0]['env'] + envVarList
+
     if "customization" in componente['spec']:
         envVarList = []
         for envs in componente['spec']['customization']:
-            envVarList.append({'name': envs.split('=')[0], 'value': envs.split('=')[1]})
+            envVarList.append({'name': envs.split('=')[0],
+                               'value': envs.split('=')[1]})
         deployObject['spec']['template']['spec']['containers'][0]['env'] = \
             deployObject['spec']['template']['spec']['containers'][0]['env'] + envVarList
         print("TODO: Añadir las variables de entorno necesarias")

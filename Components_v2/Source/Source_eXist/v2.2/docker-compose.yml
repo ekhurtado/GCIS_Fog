@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+
+  source-exist:
+    build:
+      context: ..
+      dockerfile: Dockerfile_Source_eXist
+    image: ekaitzhara/source-v2:source-exist-v2.2
+    container_name: source-exist
+

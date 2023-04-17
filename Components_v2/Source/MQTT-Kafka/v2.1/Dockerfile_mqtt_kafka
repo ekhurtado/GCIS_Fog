@@ -1,0 +1,21 @@
+FROM python:3.10-alpine
+
+COPY mqtt2kafka.py /
+COPY subscriber.py /
+
+RUN pip install kafka-python
+RUN pip install paho-mqtt
+
+ENV KAFKA_KEY=App-1
+
+ENV KAFKA_TOPIC=topico-datos-assembly-mqtt
+
+ENV MQTT_TOPIC=#
+
+ENV MQTT_CLIENT_NAME=source-mqtt-kafka
+
+#ENV FUNCTION=getDataFrom
+
+#ENV OUTPUT=sinkName
+
+CMD python3 subscriber.py
