@@ -21,7 +21,8 @@ rules:
   - applications
   - applications/status
   verbs:
-  - post
+  - list
+  - get
   - put
   - patch
   - create

@@ -21,7 +21,8 @@ rules:
   - components
   - components/status
   verbs:
-  - post
+  - list
+  - get
   - put
   - patch
   - create

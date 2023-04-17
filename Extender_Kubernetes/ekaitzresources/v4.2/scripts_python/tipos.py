@@ -74,7 +74,7 @@ def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural, 
             },
             {'apiGroups': ["ehu.gcis.org"],
              'resources': [lowerLevelPlural, lowerLevelPlural + "/status"],
-             'verbs': ["post", "put", "patch", "create", "update", "delete"]
+             'verbs': ["list", "get", "put", "patch", "create", "update", "delete"]
              },
             {'apiGroups': ["ehu.gcis.org"],
              'resources': [higherLevelPlural, higherLevelPlural + "/status"],
