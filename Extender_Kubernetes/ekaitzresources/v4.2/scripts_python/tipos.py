@@ -86,7 +86,7 @@ def level_i_role_object(currentLevelName, currentLevelPlural, lowerLevelPlural, 
              },
             {'apiGroups': [""],
              'resources': ["events"],
-             'verbs': ["watch", "create", "update", "get"]
+             'verbs': ["watch", "create", "patch", "update", "get"]
              }
         ]
     }

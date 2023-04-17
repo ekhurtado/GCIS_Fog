@@ -1,0 +1,45 @@
+apiVersion: ehu.gcis.org/v1alpha1
+kind: Asset
+metadata:
+  name: asset-cr-2
+spec:
+  name: asset-2
+  deploy: True
+  assemblystations:
+    - name: assembly-station-2
+      deploy: True
+      applications:
+        - name: data-processing-app-2-model-2
+          deploy: True
+          replicas: 1
+          components:
+            - name: data-processing-2-exist
+              image: ekaitzhara/source-v2:source-exist
+              flowConfig:
+#                previous: none # No es necesario añadir los dos, si no hay previous, no se añade
+                next:
+                  - name: data-processing-assemblystation
+                    IFMHtopic: datos-processing-assembly-oee
+              customization:
+                - "MACHINE_ID=22"
+              permanent: False
+            - name: data-processing-assemblystation
+              image: ekaitzhara/processing-v2:assembly-station-v2.2
+              flowConfig:
+                previous:
+                  - name: data-processing-2-exist
+                    IFMHtopic: datos-processing-assembly-oee
+                next:
+                  - name: data-processing-2-influx
+                    IFMHtopic: datos-processing-2-assembly-oee-influx
+              customization:
+                - "LIMIT=74"
+              permanent: True
+            - name: data-processing-2-influx
+              image: ekaitzhara/sink-v2:sink-influx
+              flowConfig:
+                previous:
+                  - name: data-processing-assemblystation
+                    IFMHtopic: datos-processing-2-assembly-oee-influx
+#                next: none
+              permanent: False  # Hay que meterlo siempre? (deberia ponerse en required del CRD) O si no se mete, el controlador lo pone a False?

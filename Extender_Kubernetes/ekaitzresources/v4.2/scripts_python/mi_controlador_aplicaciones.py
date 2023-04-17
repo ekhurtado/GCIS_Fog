@@ -391,10 +391,10 @@ def updatePermanent(cliente, componente, app, action):
             config.set('InformationSection', 'applications.' + newIndex, app['metadata']['name'])
 
             # Actualizamos la información del nuevo topico
-            nextComp = tipos.findNextComponent(componente, app)
-            config.set('OutTopicSection', app['metadata']['name'] + '.' + nextComp['name'], nextComp[
-                'inputIFMHtopic'])
-            # 'kafkaTopic'])  # TODO Pensar como conseguir el topico (de la definicion de la aplicacion conseguir los componentes "next" y sus topicos?)
+            # En este caso podemos tener mas de un componente posterior
+            for allNextComp in componente['flowConfig']['next']:
+                config.set('OutTopicSection', app['metadata']['name'] + '.' + allNextComp['name'], allNextComp[
+                    'IFMHtopic'])
 
             # Actualizamos la información del nuevo customization
             for custom in componente['customization']:

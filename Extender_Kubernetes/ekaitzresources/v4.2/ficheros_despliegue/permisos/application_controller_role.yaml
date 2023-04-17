@@ -54,5 +54,6 @@ rules:
   verbs:
   - watch
   - create
+  - patch
   - update
   - get
