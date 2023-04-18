@@ -7,10 +7,12 @@ import influx_API
 IP_server = "mi-cluster-mensajeria-kafka-bootstrap.kafka-ns"
 Kafka_key = os.environ.get('KAFKA_KEY')
 
+
 def printFile(message):
     f = open("sink_influx.txt", "a")
     f.write(str(message) + "\n")
     f.close()
+
 
 def assembly_station_oee_function_thread():
     printFile("Metodo para guardar datos del OEE de assembly station")
@@ -36,17 +38,18 @@ def assembly_station_oee_function_thread():
         # msg_key = msg.key.split("'")[1] # tenemos que hacer esto ya que no se deserializa bien, viene en forma: b'<key>'
 
         if Kafka_key == msg.key:
-
             influx_API.storeData(machineID, data)
-
         else:
             printFile("This message is not for this component (key does not match)")
+
 
 def transport_robot_oee_function_thread():
     printFile("Metodo para guardar datos del OEE de transport robot")
 
+
 def monitor_function_oee_thread():
     printFile("Metodo para guardar datos del OEE del monitor")
+
 
 def main_sink_influx():
     printFile("Comienzo de ejecución del componente Processing Assembly Station")
@@ -62,6 +65,7 @@ def main_sink_influx():
         thread_func1.start()
         thread_func2.start()
         thread_func3.start()
+
 
 if __name__ == '__main__':
     main_sink_influx()

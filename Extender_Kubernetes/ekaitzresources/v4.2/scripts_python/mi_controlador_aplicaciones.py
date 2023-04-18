@@ -239,8 +239,8 @@ def conciliar_spec_status(objeto, cliente):
                 permanente = i['permanent']
             except KeyError:
                 pass
-            if (
-                    permanente != True):  # Si el componente de la aplicacion no está marcado como permanente se despliega directamente
+            if not permanente:  # Si el componente de la aplicacion no está marcado como permanente se despliega
+                # directamente
                 crear_componente(cliente, i, objeto)
             else:
                 encontrado = False
@@ -286,7 +286,8 @@ def conciliar_spec_status(objeto, cliente):
                 else:
                     crear_componente(cliente, i, objeto)
 
-                    # Si es la primera vez que se despliega el componente permanente tambien se crea y se despliega su ConfigMap
+                    # Si es la primera vez que se despliega el componente permanente tambien se crea y se despliega
+                    # su ConfigMap
                     crear_permanente_cm(cliente, i, objeto)
 
 

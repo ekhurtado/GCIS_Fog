@@ -20,7 +20,7 @@ def assembly_station_function(message):
         outputInfo = os.environ.get("OUTPUT_IFMH_TOPIC_" + str(i))
         if outputInfo is not None:
             topic = outputInfo.split(";")[1]
-            productor.send(topic, value=topicData, key=os.environ.get('KAFKA_KEY')) # La key es el ID de la
+            productor.send(topic, value=topicData, key=os.environ.get('KAFKA_KEY'))  # La key es el ID de la
             # aplicacion siempre
             i += 1
         else:
@@ -37,21 +37,4 @@ def monitor_function():
     print("Hilo de ejecución para la función 'get Monitor Data'")
 
 
-# def main_mqtt2kafka():
-#     print("Comienzo de ejecución del componente Source MQTT-Kafka")
-#     print("Started\n")
-#
-#     # Cada funcion tendrá su hilo de ejecución propio
-#     while True:
-#         print('En el bucle.')
-#         thread_func1 = Thread(target=assembly_station_function_thread(), args=())
-#         thread_func2 = Thread(target=transport_robot_function_thread(), args=())
-#         thread_func3 = Thread(target=monitor_function_thread(), args=())
-#
-#         thread_func1.start()
-#         thread_func2.start()
-#         thread_func3.start()
-#
-#
-# if __name__ == '__main__':
-#     main_mqtt2kafka()
+

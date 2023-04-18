@@ -31,14 +31,15 @@ def isPartOfMyApps(desiredAppID):
     return False
 
 
-def findOutTopic(appID):
+def findOutTopics(appID):
     config.read(volumePath + componentName + '.properties')
-    # Buscamos el topico de influx asociado a la aplicación deseada
+    # Buscamos los topicos de influx asociados a la aplicación deseada
+    allOutTopics = []
     for key in config['OutTopicSection'].keys():
         # Si coincide el ID de la aplicacion, devolvemos el topico de influx situado en el value
         if key.split('.')[0] == appID:
-            return config['OutTopicSection'][key]
-    return None
+            allOutTopics.append(config['OutTopicSection'][key])
+    return allOutTopics
 
 
 def calculateTotalTime(actualTimes, horaInicio, horaFin):
@@ -245,24 +246,20 @@ def oee_function_thread():
                         rendimiento) + "#oee=" + str(oee)
                     message = {'machineID': machineID, 'data': calcs}
 
-                    # Consigo el topico del archivo properties en el ConfigMap
-                    config.read(volumePath + 'data-processing-assemblystation.properties')
-
-                    # TODO Añadir busqueda del topico por el KEY de la aplicacion recibida (coger el key del mensaje Kafka recibido del source, y buscar el topico influx
-                    #  asociado a esa key)
-
-                    influxTopic = findOutTopic(appIDKey)
-                    # influxTopic = config['OutTopicSection'][key]
-                    printFile(
-                        "Se va a enviar la informacion de la app " + appIDKey + " al topico de influx " + influxTopic)
-
                     # Configuracion Productor Kafka
                     productor = kafka.KafkaProducer(bootstrap_servers=[IP_server + ':9092'],
                                                     client_id='pqp-assembly-oee',
                                                     value_serializer=lambda x: json.dumps(x).encode('utf-8'),
                                                     key_serializer=str.encode)
 
-                    productor.send(influxTopic, value=message, key=appIDKey)
+                    # Busqueda de los topicos por el KEY de la aplicacion recibida (todos los topicos influx asociados
+                    # a la ID de la aplicacion)
+                    influxTopics = findOutTopics(appIDKey)
+                    for topic in influxTopics:
+                        # Se envia la informacion a todos los topicos de salida
+                        printFile("Se va a enviar la informacion de la app " + appIDKey +
+                                  " al topico de influx " + topic)
+                        productor.send(topic, value=message, key=appIDKey)
 
                     # influxAPI.storeData(machineID, calcs)
                     printFile("Calcs stored on InfluxDB")
