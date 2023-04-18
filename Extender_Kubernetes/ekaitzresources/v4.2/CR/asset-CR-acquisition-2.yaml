@@ -1,0 +1,34 @@
+apiVersion: ehu.gcis.org/v1alpha1
+kind: Asset
+metadata:
+  name: asset-cr-acquisition-2
+spec:
+  name: asset-4
+  deploy: True
+  assemblystations:
+    - name: assembly-station-2
+      deploy: True
+      applications:
+        - name: data-acquisition-app-2-model-2
+          deploy: True
+          replicas: 1
+          components:
+            - name: data-acquisition-2-source-mqtt-kafka
+              image: ekaitzhara/source-v2:source-mqtt-kafka
+              flowConfig:
+#                previous: none # No es necesario añadir los dos, si no hay previous, no se añade
+                next:
+                  - name: data-acquisition-2-sink-exist
+                    IFMHtopic: datos-acquisition-2-source-mqtt-kafka
+              customization:
+                - "MQTT_TOPIC=Asset/assembly-station/22"
+                - "MQTT_CLIENT_NAME=data-acquisition-app-2-model-2-source-mqtt-kafka"
+              permanent: False
+            - name: data-acquisition-2-sink-exist
+              image: ekaitzhara/sink-v2:sink-exist
+              flowConfig:
+                previous:
+                  - name: data-acquisition-2-source-mqtt-kafka
+                    IFMHtopic: datos-acquisition-2-source-mqtt-kafka
+#                next: none
+              permanent: False

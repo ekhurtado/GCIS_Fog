@@ -1,7 +1,7 @@
 apiVersion: ehu.gcis.org/v1alpha1
 kind: Asset
 metadata:
-  name: asset-cr-2
+  name: asset-cr-processing-2
 spec:
   name: asset-2
   deploy: True
