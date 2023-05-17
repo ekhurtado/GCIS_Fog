@@ -10,6 +10,8 @@ RUN mv ./kompose /usr/local/bin/kompose
 
 RUN npm install xmlhttprequest
 
+RUN npm install node-red-contrib-xml-validate
+
 COPY Application.xsd /xmlSchemas/Application.xsd
 
 CMD node-red
