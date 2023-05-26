@@ -176,7 +176,7 @@ def generador_permisos_ultimo_nivel():
     f_comp2 = open('../ficheros_despliegue/permisos/component_controller_rolebinding.yaml', 'w')
     f_comp3 = open('../ficheros_despliegue/permisos/component_controller_serviceaccount.yaml', 'w')
 
-    yaml.dump(tipos.last_level_role_object('component', 'components'), f_comp1)
+    yaml.dump(tipos.last_level_role_object('component', 'components', 'applications'), f_comp1)
     # En el caso del RoleBinding y ServiceAccount si es igual al resto de niveles
     yaml.dump(tipos.level_i_role_binding_object('component'), f_comp2)
     yaml.dump(tipos.level_i_service_account_object('component'), f_comp3)

@@ -16,6 +16,14 @@ rules:
   - create
   - delete
 - apiGroups:
+  - ehu.gcis.org
+  resources:
+  - applications
+  - applications/status
+  verbs:
+  - get
+  - patch
+- apiGroups:
   - apps
   resources:
   - deployments
@@ -47,7 +55,8 @@ rules:
 - apiGroups:
   - ''
   resources:
-  - events, configmaps
+  - events
+  - configmaps
   verbs:
   - watch
   - create

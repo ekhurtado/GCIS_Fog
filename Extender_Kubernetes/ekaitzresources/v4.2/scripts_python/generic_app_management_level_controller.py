@@ -172,21 +172,19 @@ def crear_recursos_nivel_inferior(cliente, recurso_inferior, recurso):
         pass
 
 
-def eliminar_recursos_nivel_inferior(recurso):  # Ya no borrará deployments.
+def eliminar_recursos_nivel_inferior(recurso):
 
     cliente = client.CustomObjectsApi()
 
     if recurso['spec']['deploy']:
         for i in recurso['spec'][Nivel_Inferior + 's']:
-            i['name'] = recurso['spec']['name'] + '-' + i['name']
-            a = tipos.recurso(grupo, i, Nivel_Inferior)
             if Nivel_Inferior == 'application':
                 version_inf = 'v1alpha4'
             else:
                 version_inf = 'v1alpha1'
 
             cliente.delete_namespaced_custom_object(grupo, version_inf, namespace, Nivel_Inferior_plural,
-                                                    i['name'])
+                                                    recurso['spec']['name'] + '-' + i['name'])
     elif not recurso['spec']['deploy']:
         pass
 

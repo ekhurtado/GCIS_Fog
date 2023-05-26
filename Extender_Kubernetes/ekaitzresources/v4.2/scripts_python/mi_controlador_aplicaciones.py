@@ -32,17 +32,17 @@ genericVersion = "v1alpha1"
 
 def controlador():
     # TODO Forma para utilizar desde Pycharm
-    path = os.path.abspath(os.path.dirname(__file__))
-    path = path.replace('Extender_Kubernetes\ekaitzresources', "")
-    path = path.replace('\\v4.2\scripts_python',
-                        "")  # Se ha tenido que realizar de este modo ya que con la v daba error
-    config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
+    # path = os.path.abspath(os.path.dirname(__file__))
+    # path = path.replace('Extender_Kubernetes\ekaitzresources', "")
+    # path = path.replace('\\v4.2\scripts_python',
+    #                     "")  # Se ha tenido que realizar de este modo ya que con la v daba error
+    # config.load_kube_config(os.path.join(os.path.abspath(path), "k3s.yaml"))  # Cargamos la configuracion del cluster
 
     # TODO Cambiarlo para el cluster
-    # if 'KUBERNETES_PORT' in os.environ:
-    #     config.load_incluster_config()
-    # else:
-    #     config.load_kube_config()
+    if 'KUBERNETES_PORT' in os.environ:
+        config.load_incluster_config()
+    else:
+        config.load_kube_config()
 
     cliente = client.CustomObjectsApi()  # Creamos el cliente de la API
     cliente_extension = client.ApiextensionsV1Api()  # Creamos el cliente que pueda implementar el CRD.
@@ -142,11 +142,11 @@ def check_modifications(objeto, cliente):
 
         runningCount = 0
         for i in range(len(objeto['status']['components'])):
-            if (objeto['status']['components'][i][
-                'status'] == "Running"):  # TODO CUIDADO! Si se añaden replicas habria que comprobar que todas las replicas esten en Running
+            if objeto['status']['components'][i]['status'] == "Running":
+                # TODO CUIDADO! Si se añaden replicas habria que comprobar que todas las replicas esten en Running
                 runningCount = runningCount + 1
 
-                if (objeto['status']['components'][i]['name'] == componentName):
+                if objeto['status']['components'][i]['name'] == componentName:
                     # Si el componente que ha enviado el mensaje está a Running, creamos el evento notificándolo
                     eventObject = tipos.customResourceEventObject(action='Created', CR_type="application",
                                                                   CR_object=objeto,
@@ -154,7 +154,8 @@ def check_modifications(objeto, cliente):
                                                                   reason='Deployed', )
                     eventAPI.create_namespaced_event("default", eventObject)
 
-        # TODO Otra forma de hacerlo que devuelve los elementos que son Running, luego solo habría que analizar su longitud para saber cuantas hay
+        # TODO Otra forma de hacerlo que devuelve los elementos que son Running, luego solo habría que analizar su
+        #  longitud para saber cuantas hay
         # runningComps = [x for x in objeto['status']['componentes'] if x['status'] == "Running"]
 
         if runningCount != 0:  # Algún componente está en Running
@@ -208,7 +209,7 @@ def conciliar_spec_status(objeto, cliente):
 
     # TODO Creamos el evento de que se indicando que está empezando a crear los componentes
 
-    if objeto['spec']['deploy'] == True:
+    if objeto['spec']['deploy']:
 
         # TODO Creamos el evento notificando que se ha creado la aplicacion
         eventObject = tipos.customResourceEventObject(action='Deploy', CR_type="application",
@@ -290,8 +291,7 @@ def conciliar_spec_status(objeto, cliente):
                     # su ConfigMap
                     crear_permanente_cm(cliente, i, objeto)
 
-
-    elif objeto['spec']['deploy'] == False:
+    elif not objeto['spec']['deploy']:
         pass
 
 
@@ -343,10 +343,10 @@ def eliminar_componentes(aplicacion):  # Ya no borrará deployments.
                     updatePermanent(cliente, i, aplicacion, action="REMOVE")
             except KeyError:
                 pass
-            if permanente != True:
+            if not permanente:
                 for j in range(aplicacion['spec']['replicas']):
                     cliente.delete_namespaced_custom_object(grupo, componentVersion, namespace, componentPlural,
-                                                            i['name'] + '-' + aplicacion['metadata']['name'])
+                                                            aplicacion['metadata']['name'] + '-' + i['name'])
     elif not aplicacion['spec']['deploy']:
         pass
 

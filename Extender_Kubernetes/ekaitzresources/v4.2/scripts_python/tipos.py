@@ -131,7 +131,7 @@ def level_i_service_account_object(currentLevelName):
     }
 
 
-def last_level_role_object(currentLevelName, currentLevelPlural):
+def last_level_role_object(currentLevelName, currentLevelPlural, higherLevelPlural):
     # Al ser el ultimo nivel, deberá tener permisos para gestionar recursos de su nivel, y, además de poder gestionar
     #   recursos propios de Kubernetes como Deployments
     # TODO, habria que añadir la posibilidad de poder hacer "patch" al status del nivel superior
@@ -145,7 +145,12 @@ def last_level_role_object(currentLevelName, currentLevelPlural):
             'apiGroups': ["ehu.gcis.org"],
             'resources': [currentLevelPlural, currentLevelPlural + "/status"],
             'verbs': ["get", "list", "watch", "patch", "create", "delete"]
-        },
+            },
+            {
+            'apiGroups': ["ehu.gcis.org"],
+            'resources': [higherLevelPlural, higherLevelPlural + "/status"],
+            'verbs': ["get", "patch"]
+            },
             {'apiGroups': ["apps"],
              'resources': ["deployments"],
              'verbs': ["post", "put", "patch", "create", "update", "delete"]
@@ -159,7 +164,7 @@ def last_level_role_object(currentLevelName, currentLevelPlural):
              'verbs': ["post", "put", "patch", "create", "update"]
              },
             {'apiGroups': [""],
-             'resources': ["events, configmaps"],
+             'resources': ["events", "configmaps"],
              'verbs': ["watch", "create", "update", "get"]
              }
         ]
@@ -227,7 +232,7 @@ def componente_recurso(componenteInfo, appName):
         component_resource['spec']['permanentCM'] = 'cm-' + nombre
     else:
         # Si no es permanente (es efímero) debemos cambiar su nombre, añadiéndole el de la aplicación
-        component_resource['metadata']['name'] = nombre + '-' + appName
+        component_resource['metadata']['name'] = appName + '-' + nombre
 
     return component_resource
 
