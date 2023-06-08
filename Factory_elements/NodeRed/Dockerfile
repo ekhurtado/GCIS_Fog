@@ -12,6 +12,8 @@ RUN npm install xmlhttprequest
 
 RUN npm install node-red-contrib-xml-validate
 
+RUN npm install libxmljs2-xsd
+
 COPY Application.xsd /xmlSchemas/Application.xsd
 
 CMD node-red

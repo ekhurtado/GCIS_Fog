@@ -1,67 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2020 (http://www.altova.com) by  (University of the Basque Country) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
-	<xs:complexType name="Parameter">
+	<xs:complexType name="InPort">
 		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="type" type="xs:string" use="required"/>
+		<xs:attribute name="protocol" type="xs:string" use="required"/>
+		<xs:attribute name="dataType" type="xs:NMTOKEN" use="required"/>
+		<xs:attribute name="number" type="xs:string" use="required"/>
 	</xs:complexType>
-	<xs:complexType name="Port">
-		<xs:sequence>
-			<xs:element ref="data" minOccurs="1"/>
-		</xs:sequence>
+	<xs:complexType name="OutPort">
 		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="id" type="xs:NMTOKEN" use="required"/>
+		<xs:attribute name="protocol" type="xs:string" use="required"/>
+		<xs:attribute name="dataType" type="xs:NMTOKEN" use="required"/>
 	</xs:complexType>
-	<xs:element name="data">
-		<xs:complexType>
-			<xs:attribute name="name" type="xs:NMTOKEN" use="required"/>
-			<xs:attribute name="type" type="xs:string" use="required"/>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="function">
-		<xs:complexType>
-			<xs:attribute name="name" type="xs:string" use="required"/>
-			<xs:attribute name="description" type="xs:string" use="required"/>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="componentInstance">
+	<xs:element name="microservice">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="function" minOccurs="1" maxOccurs="1"/>
-				<xs:element name="inPort" type="Port" minOccurs="0" maxOccurs="1"/>
-				<xs:element name="outPort" type="Port" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="inPort" type="InPort" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="outPort" type="OutPort" minOccurs="0" maxOccurs="1"/>
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:string" use="required"/>
-			<xs:attribute name="type" type="xs:string" use="required"/>		<!-- Habria que cambiar TComponent por string -->
-			<xs:attribute name="description" type="xs:string" use="required"/>
+			<xs:attribute name="service" type="xs:string" use="required"/>
+			<xs:attribute name="image" type="xs:string" use="required"/>
+			<xs:attribute name="customization" type="xs:string" use="optional"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="channel">
 		<xs:complexType>
 			<xs:attribute name="from" type="xs:string" use="required"/>
-			<xs:attribute name="to" type="xs:string"/>	<!--<xs:attribute name="to" type="xs:string" use="required"/>-->
-			<xs:attribute name="link" type="xs:string" use="required"/>
+			<xs:attribute name="to" type="xs:string" use="required"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="application">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="componentInstance" minOccurs="2" maxOccurs="unbounded"/>
+				<xs:element ref="microservice" minOccurs="2" maxOccurs="unbounded"/>
 				<xs:element ref="channel" minOccurs="1" maxOccurs="unbounded"/>
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:string" use="required"/>
 		</xs:complexType>
 		<xs:key name="inPort">
-			<xs:selector xpath="./componentInstance/inPort"/>
-			<xs:field xpath="@id"/>
+			<xs:selector xpath="./microservice/inPort"/>
+			<xs:field xpath="@name"/>
 		</xs:key>
 		<xs:keyref name="refTo" refer="inPort">
 			<xs:selector xpath="./channel"/>
 			<xs:field xpath="@to"/>
 		</xs:keyref>
 		<xs:key name="outPort">
-			<xs:selector xpath="./componentInstance/outPort"/>
-			<xs:field xpath="@id"/>
+			<xs:selector xpath="./microservice/outPort"/>
+			<xs:field xpath="@name"/>
 		</xs:key>
 		<xs:keyref name="refFrom" refer="outPort">
 			<xs:selector xpath="./channel"/>
